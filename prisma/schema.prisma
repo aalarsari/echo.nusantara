@@ -1,0 +1,526 @@
+generator client {
+  provider = "prisma-client-js"
+  // previewFeatures = ["fullTextIndex"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id Int @id @unique @default(autoincrement())
+
+  email    String
+  name     String
+  role     Role    @default(USER)
+  password String?
+
+  address    String?
+  city       String?
+  kelurahan  String?
+  kecamatan  String?
+  postalCode String?
+  longitude  Float?  @db.DoublePrecision
+  latitude   Float?  @db.DoublePrecision
+
+  gander  Gander?
+  country String?
+  photo   String
+  phone   String
+
+  socketIo_id String?
+  active      Boolean   @default(false)
+  lastLogin   DateTime?
+  createdAt   DateTime  @default(now()) @db.Timestamptz()
+  createdBy   String?
+  updateAt    DateTime  @updatedAt @db.Timestamptz()
+  updateBy    String?
+
+  ActiveTokenRegister ActiveTokenRegister[]
+  Cart                Cart[]
+  Complaint           Complaint[]
+  Payments            Payments[]
+  transaction         Transactions[]
+  WishlistProduct     WishlistProduct[]
+  ReviewProduct       ReviewProduct[]
+  Account             Account[]
+  Session             Session[]
+  ResetPasswordToken  ResetPasswordToken[]
+
+  @@map("users")
+}
+
+model SocialMedia {
+  id       Int     @id @unique @default(autoincrement())
+  name     String
+  image    String
+  link     String
+  isActive Boolean @default(true)
+
+  @@map("social_media")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            Int     @map("user_id")
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           Int      @id @unique @default(autoincrement())
+  sessionToken String   @unique @map("session_token")
+  userId       Int      @map("user_id")
+  expires      DateTime @db.Timestamptz()
+  createAt     DateTime @default(now()) @db.Timestamptz()
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verificationtokens")
+}
+
+model Subscriber {
+  id        Int      @id @unique @default(autoincrement())
+  email     String   @unique
+  createdAt DateTime @default(now()) @db.Timestamptz()
+
+  @@map("Subscriber")
+}
+
+model Transactions {
+  id                Int                 @id @unique @default(autoincrement())
+  paymentId         Int                 @map("payment_id")
+  productsId        Int                 @map("products_id")
+  userId            Int                 @map("user_id")
+  quantity          Int
+  status            TransactionsStatus
+  createdAt         DateTime            @default(now()) @db.Timestamptz()
+  createdBy         String?
+  updateAt          DateTime            @updatedAt @db.Timestamptz()
+  updateBy          String?
+  RefundTransaction RefundTransaction[]
+  payment           Payments            @relation(fields: [paymentId], references: [id])
+  products          Products            @relation(fields: [productsId], references: [id])
+  user              User                @relation(fields: [userId], references: [id])
+
+  @@map("Transactions")
+}
+
+model Payments {
+  id          Int           @id @unique @default(autoincrement())
+  orderId     String        @unique
+  amount      Float
+  status      PaymentStatus
+  userId      Int           @map("user_id")
+  paymentType String?       @map("payment_type")
+  link        String?
+  noteFailed  String?       @map("note_failed")
+
+  tokenSuccess String? @map("token_success")
+  tokenFailed  String? @map("token_failed")
+
+  createdAt   DateTime       @default(now()) @db.Timestamptz()
+  createdBy   String
+  updatedAt   DateTime       @updatedAt @db.Timestamptz()
+  updatedBy   String
+  user        User           @relation(fields: [userId], references: [id])
+  transaction Transactions[]
+  Shipment    Shipment?
+
+  @@map("Payments")
+}
+
+model Products {
+  id              Int               @id @unique @default(autoincrement())
+  name            String
+  descriptions    String
+  subDescriptions String?           @map("sub_descriptions")
+  slug            String            @unique
+  priceIDR        Float             @default(0) @db.Real
+  weight          Float
+  stock           Int
+  maxOrder        Int
+  categoryId      Int               @map("category_id")
+  image1          String
+  image2          String?
+  image3          String?
+  image4          String?
+  image5          String?
+  size            String?
+  recommendation  Boolean           @default(false)
+  bestseller      Boolean           @default(false)
+  createdAt       DateTime?         @default(now()) @db.Timestamptz()
+  createdBy       String?
+  updateAt        DateTime          @updatedAt @db.Timestamptz()
+  updateBy        String?
+  deleteAt        DateTime?
+  deleteBy        String?
+  Cart            Cart[]
+  Discount        Discount[]
+  category        Category          @relation(fields: [categoryId], references: [id])
+  transaction     Transactions[]
+  WishlistProduct WishlistProduct[]
+  ReviewProduct   ReviewProduct[]
+
+  @@map("Products")
+}
+
+model QuestionsUser {
+  id            Int                   @unique @default(autoincrement())
+  nama          String
+  email         String
+  nohandphone   String                @default("-")
+  title         String
+  Desciriptions String
+  category      QuestionsUserCategory
+
+  createdAt DateTime @default(now()) @db.Timestamptz()
+
+  @@map("qustionsUser")
+}
+
+model ReviewProduct {
+  id         Int      @id @unique @default(autoincrement())
+  review     String
+  rate       Float?
+  productsId Int      @map("product_id")
+  userId     Int      @map("user_id")
+  createdAt  DateTime @default(now()) @db.Timestamptz()
+  createdBy  String
+  updatedAt  DateTime @updatedAt @db.Timestamptz()
+  updatedBy  String
+  user       User     @relation(fields: [userId], references: [id])
+  product    Products @relation(fields: [productsId], references: [id])
+
+  @@map("ReviewProduct")
+}
+
+model Review {
+  id        Int      @id @unique @default(autoincrement())
+  name      String
+  image     String
+  title     String
+  subTitle  String?
+  review    String
+  rate      Float?
+  createdAt DateTime @default(now()) @db.Timestamptz()
+  createdBy String
+  updatedAt DateTime @updatedAt @db.Timestamptz()
+  updatedBy String
+
+  @@map("Review")
+}
+
+model ProductsBenefit {
+  id         Int     @id @unique @default(autoincrement())
+  title      String
+  descripton String
+  image      String?
+
+  @@map("ProductsBenefit")
+}
+
+model Discount {
+  id           Int      @id @unique @default(autoincrement())
+  discount     Float
+  productsId   Int      @map("product_id")
+  subject      String
+  productPrice Float?
+  startDate    DateTime @map("start_date") @db.Date
+  endDate      DateTime @map("end_date") @db.Date
+
+  createdAt DateTime @default(now()) @db.Timestamptz()
+  updateAt  DateTime @updatedAt @db.Timestamptz()
+  product   Products @relation(fields: [productsId], references: [id])
+
+  @@map("Discount")
+}
+
+model Promo {
+  id        Int      @id @unique @default(autoincrement())
+  title     String
+  subtitle  String
+  photo     String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now()) @db.Timestamptz()
+
+  @@map("Promo")
+}
+
+model Cart {
+  id          Int       @id @unique @default(autoincrement())
+  userId      Int       @map("user_id")
+  productsId  Int       @map("product_id")
+  buyQuantity Int
+  isCheckOut  Boolean   @default(false)
+  isBuyNow    Boolean   @default(false)
+  createdAt   DateTime  @default(now()) @db.Timestamptz()
+  updatedAt   DateTime? @updatedAt @db.Timestamptz()
+  product     Products  @relation(fields: [productsId], references: [id])
+  user        User      @relation(fields: [userId], references: [id])
+
+  @@map("Cart")
+}
+
+model Category {
+  id          Int        @id @unique @default(autoincrement())
+  name        String
+  Description String?
+  Products    Products[]
+
+  @@map("Category")
+}
+
+model Banner {
+  id        Int            @id @unique @default(autoincrement())
+  title     String
+  subtitle  String
+  category  CategoryBanner @default(Products)
+  path      String
+  isActive  Boolean        @default(true)
+  createdAt DateTime       @default(now()) @db.Timestamptz()
+
+  @@map("Banner")
+}
+
+model ActiveTokenRegister {
+  id        Int       @id @default(autoincrement())
+  token     String    @unique
+  activeAt  DateTime? @db.Timestamptz()
+  userId    Int       @map("user_id")
+  createdAt DateTime  @default(now()) @db.Timestamptz()
+  updateAt  DateTime  @updatedAt @db.Timestamptz()
+  user      User      @relation(fields: [userId], references: [id])
+
+  @@map("ActiveTokenRegister")
+}
+
+model ResetPasswordToken {
+  id        Int       @id @default(autoincrement())
+  token     String    @unique
+  userId    Int       @map("user_id")
+  expireAt  DateTime  @db.Timestamptz()
+  useAt     DateTime? @db.Timestamptz()
+  createdAt DateTime  @default(now()) @db.Timestamptz()
+  updatedAt DateTime  @updatedAt @db.Timestamptz()
+  user      User      @relation(fields: [userId], references: [id])
+
+  @@map("ResetPasswordToken ")
+}
+
+model WishlistProduct {
+  id         Int      @id @unique @default(autoincrement())
+  productsId Int      @map("product_id")
+  userId     Int      @map("user_id")
+  createdAt  DateTime @default(now()) @db.Timestamptz()
+  upadateAt  DateTime @updatedAt @db.Timestamptz()
+  product    Products @relation(fields: [productsId], references: [id])
+  user       User     @relation(fields: [userId], references: [id])
+
+  @@map("WishlistProduct")
+}
+
+model RefundTransaction {
+  id             Int          @id @unique @default(autoincrement())
+  transactionsId Int          @map("transactions_id")
+  status         RefundStatus @default(NEW)
+  createdAt      DateTime     @default(now()) @db.Timestamptz()
+  updatedAt      DateTime     @updatedAt @db.Timestamptz()
+  transaction    Transactions @relation(fields: [transactionsId], references: [id])
+
+  @@map("RefundTransaction")
+}
+
+model Complaint {
+  id        Int             @id @unique @default(autoincrement())
+  userId    Int             @map("user_id")
+  orderId   String
+  complaint String
+  foto      String?
+  status    ComplaintStatus @default(NEW)
+  createAt  DateTime        @default(now()) @db.Timestamptz()
+  createBy  String
+  updateAt  DateTime        @updatedAt @db.Timestamptz()
+  updateBy  String
+  user      User            @relation(fields: [userId], references: [id])
+
+  @@map("Complaint")
+}
+
+model Blog {
+  id           Int            @id @unique @default(autoincrement())
+  slug         String         @unique
+  title        String
+  subtitle     String
+  content      String         @db.Text
+  categoryId   Int?           @map("category_id")
+  image        String[]
+  createdAt    DateTime       @default(now()) @db.Timestamptz()
+  createdBy    String
+  updateAt     DateTime       @updatedAt @db.Timestamptz()
+  updateBy     String
+  UserReadBlog UserReadBlog[]
+  category     CategoryBlog?  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@map("Blog")
+}
+
+model CategoryBlog {
+  id           Int     @id @unique @default(autoincrement())
+  name         String
+  isRecomended Boolean @default(true)
+  Blog         Blog[]
+}
+
+model UserReadBlog {
+  id        Int      @id @unique @default(autoincrement())
+  blogId    Int      @map("blog_id")
+  user      String   @db.Uuid()
+  createdAt DateTime @default(now()) @db.Timestamptz()
+  createdBy String
+
+  blog Blog @relation(fields: [blogId], references: [id], onDelete: Cascade)
+
+  @@map("UserReadBlog")
+}
+
+model Couriers {
+  id           Int          @id @unique @default(autoincrement())
+  name         String
+  company      String
+  deliveryType DeliveryType @default(now) @map("delivery_type")
+  type         String
+  isActive     Boolean      @default(true)
+
+  createdAt DateTime   @default(now()) @db.Timestamptz()
+  createdBy String
+  Shipment  Shipment[]
+
+  @@map("Couriers")
+}
+
+model Shipment {
+  id               Int               @id @unique @default(autoincrement())
+  shipmentCode     String
+  trackingId       String?           @map("tracking_id")
+  couriersId       Int?              @map("couriers_id")
+  paymentsId       Int?              @unique @map("payments_id")
+  status           String
+  price            Float             @db.Real
+  ShipmentTracking ShipmentTracking?
+  payment          Payments?         @relation(fields: [paymentsId], references: [id])
+  couriers         Couriers?         @relation(fields: [couriersId], references: [id])
+  createdAt        DateTime          @default(now()) @db.Timestamptz()
+  createdBy        String
+  updatedAt        DateTime          @updatedAt @db.Timestamptz()
+  updatedBy        String
+
+  @@map("Shipment")
+}
+
+model ShipmentTracking {
+  id         Int      @id @default(autoincrement())
+  shipmentId Int      @unique @map("shipment_id")
+  history    String[]
+  createdAt  DateTime @default(now()) @db.Timestamptz()
+  updatedAt  DateTime @updatedAt @db.Timestamptz()
+  shipment   Shipment @relation(fields: [shipmentId], references: [id])
+}
+
+model LocationPickup {
+  id           Int     @id @unique @default(autoincrement())
+  address      String
+  longitude    Float
+  latitude     Float
+  contactName  String
+  contactPhone String
+  postalCode   Float?  @db.Real
+  isActive     Boolean @default(true) @db.Boolean
+
+  createdAt DateTime @default(now()) @db.Timestamptz()
+  createdBy String
+
+  updatedAt DateTime @updatedAt @db.Timestamptz()
+  updatedBy String
+
+  @@map("location_pickup")
+}
+
+enum CategoryBanner {
+  Products
+  Discount
+}
+
+enum DeliveryType {
+  now
+  scheduled
+}
+
+enum RefundStatus {
+  NEW
+  PROGRESS
+  FINISH
+  DECLINE
+}
+
+enum ComplaintStatus {
+  NEW
+  PROGRESS
+  FINISH
+  DECLINE
+}
+
+enum PaymentStatus {
+  PENDING
+  DECLINE
+  SUCCESS
+}
+
+enum TransactionsStatus {
+  NEW
+  PAID
+  PROCESS
+  DECLINE
+  DONE
+  REFUND
+}
+
+enum Role {
+  ADMIN
+  USER
+  LOGISTIC
+  SALES
+  SUPER_ADMIN
+}
+
+enum QuestionsUserCategory {
+  GENERAL
+  BUSINESS
+}
+
+enum Gander {
+  Male
+  Female
+}

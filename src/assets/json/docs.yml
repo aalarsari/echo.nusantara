@@ -1,0 +1,864 @@
+openapi: 3.0.0
+info:
+  title: echo-nusantara
+  description: |-
+    cara menggunakan auth pada next-auth:  
+    1\. login dari browser  
+    2\. masukkan cookies auth ke dalam cookies postman
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+    basicAuth:
+      type: http
+      scheme: basic
+tags:
+  - name: auth
+  - name: Chart
+  - name: Checkout
+  - name: Favorite
+  - name: Invoice
+  - name: Profile
+  - name: NoAuth
+  - name: Admin
+    description: API ini harus digunakan dengan user dengan role admin
+  - name: Admin > Product
+    description: API ini digunakan untuk Product yang ada di dashboard
+  - name: Admin > Banner
+  - name: Admin > Category
+  - name: Admin > complaint
+  - name: Admin > Transaction
+  - name: Admin > User
+paths:
+  /api/auth/register:
+    post:
+      tags:
+        - auth
+      summary: Register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: erazio01@gmail.com
+                name: Achmad Hammam
+                phone: '08211658055'
+                address: Jln. Syiah Kuala No 56
+                city: Langsa
+                postalCode: '2212345'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/user/chart:
+    post:
+      tags:
+        - Chart
+      summary: create/update chart
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                productId:
+                  type: integer
+                  example: '3'
+                quantity:
+                  type: integer
+                  example: '1'
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    get:
+      tags:
+        - Chart
+      summary: Get Chart
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/user/chart/2:
+    delete:
+      tags:
+        - Chart
+      summary: Delete Chart
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/user/transaction/checkout:
+    post:
+      tags:
+        - Checkout
+      summary: Checkout
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                cartIds:
+                  - 1
+                paymentTypeId: 12
+                creditCard: '4617006959746656'
+                cvv: '123'
+                expireMonth: '01'
+                expireYear: '2025'
+      security:
+        - basicAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/user/favorite:
+    post:
+      tags:
+        - Favorite
+      summary: create favorite
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                productId:
+                  type: integer
+                  example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/admin/download-invoice:
+    get:
+      tags:
+        - Invoice
+      summary: Get Data Invoice
+      parameters:
+        - name: startDate
+          in: query
+          schema:
+            type: string
+          example: 08-05-2024
+        - name: endData
+          in: query
+          schema:
+            type: string
+          example: 09-05-2024
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: '1'
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+          example: '10'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/user/profile:
+    get:
+      tags:
+        - Profile
+      summary: profile
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/catalog:
+    get:
+      tags:
+        - NoAuth
+      summary: Catalog
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/product:
+    get:
+      tags:
+        - NoAuth
+      summary: Product
+      parameters:
+        - name: category
+          in: query
+          schema:
+            type: integer
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/admin/product/:
+    post:
+      tags:
+        - Admin > Product
+      summary: Create Product
+      description: |-
+        | Key | **Value** | Nullable |
+        | --- | --- | --- |
+        | name | String | No |
+        | descriptions | String | No |
+        | priceIDR | Float | No |
+        | PriceUSD | Float | No |
+        | weight | Float | No |
+        | stock | Int | No |
+        | maxOrder | Int | No |
+        | categoryId | Int | No |
+        | size | String | Yes |
+        | recommendation | Booelan | Yes |
+        | image1 | File/Image | No |
+        | Image2 | File/Image | Yes |
+        | Image3 | File/Image | Yes |
+        | Image4 | File/Image | Yes |
+        | Image5 | File/Image | Yes |
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: botol kemasan hitam
+                descriptions:
+                  type: string
+                  example: produck kemasan dalam botol
+                priceIDR:
+                  type: integer
+                  example: '10000'
+                priceUSD:
+                  type: integer
+                  example: '10'
+                weight:
+                  type: integer
+                  example: '81'
+                stock:
+                  type: integer
+                  example: '10000'
+                maxOrder:
+                  type: integer
+                  example: '10'
+                categoryId:
+                  type: integer
+                  example: '1'
+                image1:
+                  type: string
+                  format: binary
+                image2:
+                  type: string
+                  format: binary
+                image3:
+                  type: string
+                  format: binary
+                image4:
+                  type: string
+                  format: binary
+                image5:
+                  type: string
+                  format: binary
+                recommendation:
+                  type: string
+                size:
+                  type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    get:
+      tags:
+        - Admin > Product
+      summary: Get Product
+      description: |-
+        | Key | **Value** | Nullable |
+        | --- | --- | --- |
+        | page | Int | No |
+        | pageSize | Int | No |
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: '1'
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+          example: '10'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/admin/product/{slug}:
+    put:
+      tags:
+        - Admin > Product
+      summary: Update Product
+      description: |-
+        | Key | **Value** | Nullable |
+        | --- | --- | --- |
+        | Slug | String | Yes |
+        | name | String | Yes |
+        | descriptions | String | Yes |
+        | priceIDR | Float | Yes |
+        | PriceUSD | Float | Yes |
+        | weight | Float | Yes |
+        | stock | Int | Yes |
+        | maxOrder | Int | Yes |
+        | categoryId | Int | Yes |
+        | size | String | Yes |
+        | recommendation | Booelan | Yes |
+        | image1 | File/Image | Yes |
+        | Image2 | File/Image | Yes |
+        | Image3 | File/Image | Yes |
+        | Image4 | File/Image | Yes |
+        | Image5 | File/Image | Yes |
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: botol kemasan hitam
+                descriptions:
+                  type: string
+                  example: produck kemasan dalam botol
+                priceIDR:
+                  type: integer
+                  example: '10000'
+                priceUSD:
+                  type: integer
+                  example: '10'
+                weight:
+                  type: integer
+                  example: '81'
+                stock:
+                  type: integer
+                  example: '10000'
+                maxOrder:
+                  type: integer
+                  example: '10'
+                categoryId:
+                  type: integer
+                  example: '1'
+                image1:
+                  type: string
+                  format: binary
+                image2:
+                  type: string
+                  format: binary
+                image3:
+                  type: string
+                  format: binary
+                image4:
+                  type: string
+                  format: binary
+                image5:
+                  type: string
+                  format: binary
+                recommendation:
+                  type: string
+                size:
+                  type: string
+      parameters:
+        - name: slug
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    get:
+      tags:
+        - Admin > Product
+      summary: Detail Product
+      description: |-
+        | Key | **Value** | Nullable |
+        | --- | --- | --- |
+        | slug | String | No |
+      parameters:
+        - name: slug
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/admin/product/{slug}/review:
+    get:
+      tags:
+        - Admin > Product
+      summary: Get Review
+      description: |-
+        | **Key** | **Value** | Nullable |
+        | --- | --- | --- |
+        | slug | String | No |
+      parameters:
+        - name: slug
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/admin/product/{slug}/discount/{discountId}:
+    delete:
+      tags:
+        - Admin > Product
+      summary: Delete Discount
+      description: |-
+        | Key | **Value** | Nullable |
+        | --- | --- | --- |
+        | slug | String | No |
+        | discountId | string | No |
+      parameters:
+        - name: slug
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: discountId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/admin/product/{slug}/discount:
+    post:
+      tags:
+        - Admin > Product
+      summary: Create Discount
+      description: |-
+        | **Key** | **Value** | **Nullable** |
+        | --- | --- | --- |
+        | discount | Float | No |
+        | subject | String | No |
+        | expirteAt | Date | No |
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                discount: 50
+                subject: help
+                expireAt: '2024-05-16T09:31:51.528Z'
+      parameters:
+        - name: slug
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/admin/banner:
+    get:
+      tags:
+        - Admin > Banner
+      summary: Get Banner
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - Admin > Banner
+      summary: Create Banner
+      description: |-
+        | **Key** | **Value** | **Nullable** |
+        | --- | --- | --- |
+        | title | String | No |
+        | subtitle | String | No |
+        | photo | File | No |
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Wow
+                subtilte:
+                  type: string
+                  example: WOW
+                photo:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/admin/banner/{bannerId}:
+    get:
+      tags:
+        - Admin > Banner
+      summary: Get Detail Banner
+      description: |-
+        | **Key** | **Value** | **Nullable** |
+        | --- | --- | --- |
+        | bannerId | string | No |
+      parameters:
+        - name: bannerId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - Admin > Banner
+      summary: Delete Banner
+      description: |-
+        | **Key** | **Value** | **Nullable** |
+        | --- | --- | --- |
+        | bannerId | string | No |
+      parameters:
+        - name: bannerId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    put:
+      tags:
+        - Admin > Banner
+      summary: Update Banner
+      description: |-
+        | **Key** | **Value** | **Nullable** |
+        | --- | --- | --- |
+        | bennerId | String | No |
+      requestBody:
+        content: {}
+      parameters:
+        - name: bannerId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/admin/category:
+    get:
+      tags:
+        - Admin > Category
+      summary: Get Category
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - Admin > Category
+      summary: Create Category
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: electronic
+                description: barang-barang electronic
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/admin/complaint:
+    get:
+      tags:
+        - Admin > complaint
+      summary: Get List Complaint
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/admin/complaint/{complaintId}:
+    get:
+      tags:
+        - Admin > complaint
+      summary: Get Detail Complaint
+      description: |-
+        | **Key** | **Value** | **Nullable** |
+        | --- | --- | --- |
+        | complaintId | string | No |
+      parameters:
+        - name: complaintId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/admin/complaint/{complaintId}/confirm:
+    post:
+      tags:
+        - Admin > complaint
+      summary: Confirm Complaint
+      description: |-
+        | **Key** | **Value** | **Nullable** |
+        | --- | --- | --- |
+        | complaintId | String | No |
+      requestBody:
+        content: {}
+      parameters:
+        - name: complaintId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/admin/complaint/{complaintId}/decline:
+    delete:
+      tags:
+        - Admin > complaint
+      summary: Decline Complaint
+      description: |-
+        | **Key** | **Value** | **Nullable** |
+        | --- | --- | --- |
+        | complaintId | String | No |
+      parameters:
+        - name: complaintId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/admin/complaint/{complaintId}/done:
+    post:
+      tags:
+        - Admin > complaint
+      summary: Done Complaint
+      description: |-
+        | **Key** | **Value** | **Nullable** |
+        | --- | --- | --- |
+        | complaintId | String | No |
+      requestBody:
+        content: {}
+      parameters:
+        - name: complaintId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/admin/transaction:
+    get:
+      tags:
+        - Admin > Transaction
+      summary: Get List Transaction
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/admin/transaction/confirm:
+    post:
+      tags:
+        - Admin > Transaction
+      summary: Confirm Transaction
+      description: |-
+        | **Key** | **Value** | **Nullable** |
+        | --- | --- | --- |
+        | orderId | String | NO |
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                orderId: aaaaaaa
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/admin/transaction/done:
+    post:
+      tags:
+        - Admin > Transaction
+      summary: Done Transaction
+      description: |-
+        | **Key** | **Value** | **Nullable** |
+        | --- | --- | --- |
+        | orderId | String | NO |
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                orderId: aaaaaaa
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/admin/transaction/{orderId}:
+    get:
+      tags:
+        - Admin > Transaction
+      summary: Get Detail Transcation
+      description: |-
+        | **Key** | **Value** | **Nullable** |
+        | --- | --- | --- |
+        | orderId | String | No |
+      parameters:
+        - name: orderId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/admin/user:
+    get:
+      tags:
+        - Admin > User
+      summary: Get List User
+      description: |-
+        | **Key** | **Value** | **Nullable** |
+        | --- | --- | --- |
+        | page | String | No |
+        | pageSize | String | No |
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: '1'
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+          example: '10'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/admin/user/{userId}:
+    get:
+      tags:
+        - Admin > User
+      summary: Get Detail User
+      description: |-
+        | **Key** | **Value** | **Nullable** |
+        | --- | --- | --- |
+        | userId | String | No |
+      parameters:
+        - name: userId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    put:
+      tags:
+        - Admin > User
+      summary: Update User
+      description: |-
+        | **Key** | **Value** | **Nullable** |
+        | --- | --- | --- |
+        | userId | String | No |
+        | email | String | Yes |
+        | name | String | Yes |
+        | Phone | String | Yes |
+        | gander | enum(male,female) | Yes |
+        | address | String | Yes |
+        | city | String | Yes |
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example: "{\r\n    \"email\":\"erazio01@gmail.com\",\r\n    \"name\": \"Achmad Hammam\",\r\n    \"phone\":\"08211658055\",\r\n    \"role\": \"USER\",\r\n    \"gander\": \"Male\",\r\n    \"address\": \"Jln. Syiah Kuala No 56\",\r\n    \"city\": \"Langsa\",\r\n    \"postalCode\": \"22412\",\r\n}\r\n\r\n"
+      parameters:
+        - name: userId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}

@@ -1,0 +1,1067 @@
+{
+  "info": {
+    "_postman_id": "7d80b250-3098-4cb9-b94c-0760d81bb4c7",
+    "name": "echo-nusantara",
+    "description": "cara menggunakan auth pada next-auth:  \n1\\. login dari browser  \n2\\. masukkan cookies auth ke dalam cookies postman",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "19050715",
+    "_collection_link": "https://lively-shuttle-567509.postman.co/workspace/Tes-API-~99294ee2-f8e3-4881-8982-5a4101916d1e/collection/19050715-7d80b250-3098-4cb9-b94c-0760d81bb4c7?action=share&source=collection_link&creator=19050715"
+  },
+  "item": [
+    {
+      "name": "auth",
+      "item": [
+        {
+          "name": "Register",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [""],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\":\"erazio01@gmail.com\",\r\n    \"name\":\"Achmad Hammam\",\r\n    \"phone\":\"08211658055\",\r\n    \"address\": \"Jln. Syiah Kuala No 56\",\r\n    \"city\": \"Langsa\",\r\n    \"postalCode\": \"2212345\"\r\n \r\n}\r\n\r\n \r\n    ",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/auth/register",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "auth", "register"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Chart",
+      "item": [
+        {
+          "name": "create/update chart",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..DIFD5QZRl18CVNr8.OCt4Oy3E0ZrBTLe614rd3XACbBCf5U5RMRlP4Jq3ih8PHPhmZqy_c84WiMOrAR8qZL1JoiUY-EacY95Yuz6iT1wJgURHPjgM5LIEQ5CHsrdO1W5kvSkg2FiF7EywKfmCTHes1ZsmT6TFPjJwfpzPGiHAJIZU7o87V_vHDPtAUIVeEePl4bd1KBhfOrVquI4KI8ujlpwKDsG9qDJLD273i8Kbv_Qur-uo7jiB7fbC5ltwKGNj9r3Bal9PICt2wB1n9Wn2QOmx.-xwFKXIun00B-tnJdMKnIg",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "productId",
+                  "value": "3",
+                  "type": "text"
+                },
+                {
+                  "key": "quantity",
+                  "value": "1",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/user/chart",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "user", "chart"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Chart",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/user/chart/2",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "user", "chart", "2"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Chart",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/user/chart",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "user", "chart"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Checkout",
+      "item": [
+        {
+          "name": "Checkout",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "admin-echo@mail.com",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "password",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"cartIds\":[1],\r\n    \"paymentTypeId\":12,\r\n    \"creditCard\":\"4617006959746656\",\r\n    \"cvv\":\"123\",\r\n    \"expireMonth\":\"01\",\r\n    \"expireYear\":\"2025\"\r\n  \r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/user/transaction/checkout",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "user", "transaction", "checkout"],
+              "query": [
+                {
+                  "key": "a",
+                  "value": null,
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Favorite",
+      "item": [
+        {
+          "name": "create favorite",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "productId",
+                  "value": "1",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/user/favorite",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "user", "favorite"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Invoice",
+      "item": [
+        {
+          "name": "Get Data Invoice",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/admin/download-invoice?startDate=08-05-2024&endData=09-05-2024&page=1&pageSize=10",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "admin", "download-invoice"],
+              "query": [
+                {
+                  "key": "startDate",
+                  "value": "08-05-2024"
+                },
+                {
+                  "key": "endData",
+                  "value": "09-05-2024"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "pageSize",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Profile",
+      "item": [
+        {
+          "name": "profile",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/user/profile",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "user", "profile"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "NoAuth",
+      "item": [
+        {
+          "name": "Catalog",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/catalog",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "catalog"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Product",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/product?category=1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "product"],
+              "query": [
+                {
+                  "key": "category",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Product",
+          "item": [
+            {
+              "name": "Create Product",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [""],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Cookie",
+                    "value": "",
+                    "type": "text",
+                    "disabled": true
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "name",
+                      "value": "botol kemasan hitam",
+                      "type": "text"
+                    },
+                    {
+                      "key": "descriptions",
+                      "value": "produck kemasan dalam botol",
+                      "type": "text"
+                    },
+                    {
+                      "key": "priceIDR",
+                      "value": "10000",
+                      "type": "text"
+                    },
+                    {
+                      "key": "priceUSD",
+                      "value": "10",
+                      "type": "text"
+                    },
+                    {
+                      "key": "weight",
+                      "value": "81",
+                      "type": "text"
+                    },
+                    {
+                      "key": "stock",
+                      "value": "10000",
+                      "type": "text"
+                    },
+                    {
+                      "key": "maxOrder",
+                      "value": "10",
+                      "type": "text"
+                    },
+                    {
+                      "key": "categoryId",
+                      "value": "1",
+                      "type": "text"
+                    },
+                    {
+                      "key": "image1",
+                      "type": "file",
+                      "src": "/E:/Kerjaan Elga/Project/BenerIt/benertit_mobile_user/assets/image/icon-technician.png"
+                    },
+                    {
+                      "key": "image2",
+                      "type": "file",
+                      "src": []
+                    },
+                    {
+                      "key": "image3",
+                      "type": "file",
+                      "src": []
+                    },
+                    {
+                      "key": "image4",
+                      "type": "file",
+                      "src": []
+                    },
+                    {
+                      "key": "image5",
+                      "type": "file",
+                      "src": []
+                    },
+                    {
+                      "key": "recommendation",
+                      "value": "",
+                      "type": "text"
+                    },
+                    {
+                      "key": "size",
+                      "value": "",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "http://localhost:3000/api/admin/product/",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["api", "admin", "product", ""]
+                },
+                "description": "| Key | **Value** | Nullable |\n| --- | --- | --- |\n| name | String | No |\n| descriptions | String | No |\n| priceIDR | Float | No |\n| PriceUSD | Float | No |\n| weight | Float | No |\n| stock | Int | No |\n| maxOrder | Int | No |\n| categoryId | Int | No |\n| size | String | Yes |\n| recommendation | Booelan | Yes |\n| image1 | File/Image | No |\n| Image2 | File/Image | Yes |\n| Image3 | File/Image | Yes |\n| Image4 | File/Image | Yes |\n| Image5 | File/Image | Yes |"
+              },
+              "response": []
+            },
+            {
+              "name": "Update Product",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [""],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Cookie",
+                    "value": "",
+                    "type": "text",
+                    "disabled": true
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "name",
+                      "value": "botol kemasan hitam",
+                      "type": "text"
+                    },
+                    {
+                      "key": "descriptions",
+                      "value": "produck kemasan dalam botol",
+                      "type": "text"
+                    },
+                    {
+                      "key": "priceIDR",
+                      "value": "10000",
+                      "type": "text"
+                    },
+                    {
+                      "key": "priceUSD",
+                      "value": "10",
+                      "type": "text"
+                    },
+                    {
+                      "key": "weight",
+                      "value": "81",
+                      "type": "text"
+                    },
+                    {
+                      "key": "stock",
+                      "value": "10000",
+                      "type": "text"
+                    },
+                    {
+                      "key": "maxOrder",
+                      "value": "10",
+                      "type": "text"
+                    },
+                    {
+                      "key": "categoryId",
+                      "value": "1",
+                      "type": "text"
+                    },
+                    {
+                      "key": "image1",
+                      "type": "file",
+                      "src": "/E:/Kerjaan Elga/Project/BenerIt/benertit_mobile_user/assets/image/icon-technician.png"
+                    },
+                    {
+                      "key": "image2",
+                      "type": "file",
+                      "src": []
+                    },
+                    {
+                      "key": "image3",
+                      "type": "file",
+                      "src": []
+                    },
+                    {
+                      "key": "image4",
+                      "type": "file",
+                      "src": []
+                    },
+                    {
+                      "key": "image5",
+                      "type": "file",
+                      "src": []
+                    },
+                    {
+                      "key": "recommendation",
+                      "value": "",
+                      "type": "text"
+                    },
+                    {
+                      "key": "size",
+                      "value": "",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "http://localhost:3000/api/admin/product/{{slug}}",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["api", "admin", "product", "{{slug}}"]
+                },
+                "description": "| Key | **Value** | Nullable |\n| --- | --- | --- |\n| Slug | String | Yes |\n| name | String | Yes |\n| descriptions | String | Yes |\n| priceIDR | Float | Yes |\n| PriceUSD | Float | Yes |\n| weight | Float | Yes |\n| stock | Int | Yes |\n| maxOrder | Int | Yes |\n| categoryId | Int | Yes |\n| size | String | Yes |\n| recommendation | Booelan | Yes |\n| image1 | File/Image | Yes |\n| Image2 | File/Image | Yes |\n| Image3 | File/Image | Yes |\n| Image4 | File/Image | Yes |\n| Image5 | File/Image | Yes |"
+              },
+              "response": []
+            },
+            {
+              "name": "Get Product",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:3000/api/admin/product/?page=1&pageSize=10",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["api", "admin", "product", ""],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "10"
+                    }
+                  ]
+                },
+                "description": "| Key | **Value** | Nullable |\n| --- | --- | --- |\n| page | Int | No |\n| pageSize | Int | No |"
+              },
+              "response": []
+            },
+            {
+              "name": "Detail Product",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:3000/api/admin/product/{{slug}}",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["api", "admin", "product", "{{slug}}"]
+                },
+                "description": "| Key | **Value** | Nullable |\n| --- | --- | --- |\n| slug | String | No |"
+              },
+              "response": []
+            },
+            {
+              "name": "Get Review",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:3000/api/admin/product/{{slug}}/review",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["api", "admin", "product", "{{slug}}", "review"]
+                },
+                "description": "| **Key** | **Value** | Nullable |\n| --- | --- | --- |\n| slug | String | No |"
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Discount",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:3000/api/admin/product/{{slug}}/discount/{{discountId}}",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": [
+                    "api",
+                    "admin",
+                    "product",
+                    "{{slug}}",
+                    "discount",
+                    "{{discountId}}"
+                  ]
+                },
+                "description": "| Key | **Value** | Nullable |\n| --- | --- | --- |\n| slug | String | No |\n| discountId | string | No |"
+              },
+              "response": []
+            },
+            {
+              "name": "Create Discount",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [""],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"discount\": 50,\r\n    \"subject\": \"help\",\r\n    \"expireAt\":\"2024-05-16T09:31:51.528Z\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3000/api/admin/product/{{slug}}/discount",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["api", "admin", "product", "{{slug}}", "discount"]
+                },
+                "description": "| **Key** | **Value** | **Nullable** |\n| --- | --- | --- |\n| discount | Float | No |\n| subject | String | No |\n| expirteAt | Date | No |"
+              },
+              "response": []
+            }
+          ],
+          "description": "API ini digunakan untuk Product yang ada di dashboard"
+        },
+        {
+          "name": "Banner",
+          "item": [
+            {
+              "name": "Get Banner",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:3000/api/admin/banner",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["api", "admin", "banner"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Detail Banner",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:3000/api/admin/banner/{{bannerId}}",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["api", "admin", "banner", "{{bannerId}}"]
+                },
+                "description": "| **Key** | **Value** | **Nullable** |\n| --- | --- | --- |\n| bannerId | string | No |"
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Banner",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:3000/api/admin/banner/{{bannerId}}",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["api", "admin", "banner", "{{bannerId}}"]
+                },
+                "description": "| **Key** | **Value** | **Nullable** |\n| --- | --- | --- |\n| bannerId | string | No |"
+              },
+              "response": []
+            },
+            {
+              "name": "Create Banner",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "title",
+                      "value": "Wow",
+                      "type": "text"
+                    },
+                    {
+                      "key": "subtilte",
+                      "value": "WOW",
+                      "type": "text"
+                    },
+                    {
+                      "key": "photo",
+                      "type": "file",
+                      "src": "E:\\Kerjaan Elga\\Project\\BenerIt\\benertit_mobile_user\\assets\\image\\icon-technician.png"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "http://localhost:3000/api/admin/banner",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["api", "admin", "banner"]
+                },
+                "description": "| **Key** | **Value** | **Nullable** |\n| --- | --- | --- |\n| title | String | No |\n| subtitle | String | No |\n| photo | File | No |"
+              },
+              "response": []
+            },
+            {
+              "name": "Update Banner",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:3000/api/admin/banner/{{bannerId}}",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["api", "admin", "banner", "{{bannerId}}"]
+                },
+                "description": "| **Key** | **Value** | **Nullable** |\n| --- | --- | --- |\n| bennerId | String | No |"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Category",
+          "item": [
+            {
+              "name": "Get Category",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:3000/api/admin/category",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["api", "admin", "category"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create Category",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\":\"electronic\",\r\n    \"description\":\"barang-barang electronic\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3000/api/admin/category",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["api", "admin", "category"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "complaint",
+          "item": [
+            {
+              "name": "Get List Complaint",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:3000/api/admin/complaint",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["api", "admin", "complaint"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Detail Complaint",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:3000/api/admin/complaint/{{complaintId}}",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["api", "admin", "complaint", "{{complaintId}}"]
+                },
+                "description": "| **Key** | **Value** | **Nullable** |\n| --- | --- | --- |\n| complaintId | string | No |"
+              },
+              "response": []
+            },
+            {
+              "name": "Confirm Complaint",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:3000/api/admin/complaint/{{complaintId}}/confirm",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": [
+                    "api",
+                    "admin",
+                    "complaint",
+                    "{{complaintId}}",
+                    "confirm"
+                  ]
+                },
+                "description": "| **Key** | **Value** | **Nullable** |\n| --- | --- | --- |\n| complaintId | String | No |"
+              },
+              "response": []
+            },
+            {
+              "name": "Decline Complaint",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:3000/api/admin/complaint/{{complaintId}}/decline",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": [
+                    "api",
+                    "admin",
+                    "complaint",
+                    "{{complaintId}}",
+                    "decline"
+                  ]
+                },
+                "description": "| **Key** | **Value** | **Nullable** |\n| --- | --- | --- |\n| complaintId | String | No |"
+              },
+              "response": []
+            },
+            {
+              "name": "Done Complaint",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:3000/api/admin/complaint/{{complaintId}}/done",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": [
+                    "api",
+                    "admin",
+                    "complaint",
+                    "{{complaintId}}",
+                    "done"
+                  ]
+                },
+                "description": "| **Key** | **Value** | **Nullable** |\n| --- | --- | --- |\n| complaintId | String | No |"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Transaction",
+          "item": [
+            {
+              "name": "Get List Transaction",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:3000/api/admin/transaction",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["api", "admin", "transaction"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Confirm Transaction",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"orderId\":\"aaaaaaa\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3000/api/admin/transaction/confirm",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["api", "admin", "transaction", "confirm"]
+                },
+                "description": "| **Key** | **Value** | **Nullable** |\n| --- | --- | --- |\n| orderId | String | NO |"
+              },
+              "response": []
+            },
+            {
+              "name": "Done Transaction",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"orderId\":\"aaaaaaa\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3000/api/admin/transaction/done",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["api", "admin", "transaction", "done"]
+                },
+                "description": "| **Key** | **Value** | **Nullable** |\n| --- | --- | --- |\n| orderId | String | NO |"
+              },
+              "response": []
+            },
+            {
+              "name": "Get Detail Transcation",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:3000/api/admin/transaction/{{orderId}}",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["api", "admin", "transaction", "{{orderId}}"]
+                },
+                "description": "| **Key** | **Value** | **Nullable** |\n| --- | --- | --- |\n| orderId | String | No |"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "User",
+          "item": [
+            {
+              "name": "Get List User",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:3000/api/admin/user?page=1&pageSize=10",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["api", "admin", "user"],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "10"
+                    }
+                  ]
+                },
+                "description": "| **Key** | **Value** | **Nullable** |\n| --- | --- | --- |\n| page | String | No |\n| pageSize | String | No |"
+              },
+              "response": []
+            },
+            {
+              "name": "Get Detail User",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:3000/api/admin/user/{{userId}}",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["api", "admin", "user", "{{userId}}"]
+                },
+                "description": "| **Key** | **Value** | **Nullable** |\n| --- | --- | --- |\n| userId | String | No |"
+              },
+              "response": []
+            },
+            {
+              "name": "Update User",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\":\"erazio01@gmail.com\",\r\n    \"name\": \"Achmad Hammam\",\r\n    \"phone\":\"08211658055\",\r\n    \"role\": \"USER\",\r\n    \"gander\": \"Male\",\r\n    \"address\": \"Jln. Syiah Kuala No 56\",\r\n    \"city\": \"Langsa\",\r\n    \"postalCode\": \"22412\",\r\n}\r\n\r\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3000/api/admin/user/{{userId}}",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["api", "admin", "user", "{{userId}}"]
+                },
+                "description": "| **Key** | **Value** | **Nullable** |\n| --- | --- | --- |\n| userId | String | No |\n| email | String | Yes |\n| name | String | Yes |\n| Phone | String | Yes |\n| gander | enum(male,female) | Yes |\n| address | String | Yes |\n| city | String | Yes |"
+              },
+              "response": []
+            }
+          ]
+        }
+      ],
+      "description": "API ini harus digunakan dengan user dengan role admin"
+    }
+  ]
+}

@@ -1,0 +1,487 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Josefins";
+  src: url("/fonts/JosefinSans-VariableFont_wght.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Domaine";
+  src: url("/fonts/domaine-display-regular.woff2") format("woff2");
+  font-display: swap;
+}
+
+@keyframes birdMove {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-birdMove {
+  animation: birdMove 3s linear infinite;
+}
+#no-translate {
+  -ms-translate: no;
+  -webkit-translate: no;
+  translate: no;
+}
+
+@layer base {
+  ::selection {
+    @apply bg-[#3b532c] text-white;
+  }
+
+  body {
+    @apply bg-white text-black;
+    top: 0px !important;
+  }
+
+  .perspective {
+    perspective: 1000px;
+  }
+
+  .transform-3d {
+    transform-style: preserve-3d;
+  }
+
+  .layer-bg {
+    @apply absolute -inset-[2vw] flex items-center justify-center bg-cover bg-center;
+  }
+
+  .layer-content {
+    @apply absolute -inset-[5vw] flex items-center justify-center;
+  }
+}
+
+.skiptranslate {
+  display: none !important;
+}
+
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+
+.goog-te-gadget img {
+  display: none !important;
+}
+
+#google_translate_element {
+  display: none;
+}
+
+.fade-up {
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
+}
+
+.fade-up.show {
+  opacity: 1;
+}
+
+.swal2-small {
+  width: 500px !important;
+  height: 7rem !important;
+}
+
+.custom-progress-bar {
+  background-color: #4bb74c !important;
+}
+
+.swiper-container {
+  position: relative;
+}
+
+.swiper-pagination-bullet {
+  width: 8px !important;
+  height: 8px !important;
+  background-color: white !important;
+  border: 1.5px solid #c1ae94 !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #c1ae94 !important;
+}
+
+@keyframes fadeInFromLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInFromRight {
+  0% {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.custom-arrow-button.left {
+  animation: fadeInFromLeft 1s ease forwards;
+  transition: transform 0.3s ease-in-out;
+}
+
+.custom-arrow-button.right {
+  animation: fadeInFromRight 1s ease forwards;
+  transition: transform 0.3s ease-in-out;
+}
+
+@keyframes cartDivEnter {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+
+.cart-div-enter {
+  animation: cartDivEnter 0.4s ease-in-out;
+}
+
+.inputPassword {
+  background-color: transparent !important;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.custom-button-primary {
+  font-family: "Domaine";
+  src: url("../../../public/fonts/domaine-display-regular.woff2");
+  text-transform: uppercase;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+.button-container {
+  position: relative;
+  height: 50px;
+}
+
+.transition-button {
+  position: absolute;
+  transition:
+    opacity 0.3s,
+    visibility 0.3s;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.transition-button.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+@keyframes symphonyAnimation {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.letter-animation {
+  /* display: inline-block; */
+  opacity: 0;
+  animation: letterAppear 0.1s forwards;
+}
+
+.letter-animation:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.letter-animation:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.letter-animation:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.letter-animation:nth-child(4) {
+  animation-delay: 0.4s;
+}
+.letter-animation:nth-child(5) {
+  animation-delay: 0.5s;
+}
+.letter-animation:nth-child(6) {
+  animation-delay: 0.6s;
+}
+.letter-animation:nth-child(7) {
+  animation-delay: 0.7s;
+}
+.letter-animation:nth-child(8) {
+  animation-delay: 0.8s;
+}
+.letter-animation:nth-child(9) {
+  animation-delay: 0.9s;
+}
+.letter-animation:nth-child(10) {
+  animation-delay: 1s;
+}
+.letter-animation:nth-child(11) {
+  animation-delay: 1.1s;
+}
+.letter-animation:nth-child(12) {
+  animation-delay: 1.2s;
+}
+.letter-animation:nth-child(13) {
+  animation-delay: 1.3s;
+}
+.letter-animation:nth-child(14) {
+  animation-delay: 1.4s;
+}
+.letter-animation:nth-child(15) {
+  animation-delay: 1.5s;
+}
+.letter-animation:nth-child(16) {
+  animation-delay: 1.6s;
+}
+.letter-animation:nth-child(17) {
+  animation-delay: 1.7s;
+}
+.letter-animation:nth-child(18) {
+  animation-delay: 1.8s;
+}
+.letter-animation:nth-child(19) {
+  animation-delay: 1.9s;
+}
+.letter-animation:nth-child(20) {
+  animation-delay: 2s;
+}
+
+@keyframes letterAppear {
+  0% {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes echoAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-symphony {
+  display: flex;
+  justify-content: center;
+}
+
+.animate-echo {
+  animation: echoAppear 2s forwards;
+}
+
+/* Custom CSS for truncating lines */
+.truncate-line-clamp-1 {
+  @apply line-clamp-1;
+}
+
+.truncate-line-clamp-2 {
+  @apply line-clamp-2;
+}
+
+/* Add the necessary plugin for line clamping if not already included */
+@layer utilities {
+  .line-clamp-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.custom-scroll::-webkit-scrollbar {
+  display: none;
+}
+.custom-scroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.line-clamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  -webkit-line-clamp: 2;
+}
+
+.nav {
+  position: fixed;
+  top: 0;
+  transition: top 1s ease-in-out;
+}
+
+.-top-40 {
+  top: -70px;
+}
+
+/* .bg-white {
+  background-color: !important;
+} */
+
+.navbar.active {
+  background-color: white;
+  transition: top 1s ease-in-out;
+}
+
+/* Ensure images can be resized and aligned */
+.ql-editor img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: auto;
+}
+
+.ql-editor img.ql-align-left {
+  float: left;
+  margin-right: 10px;
+}
+
+.ql-editor img.ql-align-center {
+  display: block;
+  margin: 0 auto;
+}
+
+.ql-editor img.ql-align-right {
+  float: right;
+  margin-left: 10px;
+}
+
+.ql-editor img.ql-align-justify {
+  display: block;
+  margin: 0 auto;
+}
+
+.ql-editor img.ql-align-justify {
+  display: block;
+  margin: 0 auto;
+}
+
+.ql-editor img.ql-align-justify {
+  display: block;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin 1s linear infinite;
+}
+
+.ql-align-center {
+  text-align: center !important;
+}
+
+.ql-align-left {
+  text-align: left !important;
+}
+
+.ql-align-right {
+  text-align: right !important;
+}
+
+.blog-content img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
+  height: auto;
+}
+
+.custom-date-picker input {
+  border: none !important;
+  outline: none;
+  height: 2.5rem;
+}
+
+.custom-date-picker {
+  height: 2.5rem;
+  /* border: 1px solid; */
+  /* border-color: #343434; */
+  border-radius: 8px;
+  outline: none;
+}
+
+a:focus {
+  outline: none; /* Menghapus outline biru */
+  text-decoration: none; /* Menghapus underline */
+}
+
+a:focus-visible {
+  outline: none; /* Menghapus focus visible */
+}
+
+.hide-scroll::-webkit-scrollbar {
+  display: none; /* Untuk Chrome, Safari */
+}
+
+.hide-scroll {
+  scrollbar-width: none; /* Untuk Firefox */
+  -ms-overflow-style: none; /* Untuk Edge */
+}
