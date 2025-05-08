@@ -52,7 +52,7 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
 }) => {
   const generateOrderDetailsPDF = (
     transactionDetails: Transaction[],
-    orders: Order,
+    orders: Order
   ) => {
     const doc = new jsPDF();
 
@@ -79,7 +79,7 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
       pageWidth - logoWidth + 40,
       pageHeight - logoHeight + 40,
       logoWidth,
-      logoHeight,
+      logoHeight
     );
 
     doc.setFontSize(12);
@@ -88,13 +88,13 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
     const orderDate = moment(
       transactionDetails
         ? transactionDetails[0].createdAt
-        : "Date not available",
+        : "Date not available"
     ).format("DD MMMM YYYY, HH:mm");
 
     const labelWidth = Math.max(
       doc.getTextWidth("Order Date:"),
       doc.getTextWidth("Order ID:"),
-      doc.getTextWidth("Status:"),
+      doc.getTextWidth("Status:")
     );
 
     const startX = 17;
@@ -171,7 +171,7 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
     doc.text(
       `: Rp ${orders?.Shipment.price.toLocaleString("id-ID") || 0}`,
       valueTabX,
-      108,
+      108
     );
 
     const products = transactionDetails.map((item) => ({
@@ -280,7 +280,7 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
                       <span className="font-josefins text-[16px] font-semibold text-[#231F20]">
                         {moment(
                           transactionDetails[0].createdAt ||
-                            "Date not available",
+                            "Date not available"
                         ).format("DD MMMM YYYY, HH:mm")}
                       </span>
                     </div>
@@ -348,7 +348,7 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
                           <div className="flex flex-col pb-4">
                             <span className="text-sm font-semibold text-[#231F20]">
                               {moment(
-                                item.updated_at || "Date not available",
+                                item.updated_at || "Date not available"
                               ).format("DD MMMM YYYY, HH:mm")}
                             </span>
                             <span className="text-xs text-gray-500">
@@ -444,7 +444,7 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
                       <span className="text-[16px] font-bold">
                         <FormatRupiah
                           price={
-                            transactionDetails[0].products!.Discount
+                            transactionDetails[0].products!.Discount.length > 0
                               ? transactionDetails[0].products!.Discount[0]
                                   .productPrice *
                                 (transactionDetails[0].quantity || 0)
@@ -555,7 +555,7 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({
                   </span>
                   <FormatRupiah
                     price={
-                      transactionDetails[0].products!.Discount
+                      transactionDetails[0].products!.Discount.length > 0
                         ? transactionDetails[0].products!.Discount[0]
                             .productPrice *
                           (transactionDetails[0].quantity || 0)

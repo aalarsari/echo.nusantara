@@ -36,11 +36,11 @@ export default function Checkout() {
   const [profileData, setProfileData] = useState<User | undefined>(undefined);
   const [cartHome, setCartHome] = useState<CartItem | undefined>(undefined);
   const [selectedCourier, setSelectedCourier] = useState<string | undefined>(
-    undefined,
+    undefined
   );
   const [courierServices, setCourierServices] = useState<string[]>([]);
   const [selectedService, setSelectedService] = useState<string | undefined>(
-    undefined,
+    undefined
   );
   const [selectedServiceCode, setSelectedServiceCode] = useState<
     string | undefined
@@ -213,11 +213,11 @@ export default function Checkout() {
 
     const selectedCourierData =
       cartHome?.shipmentPrice?.filter(
-        (courier) => courier.courier_code === courierName,
+        (courier) => courier.courier_code === courierName
       ) || [];
 
     const serviceCodes = selectedCourierData.map(
-      (courier) => courier.courier_service_name,
+      (courier) => courier.courier_service_name
     );
     setCourierServices(serviceCodes);
     setShipmentCost(0);
@@ -230,7 +230,7 @@ export default function Checkout() {
     const selectedServiceData = cartHome?.shipmentPrice?.find(
       (courier) =>
         courier.courier_code === selectedCourier &&
-        courier.courier_service_name === service,
+        courier.courier_service_name === service
     );
 
     if (selectedServiceData) {
@@ -241,7 +241,7 @@ export default function Checkout() {
 
   const uniqueCourierNames = cartHome?.shipmentPrice
     ? Array.from(
-        new Set(cartHome.shipmentPrice.map((courier) => courier.courier_code)),
+        new Set(cartHome.shipmentPrice.map((courier) => courier.courier_code))
       )
     : [];
 
@@ -291,7 +291,7 @@ export default function Checkout() {
       console.log("Invalid profile data:", profileData);
       showNotification(
         "Lengkapi Alamat, Kode Pos, dan Kota terlebih dahulu.",
-        "error",
+        "error"
       );
       return;
     }
