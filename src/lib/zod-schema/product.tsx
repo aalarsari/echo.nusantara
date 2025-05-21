@@ -5,8 +5,7 @@ const MAX_FILE_SIZE = 5000000;
 function checkFileType(file: File) {
   if (file?.name) {
     const fileType = file.name.split(".").pop();
-    if (fileType === "jpg" || fileType === "jpeg" || fileType === "png")
-      return true;
+    if (fileType === "jpg" || fileType === "jpeg" || fileType === "png") return true;
   }
   return false;
 }
@@ -46,62 +45,51 @@ export const ProductValidation = zfd.formData(
       z.number({
         required_error: "price is required",
         invalid_type_error: "price must number",
-      }),
+      })
     ),
     weight: zfd.numeric(
       z.number({
         required_error: "Weight is required",
         invalid_type_error: "Weight must number",
-      }),
+      })
     ),
     stock: zfd.numeric(
       z.number({
         required_error: "Stock is required",
         invalid_type_error: "Stock must number",
-      }),
+      })
     ),
     maxOrder: zfd.numeric(
       z.number({
         required_error: "MaxOrder is required",
         invalid_type_error: "MaxOrder must number",
-      }),
+      })
     ),
     categoryId: zfd.numeric(
       z.number({
         required_error: "Category is required",
         invalid_type_error: "CategoryId must number",
-      }),
+      })
     ),
     size: zfd.text(z.string().optional().nullable()),
     recommendation: z.boolean().optional().nullable(),
+    isBestSeller: z.boolean().nullable().default(false),
     image1: z
       .any()
       .refine((file) => file !== null && file !== undefined, "Image minimal 1")
       .refine((file) => {
-        return (
-          file && typeof file.size === "number" && file.size <= MAX_FILE_SIZE
-        );
+        return file && typeof file.size === "number" && file.size <= MAX_FILE_SIZE;
       }, "Max size is 5MB.")
-      .refine(
-        (file) => file && checkFileType(file),
-        "Only .jpeg, .jpg, png formats are supported.",
-      ),
+      .refine((file) => file && checkFileType(file), "Only .jpeg, .jpg, png formats are supported."),
     image2: z.optional(
       z
         .any()
-        .refine(
-          (file: File) => file !== null && file !== undefined,
-          "Image2 must image",
-        )
+        .refine((file: File) => file !== null && file !== undefined, "Image2 must image")
         .refine((file) => {
           if (file === "undefined") {
             return true;
           } else {
-            return (
-              file &&
-              typeof file.size === "number" &&
-              file.size <= MAX_FILE_SIZE
-            );
+            return file && typeof file.size === "number" && file.size <= MAX_FILE_SIZE;
           }
         }, "Max size is 5MB.")
         .refine((file) => {
@@ -110,25 +98,18 @@ export const ProductValidation = zfd.formData(
           } else {
             return file && checkFileType(file);
           }
-        }, "Only .jpeg, .jpg, png formats are supported."),
+        }, "Only .jpeg, .jpg, png formats are supported.")
     ),
 
     image3: z.optional(
       z
         .any()
-        .refine(
-          (file: File) => file !== null && file !== undefined,
-          "Image3 must image",
-        )
+        .refine((file: File) => file !== null && file !== undefined, "Image3 must image")
         .refine((file) => {
           if (file === "undefined") {
             return true;
           } else {
-            return (
-              file &&
-              typeof file.size === "number" &&
-              file.size <= MAX_FILE_SIZE
-            );
+            return file && typeof file.size === "number" && file.size <= MAX_FILE_SIZE;
           }
         }, "Max size is 5MB.")
         .refine((file) => {
@@ -137,7 +118,7 @@ export const ProductValidation = zfd.formData(
           } else {
             return file && checkFileType(file);
           }
-        }, "Only .jpeg, .jpg, png formats are supported."),
+        }, "Only .jpeg, .jpg, png formats are supported.")
     ),
     image4: z.optional(
       z
@@ -146,41 +127,27 @@ export const ProductValidation = zfd.formData(
           if (file === "undefined") {
             return true;
           } else {
-            return (
-              file &&
-              typeof file.size === "number" &&
-              file.size <= MAX_FILE_SIZE
-            );
+            return file && typeof file.size === "number" && file.size <= MAX_FILE_SIZE;
           }
         }, "Max size is 5MB.")
-        .refine(
-          (file: File) => file !== null && file !== undefined,
-          "Image4 must image",
-        )
+        .refine((file: File) => file !== null && file !== undefined, "Image4 must image")
         .refine((file) => {
           if (file === "undefined") {
             return true;
           } else {
             return file && checkFileType(file);
           }
-        }, "Only .jpeg, .jpg, png formats are supported."),
+        }, "Only .jpeg, .jpg, png formats are supported.")
     ),
     image5: z.optional(
       z
         .any()
-        .refine(
-          (file: File) => file !== null && file !== undefined,
-          "Image5 must image",
-        )
+        .refine((file: File) => file !== null && file !== undefined, "Image5 must image")
         .refine((file) => {
           if (file === "undefined") {
             return true;
           } else {
-            return (
-              file &&
-              typeof file.size === "number" &&
-              file.size <= MAX_FILE_SIZE
-            );
+            return file && typeof file.size === "number" && file.size <= MAX_FILE_SIZE;
           }
         }, "Max size is 5MB.")
         .refine((file) => {
@@ -189,9 +156,9 @@ export const ProductValidation = zfd.formData(
           } else {
             return file && checkFileType(file);
           }
-        }, "Only .jpeg, .jpg, png formats are supported."),
+        }, "Only .jpeg, .jpg, png formats are supported.")
     ),
-  }),
+  })
 );
 
 export const ProductUpadateValidation = zfd.formData(
@@ -199,7 +166,7 @@ export const ProductUpadateValidation = zfd.formData(
     name: z.string().optional().nullable(),
     descriptions: z.string().optional().nullable(),
     subDescriptions: z.string().optional().nullable(),
-
+    isBestSeller: z.boolean().optional().nullable(),
     recommendation: z.boolean().optional().nullable(),
     priceIDR: zfd.numeric(
       z
@@ -207,7 +174,7 @@ export const ProductUpadateValidation = zfd.formData(
           invalid_type_error: "price must number",
         })
         .optional()
-        .nullable(),
+        .nullable()
     ),
     weight: zfd.numeric(
       z
@@ -215,7 +182,7 @@ export const ProductUpadateValidation = zfd.formData(
           invalid_type_error: "Weight must number",
         })
         .optional()
-        .nullable(),
+        .nullable()
     ),
     stock: zfd.numeric(
       z
@@ -223,7 +190,7 @@ export const ProductUpadateValidation = zfd.formData(
           invalid_type_error: "Stock must number",
         })
         .optional()
-        .nullable(),
+        .nullable()
     ),
     maxOrder: zfd.numeric(
       z
@@ -231,7 +198,7 @@ export const ProductUpadateValidation = zfd.formData(
           invalid_type_error: "MaxOrder must number",
         })
         .optional()
-        .nullable(),
+        .nullable()
     ),
     categoryId: zfd.numeric(
       z
@@ -239,7 +206,7 @@ export const ProductUpadateValidation = zfd.formData(
           invalid_type_error: "CategoryId must number",
         })
         .optional()
-        .nullable(),
+        .nullable()
     ),
     size: zfd.text(z.string().optional().nullable()),
     image1: z.optional(z.any()),
@@ -247,5 +214,5 @@ export const ProductUpadateValidation = zfd.formData(
     image3: z.optional(z.any()),
     image4: z.optional(z.any()),
     image5: z.optional(z.any()),
-  }),
+  })
 );
