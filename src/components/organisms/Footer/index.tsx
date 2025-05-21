@@ -43,14 +43,14 @@ export const Footer = () => {
 
   return (
     <>
-      <div className="relative h-full w-full flex-col bg-white lg:h-[26rem]">
-        <div className="relative h-full w-full overflow-hidden bg-white lg:h-[24rem]">
+      <div className="relative h-full w-full flex-col bg-[#000000] lg:h-[26rem]">
+        <div className="relative h-full w-full overflow-hidden bg-[#000000] lg:h-[24rem]">
           <div className="flex h-full w-full flex-col items-start justify-start gap-10 p-4 lg:flex-row lg:px-14 lg:py-10">
             <div className="relative flex h-full w-full flex-col lg:w-[50%]">
               <div className="flex h-full w-full flex-col items-center justify-center gap-4 lg:justify-start">
                 <div className="flex items-center justify-center">
                   <Image
-                    src={Assets.LogoEchoBlack}
+                    src={Assets.LogoEcho}
                     alt="Logo Echo"
                     style={{ width: "500px", height: "auto" }}
                     loading="lazy"
@@ -58,21 +58,21 @@ export const Footer = () => {
                 </div>
                 <div className="flex w-full flex-row items-center justify-center gap-4">
                   <div className="flex flex-col items-center gap-4">
-                    <h2 className="text-sm font-semibold text-black">
+                    <h2 className="text-sm font-semibold text-white">
                       E-commerce
                     </h2>
                     {socialMediaLinks.filter(
                       (link) =>
                         ["Tokopedia", "Shopee", "Lazada"].includes(link.name) &&
-                        link.isActive,
+                        link.isActive
                     ).length > 0 && (
                       <div className="flex flex-row gap-2">
                         {socialMediaLinks
                           .filter(
                             (link) =>
                               ["Tokopedia", "Shopee", "Lazada"].includes(
-                                link.name,
-                              ) && link.isActive,
+                                link.name
+                              ) && link.isActive
                           )
                           .map((link) => (
                             <a
@@ -97,20 +97,20 @@ export const Footer = () => {
                   </div>
 
                   <div className="flex flex-col items-center gap-4">
-                    <h2 className="text-sm font-semibold text-black">
+                    <h2 className="text-sm font-semibold text-white">
                       Social Media
                     </h2>
                     {socialMediaLinks.filter(
                       (link) =>
                         ["Tiktok", "Instagram"].includes(link.name) &&
-                        link.isActive,
+                        link.isActive
                     ).length > 0 && (
                       <div className="flex flex-row gap-2">
                         {socialMediaLinks
                           .filter(
                             (link) =>
                               ["Tiktok", "Instagram"].includes(link.name) &&
-                              link.isActive,
+                              link.isActive
                           )
                           .map((link) => (
                             <a
@@ -138,15 +138,15 @@ export const Footer = () => {
             </div>
             <div className="flex h-full w-full flex-col justify-between lg:w-[50%]">
               <div className="flex flex-col gap-2">
-                <h2 className="text-lg font-bold text-black">Location</h2>
+                <h2 className="text-lg font-bold text-white">Location</h2>
                 {locations.map((location, index) => (
                   <div key={index} className="flex w-full flex-col gap-2">
                     <div>
-                      <h2 className="text-sm font-semibold text-black">
+                      <h2 className="text-sm font-semibold text-white">
                         {location.title}
                       </h2>
                     </div>
-                    <span className="text-sm text-[#252525]">
+                    <span className="text-sm text-white">
                       {location.address}
                     </span>
                   </div>
@@ -157,23 +157,23 @@ export const Footer = () => {
               <div className="flex h-full w-full flex-col lg:w-[50%]">
                 <div className="flex flex-col gap-2">
                   <div className="">
-                    <h2 className="text-lg font-bold text-black">Find Us</h2>
+                    <h2 className="text-lg font-bold text-white">Find Us</h2>
                   </div>
                   <div className="flex w-[60%] flex-col gap-2">
                     <div>
-                      <h2 className="text-sm font-semibold text-black">
+                      <h2 className="text-sm font-semibold text-white">
                         Email
                       </h2>
                     </div>
                     <Link href="mailto:aal@arsari.co.id">
-                      <span className="text-sm text-[#252525]">
+                      <span className="text-sm text-white">
                         aal@arsari.co.id
                       </span>
                     </Link>
                   </div>
                   <div className="flex w-[60%] flex-col gap-2">
                     <div>
-                      <h2 className="text-sm font-semibold text-black">
+                      <h2 className="text-sm font-semibold text-white">
                         Phone
                       </h2>
                     </div>
@@ -183,7 +183,7 @@ export const Footer = () => {
                         "https://api.whatsapp.com/send/?phone=6282137476157&text=(Website)%20Halo+saya+ingin+bertanya+tentang+produk%20Echo%20Nusantara&type=phone_number&app_absent=0"
                       }
                     >
-                      <span className="text-sm text-[#252525]">
+                      <span className="text-sm text-white">
                         +62 821 3747 6157
                       </span>
                     </Link>
@@ -195,18 +195,18 @@ export const Footer = () => {
                   <div className="flex w-full  flex-col lg:w-[50%]">
                     <div className="flex flex-col gap-2">
                       <div className="">
-                        <h2 className="text-lg font-bold text-black">
+                        <h2 className="text-lg font-bold text-white">
                           ECHO Care
                         </h2>
                       </div>
                       <div className="flex w-full flex-col lg:w-[60%]">
                         <Link href="/faq">
-                          <span className="text-sm text-[#252525] transition-all duration-300 ease-in-out hover:text-[#835a41]">
+                          <span className="text-sm text-white transition-all duration-300 ease-in-out hover:text-[#835a41]">
                             FAQ
                           </span>
                         </Link>
                         <Link href="/">
-                          <span className="text-sm text-[#252525] transition-all duration-300 ease-in-out hover:text-[#000000]">
+                          <span className="text-sm text-white transition-all duration-300 ease-in-out hover:text-[#000000]">
                             Privacy Policy
                           </span>
                         </Link>
@@ -215,7 +215,7 @@ export const Footer = () => {
                     <div className="mt-2 flex flex-col gap-2">
                       <div className="mt-2 flex flex-col gap-2">
                         <div>
-                          <h2 className="text-sm font-semibold text-black">
+                          <h2 className="text-sm font-semibold text-white">
                             Certificate
                           </h2>
                         </div>
@@ -257,16 +257,8 @@ export const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="flex h-[20] w-full flex-col items-center justify-between bg-[#85776E] px-10 py-4 lg:flex-row">
-          <div>
-            <Image
-              src={Assets.LogoEcho}
-              alt={"Logo"}
-              width={100}
-              height={100}
-            />
-          </div>
-          <span className="text-center font-domaine text-sm text-white lg:text-left">
+        <div className="flex h-[20] w-full flex-col items-center justify-center bg-[#D5BD9F] px-10 py-4 lg:flex-row">
+          <span className="text-center font-domaine text-sm text-black lg:text-left">
             Copyright © 2025 Alam Anugrah Lestari Co., Ltd. All Rights
             Reserved.
           </span>

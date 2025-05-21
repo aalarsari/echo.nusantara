@@ -6,7 +6,7 @@ export { default as LogoOr } from "./logo-or.svg";
 export { default as LogoGoogle } from "./logo-google.svg";
 export { default as LogoOr1 } from "./logo-or1.svg";
 export { default as Mantap } from "./mantap.jpeg";
-export { default as Subscribe } from "./photo-subscribe.png";
+export { default as Subscribe } from "./image-subscrption.svg";
 export { default as Forest } from "./photo-forest.png";
 export { default as CoverBenefits } from "./background-benefit.webp";
 export { default as LineTopRight } from "./line-top-right.svg";
@@ -137,3 +137,16 @@ export { default as NotFound } from "./icon-found.svg";
 // #Gif
 export { default as GifBird } from "./gif-bird.gif";
 export { default as GifBird1 } from "./gif-bird1.gif";
+
+export { default as AboutUs } from "./image-aboutUs.jpg";
+export { default as Pure } from "./image-pure.svg";
+
+export { default as Promise1 } from "./image-promise-1.svg";
+export { default as Promise2 } from "./image-promise-2.svg";
+export { default as Promise3 } from "./image-promise-3.svg";
+
+export { default as Home1 } from "./image-home-1.svg";
+export { default as Choose1 } from "./image-chose-1.svg";
+export { default as Choose2 } from "./image-chose-2.svg";
+export { default as Choose3 } from "./image-chose-3.svg";
+export { default as Choose4 } from "./image-chose-4.svg";

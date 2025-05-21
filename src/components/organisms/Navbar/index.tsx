@@ -30,8 +30,7 @@ import {
   GetProductLocaly,
   UpdateBuyQuantity,
 } from "@/lib/cookies/cart";
-import { useDebouncedCallback } from "use-debounce";
-import { GetStock } from "@/controller/noAuth/stock";
+
 import { WishlistItem } from "@/types/wishlist/wishlist";
 import { GetListWishlist } from "@/controller/user/wishlist";
 import { GetWishlistCookies } from "@/lib/cookies/wishlist";
@@ -49,7 +48,7 @@ export const Navbar: React.FC = () => {
   const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
   const pathname = usePathname();
   const [previousCartState, setPreviousCartState] = useState<CartItem | null>(
-    null,
+    null
   );
   const [stock, setStock] = useState<number | undefined>(undefined);
   const [quantity, SetQuantity] = useState<string>("0");
@@ -67,7 +66,7 @@ export const Navbar: React.FC = () => {
   const showNotification = (
     message: string,
     type: "success" | "error",
-    duration: number = 3000,
+    duration: number = 3000
   ) => {
     setNotification({ message, type, visible: true });
     setTimeout(() => {
@@ -158,7 +157,7 @@ export const Navbar: React.FC = () => {
 
   var cartCount: number = useSelector((state: RootState) => state.pin.cart!);
   var wishlistCount: number = useSelector(
-    (state: RootState) => state.pin.wishlist!,
+    (state: RootState) => state.pin.wishlist!
   );
 
   useEffect(() => {
@@ -210,7 +209,7 @@ export const Navbar: React.FC = () => {
 
   const handleDecreaseQuantity = async (
     cartId: number | undefined,
-    productId: number | undefined,
+    productId: number | undefined
   ) => {
     if (!cartId || !productId) return;
 
@@ -245,7 +244,7 @@ export const Navbar: React.FC = () => {
 
   const handleIncreaseQuantity = async (
     cartId: number | undefined,
-    productId: number | undefined,
+    productId: number | undefined
   ) => {
     if (!cartId || !productId) return;
 
@@ -277,7 +276,7 @@ export const Navbar: React.FC = () => {
   const handleQuantityChange = async (
     e: React.ChangeEvent<HTMLInputElement>,
     cartId: number | undefined,
-    productId: number | undefined,
+    productId: number | undefined
   ) => {
     const newValue = parseInt(e.target.value);
 
@@ -313,7 +312,7 @@ export const Navbar: React.FC = () => {
 
   const handleDeleteCartItem = async (
     cartId: number | undefined,
-    productId: number | undefined,
+    productId: number | undefined
   ) => {
     if (!cartId || !productId) return;
 
@@ -325,7 +324,7 @@ export const Navbar: React.FC = () => {
       }
 
       const updatedCart = (cartHome?.cart || []).filter(
-        (item) => item.id !== cartId,
+        (item) => item.id !== cartId
       );
 
       const newTotal = updatedCart?.reduce((acc, curr) => {
@@ -507,7 +506,7 @@ export const Navbar: React.FC = () => {
                                 onClick={() =>
                                   handleDecreaseQuantity(
                                     item.id,
-                                    item.product!.id!,
+                                    item.product!.id!
                                   )
                                 }
                                 disabled={item.buyQuantity! <= 0}
@@ -523,7 +522,7 @@ export const Navbar: React.FC = () => {
                                   handleQuantityChange(
                                     e,
                                     item.id,
-                                    item.product?.id,
+                                    item.product?.id
                                   )
                                 }
                               />
@@ -531,7 +530,7 @@ export const Navbar: React.FC = () => {
                                 onClick={() =>
                                   handleIncreaseQuantity(
                                     item.id,
-                                    item.product!.id,
+                                    item.product!.id
                                   )
                                 }
                                 className="h-full w-[30%] cursor-pointer"

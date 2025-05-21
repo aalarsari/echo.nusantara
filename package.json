@@ -42,6 +42,7 @@
     "express": "^4.19.2",
     "flowbite": "^2.3.0",
     "flowbite-react": "^0.10.1",
+    "framer-motion": "^12.11.4",
     "googleapis": "^144.0.0",
     "html2pdf.js": "^0.10.2",
     "hybrid-crypto-js": "^0.2.4",

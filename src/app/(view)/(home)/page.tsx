@@ -8,11 +8,8 @@ import { useSession } from "next-auth/react";
 import { Dialog } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import Carousel from "react-multi-carousel";
-import {
-  CustomArrowLeft,
-  CustomArrowRight,
-  CustomDot,
-} from "@/components/atoms/ButtomCustom";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface Feature {
   icon: StaticImageData;
@@ -185,24 +182,6 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const { data: session } = useSession();
 
-  const handleMerahMouseEnter = () => {
-    setIsMerahHovered(true);
-  };
-
-  const handleMerahMouseLeave = () => {
-    setIsMerahHovered(false);
-  };
-
-  const openModal = (content: ModalContent) => {
-    setModalContent(content);
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setModalContent(null);
-  };
-
   useEffect(() => {
     const handleScroll = () => setScrollPosition(window.scrollY);
     window.addEventListener("scroll", handleScroll);
@@ -233,12 +212,6 @@ export default function Home() {
       {children}
     </h2>
   );
-
-  const translateX_E = -scrollPosition / 1.5;
-  const translateX_C = -scrollPosition / 3;
-  const translateX_H = scrollPosition / 3;
-  const translateX_O = scrollPosition / 1.5;
-  const translateX_Image = scrollPosition / 1.5;
 
   const features: Feature[] = [
     {
@@ -273,16 +246,13 @@ export default function Home() {
     },
   ];
 
-  const symphonyLetters = ["S", "Y", "M", "P", "H", "O", "N", "Y"];
-  const ofLetters = ["OF"];
-  const natureLetters = ["N", "A", "T", "U", "R", "E"];
+  const [step, setStep] = useState(0);
+  const totalSteps = 4;
 
-  const letterSizes = {
-    H: { width: 50, height: 50 },
-    O: { width: 50, height: 50 },
-    E: { width: 50, height: 50 },
-    default: { width: 64, height: 64 },
-  };
+  const nextSlide = () => setStep((prev) => (prev + 1) % totalSteps);
+  const prevSlide = () =>
+    setStep((prev) => (prev - 1 + totalSteps) % totalSteps);
+  const goToSlide = (index: number) => setStep(index);
 
   return (
     <>
@@ -291,123 +261,115 @@ export default function Home() {
         <NavHome />
         {/* Section #1 */}
         <div className="relative min-h-screen overflow-hidden">
-          <div
-            className={`layer-bg -translate-z-[55px] duration-500"} scale-[1.06] bg-layer-10 bg-no-repeat transition-opacity`}
-          >
-            {showSymphony ? (
-              <div className="absolute inset-0 z-10 flex items-center justify-center px-10 lg:px-20">
-                <Image
-                  src={Assets.Symphony}
-                  alt="Symphony"
-                  width={1000}
-                  height={1000}
-                />
-              </div>
-            ) : (
-              <div className="animate-echo relative flex flex-col items-center justify-center gap-8 px-[4rem] lg:gap-4">
-                <div className="relative flex flex-row gap-2">
-                  <Letter translateX={translateX_E}>
-                    <Image src={Assets.E} alt="E" width={120} height={120} />
-                  </Letter>
-                  <Letter translateX={translateX_C}>
-                    <Image src={Assets.C} alt="C" width={120} height={120} />
-                  </Letter>
-                  <Letter translateX={translateX_H}>
-                    <Image src={Assets.H} alt="H" width={120} height={120} />
-                  </Letter>
-                  <Letter translateX={translateX_O}>
-                    <Image src={Assets.O} alt="O" width={120} height={120} />
-                  </Letter>
-                  <div
-                    className="absolute -right-10 lg:-right-10 lg:top-0"
-                    style={{
-                      transform: `translateX(${translateX_Image}px)`,
-                    }}
-                  >
-                    <Image
-                      src={Assets.IconMini}
-                      alt="Logo Mini"
-                      width={36}
-                      height={36}
-                    />
-                  </div>
-                </div>
-                <div
-                  style={{ opacity: opacityNusantara }}
-                  className="absolute -bottom-12 h-[1.5rem] w-full lg:-bottom-16"
-                >
-                  <Image
-                    src={Assets.Nusantara}
-                    alt="Echo Nusantara"
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-              </div>
-            )}
+          <div className="absolute top-0 left-0 z-0 h-full w-full">
+            <Image
+              src={Assets.Home1}
+              alt="Home"
+              style={{ objectFit: "cover", width: "100%", height: "100%" }}
+            />
           </div>
         </div>
-        <div className="flex h-[25vh] w-full items-center justify-center bg-white">
-          <h2 className="text-center font-domaine text-2xl font-medium tracking-[0.5rem] text-black">
-            PREMIUM QUALITY BIRD{"'"}S NEST
-          </h2>
-        </div>
-        <div
-          className="relative h-[40vh] w-full lg:h-[75vh]"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-        >
-          <Carousel
-            autoPlay={true}
-            autoPlaySpeed={1000}
-            infinite={true}
-            draggable
-            focusOnSelect
-            arrows={isHovered}
-            responsive={{
-              desktop: {
-                breakpoint: { max: 3000, min: 1024 },
-                items: 1,
-                partialVisibilityGutter: 40,
-              },
-              tablet: {
-                breakpoint: { max: 1024, min: 464 },
-                items: 1,
-              },
-              mobile: {
-                breakpoint: { max: 464, min: 0 },
-                items: 1,
-              },
-            }}
-            showDots
-            itemClass="w-full lg:w-[100vh]"
-            className="h-[30vh] lg:h-[80vh]"
-            customDot={<CustomDot onClick={() => null} active />}
-            customLeftArrow={
-              <CustomArrowLeft onClick={() => null} isHovered={isHovered} />
-            }
-            customRightArrow={
-              <CustomArrowRight onClick={() => null} isHovered={isHovered} />
-            }
-          >
-            {[
-              "Landing1",
-              "Landing2",
-              "Landing3",
-              "Landing4",
-              "Landing5",
-              "Landing6",
-            ].map((image, index) => (
-              <Image
-                key={index}
-                src={Assets[image as keyof typeof Assets]}
-                alt={image}
-              />
-            ))}
-          </Carousel>
-        </div>
         {/* Video Section */}
-        <div className="flex h-[30vh] w-full items-center justify-center rounded-[4px] md:h-[120vh] md:p-[6rem] lg:h-[120vh] lg:p-[12rem]">
+        <div className="flex h-screen w-full justify-center items-center flex-col gap-14">
+          <h1 className="text-[52px] font-thin text-black font-domaine text-left">
+            Why Choose Our Product
+          </h1>
+          <div className="group relative mx-auto flex h-[70vh] w-full max-w-6xl flex-col items-center overflow-hidden">
+            {/* Container utama */}
+            <div className="relative flex h-[70vh] w-full">
+              {/* Bagian kiri (1 → 3 → 5) */}
+              <div className="relative h-full w-1/2 overflow-hidden">
+                {[
+                  "Sourced directly from nature, our offerings are purely organic. They exemplify nature's genuine authenticity. Only filtered water and organic rock sugar are used for some bottled products.",
+                  "We prioritize sustainability and respect in our operations. We harvest only from empty nests and in a way that does not disturb nesting birds in the same area.",
+                  "We stand against the use of any chemicals in our products. Our products are free of nitrates, heavy metals, chemical bleach and colouring agent, preservatives and pesticides.",
+                  "We stand against the use of any chemicals in our products. Our products are free of nitrates, heavy metals, chemical bleach and colouring agent, preservatives and pesticides.",
+                ].map((num, index) => (
+                  <motion.div
+                    key={num}
+                    initial={{ y: index * 100 + "%" }}
+                    animate={{ y: (index - step) * 100 + "%" }}
+                    transition={{ duration: 0.5 }}
+                    className="absolute left-0 flex h-[70vh] w-full items-center justify-center text-[16px] text-center font-thin text-white"
+                    style={{
+                      backgroundColor: [
+                        "#D5BD9F",
+                        "#7D8699",
+                        "#7D716A",
+                        "#CDB698",
+                      ][index],
+                    }}
+                  >
+                    <div className="w-[60%]">{num}</div>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Bagian kanan (2 → 4 → 6) dengan gambar */}
+              <div className="relative h-full w-1/2 overflow-hidden">
+                {[
+                  Assets.Choose1,
+                  Assets.Choose2,
+                  Assets.Choose3,
+                  Assets.Choose4,
+                ].map((img, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ y: -index * 100 + "%" }}
+                    animate={{ y: (step - index) * 100 + "%" }}
+                    transition={{ duration: 0.5 }}
+                    className="absolute left-0 h-[70vh] w-full"
+                  >
+                    <Image
+                      src={img}
+                      alt={`Image ${index + 1}`}
+                      style={{
+                        objectFit: "cover",
+                        width: "100%",
+                        height: "100%",
+                      }}
+                    />
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            {/* Tombol Navigasi */}
+            <button
+              onClick={prevSlide}
+              className="absolute left-4 top-1/2 hidden -translate-y-1/2 items-center justify-center rounded-full bg-gray-800 p-2 text-white opacity-75 hover:opacity-100 group-hover:flex"
+            >
+              <ChevronLeft size={24} />
+            </button>
+            <button
+              onClick={nextSlide}
+              className="absolute right-4 top-1/2 hidden -translate-y-1/2 items-center justify-center rounded-full bg-gray-800 p-2 text-white opacity-75 hover:opacity-100 group-hover:flex"
+            >
+              <ChevronRight size={24} />
+            </button>
+
+            {/* Indikator Dots */}
+            <div className="absolute bottom-4 flex gap-2">
+              {Array.from({ length: totalSteps }).map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => goToSlide(i)}
+                  className={`rounded-full bg-gray-800 transition-all ${
+                    step === i ? "h-3 w-8" : "h-3 w-3"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="relative h-full overflow-hidden flex justify-center w-full items-center py-4">
+          <Image
+            src={Assets.LogoEchoBlack}
+            alt="Home"
+            style={{ objectFit: "cover", width: "40%", height: "40%" }}
+          />
+        </div>
+        <div className="flex h-screen w-full items-center justify-center rounded-[4px] ">
           <video
             style={{ objectFit: "cover", width: "100%", height: "100%" }}
             src={require("../../../../public/video-aal.mp4")}
@@ -417,261 +379,42 @@ export default function Home() {
             playsInline
           />
         </div>
-        {/* Features Section */}
-        <div className="flex h-full w-full items-center justify-center gap-4 py-4">
-          <div className="gap-[2rem] lg:grid lg:grid-cols-3">
-            {features.map(({ icon, title, text }, index) => (
-              <div
-                key={index}
-                className="flex w-full items-start justify-center overflow-hidden rounded-[4px] bg-white px-2 md:relative md:w-[70vh] lg:h-[60vh] lg:w-[50vh]"
-              >
-                <div className="flex flex-col items-center gap-4">
-                  <Image src={icon} alt={title} width={100} height={100} />
-                  <div className="flex w-full flex-col items-center gap-2 bg-white">
-                    <div className="w-full">
-                      <h2 className="text-center font-domaine text-2xl uppercase tracking-[0.25rem]">
-                        {title}
-                      </h2>
-                    </div>
-                    <span className="z-[5] text-center font-josefins text-[20px] font-light">
-                      {text}
-                    </span>
-                  </div>
-                </div>
+        <div className="relative h-[100vh] w-full flex items-center justify-center">
+          <div className="absolute top-0 left-0 z-0 h-full w-full">
+            <Image
+              src={Assets.AboutUs}
+              alt="About"
+              style={{ objectFit: "cover", width: "100%", height: "100%" }}
+            />
+          </div>
+          <div className="flex items-center flex-col gap-8 justify-center z-[999] w-full ">
+            <Image
+              src={Assets.IconFlower}
+              alt="About"
+              style={{ objectFit: "cover", width: "5%", height: "5%" }}
+            />
+            <div className="flex flex-col gap-4 justify-center items-center w-full h-full">
+              <h1 className="text-[64px] font-thin text-black font-domaine text-left">
+                SYMPHONY
+              </h1>
+              <h1 className="text-[64px] font-thin text-black font-domaine text-left">
+                OF NATURE
+              </h1>
+              <div className="w-[50%]">
+                <h2 className="text-[24px] font-thin text-center text-black font-domaine">
+                  At ECHO, we believe that when you respect the harmony of
+                  nature
+                  {"'"}s ecosystem, humans and nature can co-exist in a
+                  beautiful symphony. We are born from nature, and ECHO seeks to
+                  reestablish that innate connection
+                </h2>
               </div>
-            ))}
+            </div>
           </div>
         </div>
+        {/* Features Section */}
 
         {/* Section */}
-        <div className="hidden lg:block">
-          <div className="relative flex h-[210vh] w-full items-center justify-center py-4">
-            <div className="absolute top-[6em]">
-              <h2 className="font-domaine text-4xl font-medium tracking-[0.75rem]">
-                SYMPHONY of NATURE
-              </h2>
-            </div>
-            <div className="w-[45%]">
-              <h2 className="text-center font-domaine text-[1.275rem] font-thin leading-[3rem] tracking-[2px]">
-                At ECHO, we believe that when you respect the harmony of nature
-                {"'"}s ecosystem, humans and nature can co-exist in a beautiful
-                symphony. We are born from nature, and ECHO seeks to reestablish
-                that innate connection
-              </h2>
-            </div>
-            <div
-              data-aos="fade-up"
-              data-aos-duration="2000"
-              className="absolute right-[0rem] top-[12rem] w-80"
-            >
-              <HoveredImage
-                src={Assets.OrangUtan}
-                alt="Orangutan"
-                width={280}
-                height={280}
-                overlayColor="bg-[#7b8f6e]"
-                onClick={() =>
-                  openModal({
-                    title: "ECHOING KINDNESS",
-                    text: "Conservation is more than just an ideal for us. It's a deep commitment that influences every action we take. We invest in supporting a wide range of conservation initiatives, including the protection of endangered species like the Orangutans",
-                    subtitle: "For more info please visit,",
-                    link: "https://www.yad.or.id/photo-gallery",
-                    color: "bg-[#7b8f6e]",
-                  })
-                }
-              />
-            </div>
-            <div
-              data-aos="fade-up"
-              data-aos-duration="2000"
-              className="absolute left-[1rem] top-[24rem] w-80"
-            >
-              <HoveredImage
-                src={Assets.Pabrik}
-                alt="Pabrik"
-                width={280}
-                height={280}
-                overlayColor="bg-[#8899ad]"
-                onClick={() =>
-                  openModal({
-                    title: "RESONATING SYMPHONY",
-                    text: "Our product is one that echoes with tranquillity and harmony. It's cultivated only from vacant nests, adhering to a cycle that respects and preserves the natural rhythms of our swiftlet inhabitants. This thoughtful balance between consumption and conservation reverberates a beautiful symphony - one that sings of respect for nature and peace of mind for you.",
-                    color: "bg-[#8899ad]",
-                  })
-                }
-              />
-            </div>
-            <div
-              data-aos="fade-up"
-              data-aos-duration="2000"
-              className="absolute bottom-[11rem] right-[2rem] h-[16rem] w-[30rem]"
-              onMouseEnter={handleMerahMouseEnter}
-              onMouseLeave={handleMerahMouseLeave}
-            >
-              <div
-                className={`relative h-full w-full transition-transform duration-700 ${isMerahHovered ? "scale-105" : ""}`}
-                onClick={() =>
-                  openModal({
-                    title: "A RESONANT REJUVINATION",
-                    text: "Packed with an array of potent nutrients, ECHO's bird's nest products stand out for their naturally high sialic acid content, known for its immune-enhancing properties. These also contain collagen, a key component for skin elasticity and hydration. Present too is estradiol, which plays a vital role in enhancing skin health. Vitamin E and Vitamin B complex, as well as amino acids, minerals, and trace elements further enhance the product's health and beauty benefits.",
-                    color: "bg-[#c9968e]",
-                  })
-                }
-              >
-                <Image
-                  src={Assets.Merah}
-                  alt="Merah"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                />
-                {isMerahHovered && (
-                  <div className="relative flex h-full w-full flex-col items-center justify-center gap-[7rem] bg-[#c9968e] transition-transform duration-700">
-                    <div>
-                      <h2 className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-center font-domaine text-[30px] leading-[2.25rem] tracking-[0.5rem] text-black transition duration-700">
-                        A RESONANT REJUVINATION
-                      </h2>
-                    </div>
-                    <span className="relative h-[1px] w-[7rem] bg-black"></span>
-                  </div>
-                )}
-              </div>
-            </div>
-            <div
-              data-aos="fade-up"
-              data-aos-duration="2000"
-              className="absolute bottom-[3rem] left-[8rem] w-80"
-            >
-              <HoveredImage
-                src={Assets.Batang}
-                alt="Batang"
-                width={280}
-                height={280}
-                overlayColor="bg-[#c3b199]"
-                onClick={() =>
-                  openModal({
-                    title: "THE PERFECT ECOSYSTEM",
-                    text: "Nestled deep in the Kalimantan rainforest, we have meticulously safeguarded a clean and pure environment spanning 173,000 hectares. This haven is carefully isolated from pesticides and heavy industry, offering an ideal habitat for our nesting swiftlets. Human interactions are minimized, mitigating stress on the birds, and thousands of trees are replanted, sustaining a flourishing ecosystem. This sanctuary is not only protected but thriving under our careful stewardship.",
-                    color: "bg-[#c3b199]",
-                  })
-                }
-              />
-            </div>
-          </div>
-        </div>
-        <div className="block lg:hidden">
-          <div className="relative flex h-full w-full flex-col items-center justify-center gap-10 py-10">
-            <div className="">
-              <h2 className="text-center font-domaine text-2xl font-medium tracking-[0.75rem]">
-                SYMPHONY of NATURE
-              </h2>
-            </div>
-            <div
-              data-aos="fade-up"
-              data-aos-duration="2000"
-              className="flex items-center justify-center"
-            >
-              <HoveredImage
-                src={Assets.OrangUtan}
-                alt="Orangutan"
-                width={280}
-                height={280}
-                overlayColor="bg-[#7b8f6e]"
-                onClick={() =>
-                  openModal({
-                    title: "ECHOING KINDNESS",
-                    text: "Conservation is more than just an ideal for us. It's a deep commitment that influences every action we take. We invest in supporting a wide range of conservation initiatives, including the protection of endangered species like the Orangutans",
-                    subtitle: "For more info please visit,",
-                    link: "https://www.yad.or.id/photo-gallery",
-                    color: "bg-[#7b8f6e]",
-                  })
-                }
-              />
-            </div>
-            <div
-              data-aos="fade-up"
-              data-aos-duration="2000"
-              className="h-[16rem] w-full"
-              onMouseEnter={handleMerahMouseEnter}
-              onMouseLeave={handleMerahMouseLeave}
-            >
-              <div
-                className={`relative h-full w-full transition-transform duration-700 ${isMerahHovered ? "scale-105" : ""}`}
-                onClick={() =>
-                  openModal({
-                    title: "A RESONANT REJUVINATION",
-                    text: "Packed with an array of potent nutrients, ECHO's bird's nest products stand out for their naturally high sialic acid content, known for its immune-enhancing properties. These also contain collagen, a key component for skin elasticity and hydration. Present too is estradiol, which plays a vital role in enhancing skin health. Vitamin E and Vitamin B complex, as well as amino acids, minerals, and trace elements further enhance the product's health and beauty benefits.",
-                    color: "bg-[#c9968e]",
-                  })
-                }
-              >
-                <Image
-                  src={Assets.Merah}
-                  alt="Merah"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                />
-                {isMerahHovered && (
-                  <div className="relative flex h-full w-full flex-col items-center justify-center bg-[#c9968e] transition-transform duration-700">
-                    <div>
-                      <h2 className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-center font-domaine text-[30px] leading-[2.25rem] tracking-[0.5rem] text-black transition duration-700">
-                        A RESONANT REJUVINATION
-                      </h2>
-                    </div>
-                    <span className="relative h-[1px] w-[7rem] bg-black"></span>
-                  </div>
-                )}
-              </div>
-            </div>
-            <div className="w-full px-10">
-              <h2 className="text-center font-domaine text-[1.275rem] font-thin leading-[3rem] tracking-[2px]">
-                At ECHO, we believe that when you respect the harmony of nature
-                {"'"}s ecosystem, humans and nature can co-exist in a beautiful
-                symphony. We are born from nature, and ECHO seeks to reestablish
-                that innate connection
-              </h2>
-            </div>
-            <div className="flex w-full items-center justify-center">
-              <HoveredImage
-                src={Assets.Pabrik}
-                alt="Pabrik"
-                width={280}
-                height={280}
-                overlayColor="bg-[#8899ad]"
-                onClick={() =>
-                  openModal({
-                    title: "RESONATING SYMPHONY",
-                    text: "Our product is one that echoes with tranquillity and harmony. It's cultivated only from vacant nests, adhering to a cycle that respects and preserves the natural rhythms of our swiftlet inhabitants. This thoughtful balance between consumption and conservation reverberates a beautiful symphony - one that sings of respect for nature and peace of mind for you.",
-                    color: "bg-[#8899ad]",
-                  })
-                }
-              />
-            </div>
-
-            <div className="flex w-full items-center justify-center">
-              <HoveredImage
-                src={Assets.Batang}
-                alt="Batang"
-                width={280}
-                height={280}
-                overlayColor="bg-[#c3b199]"
-                onClick={() =>
-                  openModal({
-                    title: "THE PERFECT ECOSYSTEM",
-                    text: "Nestled deep in the Kalimantan rainforest, we have meticulously safeguarded a clean and pure environment spanning 173,000 hectares. This haven is carefully isolated from pesticides and heavy industry, offering an ideal habitat for our nesting swiftlets. Human interactions are minimized, mitigating stress on the birds, and thousands of trees are replanted, sustaining a flourishing ecosystem. This sanctuary is not only protected but thriving under our careful stewardship.",
-                    color: "bg-[#c3b199]",
-                  })
-                }
-              />
-            </div>
-          </div>
-        </div>
-        <Modal
-          isOpen={isModalOpen}
-          closeModal={closeModal}
-          content={modalContent}
-        />
       </main>
     </>
     //   )}
