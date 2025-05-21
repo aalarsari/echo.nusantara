@@ -18,6 +18,7 @@ export async function GET(request: NextRequest) {
          priceIDR: true,
          weight: true,
          maxOrder: true,
+         bestseller: true,
          image1: true,
          recommendation: true,
          Discount: {
@@ -52,51 +53,82 @@ export async function GET(request: NextRequest) {
       },
    });
 
-   var productBestSallerMap = new Map<number, number>();
+   // var productBestSallerMap = new Map<number, number>();
 
-   getDataBestSellerProduct.map((e) => {
-      const currentQuantity = productBestSallerMap.get(e.products.id) || 0;
-      productBestSallerMap.set(e.products.id, currentQuantity + e.quantity);
-   });
+   // getDataBestSellerProduct.map((e) => {
+   //    const currentQuantity = productBestSallerMap.get(e.products.id) || 0;
+   //    productBestSallerMap.set(e.products.id, currentQuantity + e.quantity);
+   // });
 
-   const sort = Array.from(productBestSallerMap.entries()).sort((a, b) => b[1] - a[1]);
+   // const sort = Array.from(productBestSallerMap.entries()).sort((a, b) => b[1] - a[1]);
 
-   const productIdBestSeller = sort.map((e) => {
-      return e[0];
-   });
+   // const productIdBestSeller = sort.map((e) => {
+   //    return e[0];
+   // });
 
-   var bestSeller: any[] = [];
-   for (let i = 0; i < productIdBestSeller.slice(0, 4).length; i++) {
-      const e = productIdBestSeller[i];
+   // var bestSeller: any[] = [];
+   // for (let i = 0; i < productIdBestSeller.slice(0, 4).length; i++) {
+   //    const e = productIdBestSeller[i];
 
-      var p = await prisma.products.findFirst({
-         where: {
-            id: e,
-            deleteAt: null,
-            deleteBy: null,
-         },
-         select: {
-            id: true,
-            slug: true,
-            name: true,
-            priceIDR: true,
-            maxOrder: true,
-            weight: true,
-            image1: true,
-            Discount: {
-               where: {
-                  startDate: {
-                     lte: moment().format(),
-                  },
-                  endDate: {
-                     gte: moment().format(),
-                  },
+   //    var p = await prisma.products.findFirst({
+   //       where: {
+   //          id: e,
+   //          deleteAt: null,
+   //          deleteBy: null,
+   //       },
+   //       select: {
+   //          id: true,
+   //          slug: true,
+   //          name: true,
+   //          priceIDR: true,
+   //          maxOrder: true,
+   //          weight: true,
+   //          image1: true,
+   //          Discount: {
+   //             where: {
+   //                startDate: {
+   //                   lte: moment().format(),
+   //                },
+   //                endDate: {
+   //                   gte: moment().format(),
+   //                },
+   //             },
+   //          },
+   //       },
+   //    });
+   //    bestSeller.push(p);
+   // }
+   var bestSeller = await prisma.products.findMany({
+      where: {
+         deleteAt: null,
+         deleteBy: null,
+         bestseller: true,
+      },
+      select: {
+         id: true,
+         slug: true,
+         name: true,
+         priceIDR: true,
+         maxOrder: true,
+         weight: true,
+         image1: true,
+         Discount: {
+            where: {
+               startDate: {
+                  lte: moment().format(),
+               },
+               endDate: {
+                  gte: moment().format(),
                },
             },
          },
-      });
-      bestSeller.push(p);
-   }
+      },
+      orderBy: {
+         createdAt: "desc",
+      },
+      take: 5,
+   });
+
    var benner = await prisma.banner.findMany({
       where: {
          isActive: true,

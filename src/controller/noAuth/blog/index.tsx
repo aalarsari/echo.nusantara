@@ -1,10 +1,6 @@
 import { Prisma } from "@prisma/client";
 
-export async function GetBlog(
-  page: number = 1,
-  pageSize: number = 10,
-  orderBy: Prisma.SortOrder = "desc"
-) {
+export async function GetBlog(page: number, pageSize: number, orderBy: Prisma.SortOrder = "desc") {
   var response = await fetch(`/api/blog?page=${page}&pageSize=${pageSize}&orderBy=${orderBy}`);
   return response;
 }

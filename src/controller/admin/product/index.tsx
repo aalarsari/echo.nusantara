@@ -15,10 +15,7 @@ export async function AddProduct(data: Products) {
   return response;
 }
 
-export async function UpdateProduct(
-  data: z.infer<typeof ProductUpadateValidation>,
-  slug: string,
-) {
+export async function UpdateProduct(data: z.infer<typeof ProductUpadateValidation>, slug: string) {
   var formData = new FormData();
 
   Object.keys(data).forEach((key) => {
@@ -31,19 +28,17 @@ export async function UpdateProduct(
   return response;
 }
 
-export async function ListProductAdmin(
-  page: number,
-  pageSize: number,
-  search: string,
-  orderBy: string,
-  nameOrderBy: string,
-) {
-  var response = await fetch(
-    `/api/admin/product/?page=${page}&pageSize=${pageSize}&search=${search}&orderBy=${orderBy}&nameOrderBy=${nameOrderBy}`,
-    {
-      method: "GET",
-    },
-  );
+export async function UpdateBestSeller(slug: string) {
+  var response = await fetch(`/api/admin/product/${slug}/bestSeller`, {
+    method: "PUT",
+  });
+  return response;
+}
+
+export async function ListProductAdmin(page: number, pageSize: number, search: string, orderBy: string, nameOrderBy: string) {
+  var response = await fetch(`/api/admin/product/?page=${page}&pageSize=${pageSize}&search=${search}&orderBy=${orderBy}&nameOrderBy=${nameOrderBy}`, {
+    method: "GET",
+  });
   return response;
 }
 
@@ -68,10 +63,7 @@ export async function DeleteProduct(slug: string) {
   return response;
 }
 
-export async function AddDiscountProduct(
-  data: z.infer<typeof DiscountValidation>,
-  slug: string,
-) {
+export async function AddDiscountProduct(data: z.infer<typeof DiscountValidation>, slug: string) {
   var response = await fetch(`/api/admin/product/${slug}/discount`, {
     method: "POST",
     body: JSON.stringify(data),

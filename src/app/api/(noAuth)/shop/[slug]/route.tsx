@@ -9,6 +9,7 @@ export async function GET(request: NextRequest, { params }: { params: { slug: st
          id: true,
          name: true,
          descriptions: true,
+         bestseller: true,
          subDescriptions: true,
          priceIDR: true,
          weight: true,

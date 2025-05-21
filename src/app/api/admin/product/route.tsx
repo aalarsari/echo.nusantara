@@ -11,10 +11,7 @@ import slugify from "react-slugify";
 import { z } from "zod";
 import { fromZodError } from "zod-validation-error";
 import { CreateLocationAttachment } from "@/lib/attachment";
-import {
-  AscDescValidation,
-  NameOrderByValidation,
-} from "@/lib/zod-schema/user";
+import { AscDescValidation, NameOrderByValidation } from "@/lib/zod-schema/user";
 import moment from "moment-timezone";
 
 export async function POST(request: NextRequest) {
@@ -44,7 +41,7 @@ export async function POST(request: NextRequest) {
         },
         {
           status: HttpStatusCode.BadRequest,
-        },
+        }
       );
     }
 
@@ -65,49 +62,34 @@ export async function POST(request: NextRequest) {
     var image1 = validation.image1 as File;
     var imageBuffer1 = Buffer.from(await image1.arrayBuffer());
     var imageName1 = image1.name.replace(/ /g, "-");
-    await writeFile(
-      path.join(process.cwd(), `${directoryPath}/${imageName1}`),
-      imageBuffer1 as unknown as Uint8Array,
-    );
+    await writeFile(path.join(process.cwd(), `${directoryPath}/${imageName1}`), imageBuffer1 as unknown as Uint8Array);
 
     if (validation.image2) {
       var image2 = validation.image2 as File;
       var imageBuffer2 = Buffer.from(await image2.arrayBuffer());
       var imageName2 = image2.name.replaceAll(" ", "-");
-      await writeFile(
-        path.join(process.cwd(), `${directoryPath}/${imageName2}`),
-        imageBuffer2 as unknown as Uint8Array,
-      );
+      await writeFile(path.join(process.cwd(), `${directoryPath}/${imageName2}`), imageBuffer2 as unknown as Uint8Array);
     }
 
     if (validation.image3) {
       var image3 = validation.image3 as File;
       var imageBuffer3 = Buffer.from(await image3.arrayBuffer());
       var imageName3 = image3.name.replaceAll(" ", "-");
-      await writeFile(
-        path.join(process.cwd(), `${directoryPath}/${imageName3}`),
-        imageBuffer3 as unknown as Uint8Array,
-      );
+      await writeFile(path.join(process.cwd(), `${directoryPath}/${imageName3}`), imageBuffer3 as unknown as Uint8Array);
     }
 
     if (validation.image4) {
       var image4 = validation.image4 as File;
       var imageBuffer4 = Buffer.from(await image4.arrayBuffer());
       var imageName4 = image4.name.replaceAll(" ", "-");
-      await writeFile(
-        path.join(process.cwd(), `${directoryPath}/${imageName4}`),
-        imageBuffer4 as unknown as Uint8Array,
-      );
+      await writeFile(path.join(process.cwd(), `${directoryPath}/${imageName4}`), imageBuffer4 as unknown as Uint8Array);
     }
 
     if (validation.image5) {
       var image5 = validation.image5 as File;
       var imageBuffer5 = Buffer.from(await image5.arrayBuffer());
       var imageName5 = image5.name.replaceAll(" ", "-");
-      await writeFile(
-        path.join(process.cwd(), `${directoryPath}/${imageName5}`),
-        imageBuffer5 as unknown as Uint8Array,
-      );
+      await writeFile(path.join(process.cwd(), `${directoryPath}/${imageName5}`), imageBuffer5 as unknown as Uint8Array);
     }
 
     // kalo productnya di delete
@@ -139,24 +121,14 @@ export async function POST(request: NextRequest) {
           weight: validation.weight!,
           maxOrder: validation.maxOrder!,
           stock: validation.stock!,
+          recommendation: validation.recommendation!,
+          bestseller: validation.isBestSeller!,
           categoryId: validation.categoryId,
           image1: `${process.env.APP_URL}/static/attachment/product/images/${imageName1}`,
-          image2:
-            imageName2! != null
-              ? `${process.env.APP_URL}/static/attachment/product/images/${imageName2}`
-              : null,
-          image3:
-            imageName3! != null
-              ? `${process.env.APP_URL}/static/attachment/product/images/${imageName3}`
-              : null,
-          image4:
-            imageName4! != null
-              ? `${process.env.APP_URL}/static/attachment/product/images/${imageName4}`
-              : null,
-          image5:
-            imageName5! != null
-              ? `${process.env.APP_URL}/static/attachment/product/images/${imageName5}`
-              : null,
+          image2: imageName2! != null ? `${process.env.APP_URL}/static/attachment/product/images/${imageName2}` : null,
+          image3: imageName3! != null ? `${process.env.APP_URL}/static/attachment/product/images/${imageName3}` : null,
+          image4: imageName4! != null ? `${process.env.APP_URL}/static/attachment/product/images/${imageName4}` : null,
+          image5: imageName5! != null ? `${process.env.APP_URL}/static/attachment/product/images/${imageName5}` : null,
           size: validation.size!,
           updateAt: moment.tz().format(),
           updateBy: session?.user.name,
@@ -174,24 +146,13 @@ export async function POST(request: NextRequest) {
           subDescriptions: validation.subDescriptions,
           maxOrder: validation.maxOrder,
           recommendation: validation.recommendation!,
+          bestseller: validation.isBestSeller!,
           categoryId: validation.categoryId,
           image1: `${process.env.APP_URL}/static/attachment/product/images/${imageName1}`,
-          image2:
-            imageName2! != null
-              ? `${process.env.APP_URL}/static/attachment/product/images/${imageName2}`
-              : null,
-          image3:
-            imageName3! != null
-              ? `${process.env.APP_URL}/static/attachment/product/images/${imageName3}`
-              : null,
-          image4:
-            imageName4! != null
-              ? `${process.env.APP_URL}/static/attachment/product/images/${imageName4}`
-              : null,
-          image5:
-            imageName5! != null
-              ? `${process.env.APP_URL}/static/attachment/product/images/${imageName5}`
-              : null,
+          image2: imageName2! != null ? `${process.env.APP_URL}/static/attachment/product/images/${imageName2}` : null,
+          image3: imageName3! != null ? `${process.env.APP_URL}/static/attachment/product/images/${imageName3}` : null,
+          image4: imageName4! != null ? `${process.env.APP_URL}/static/attachment/product/images/${imageName4}` : null,
+          image5: imageName5! != null ? `${process.env.APP_URL}/static/attachment/product/images/${imageName5}` : null,
           size: validation.size!,
           createdAt: moment.tz().format(),
           updateAt: moment.tz().format(),
@@ -219,7 +180,7 @@ export async function POST(request: NextRequest) {
         },
         {
           status: HttpStatusCode.UnprocessableEntity,
-        },
+        }
       );
     } else if (err instanceof Prisma.PrismaClientKnownRequestError) {
       return NextResponse.json(
@@ -230,7 +191,7 @@ export async function POST(request: NextRequest) {
         },
         {
           status: HttpStatusCode.BadRequest,
-        },
+        }
       );
     }
   }
@@ -255,12 +216,7 @@ export async function GET(request: NextRequest) {
       contains: searchP,
     },
   };
-  if (
-    searchP.length == 0 ||
-    searchP == "undifined" ||
-    searchP == null ||
-    searchP == undefined
-  ) {
+  if (searchP.length == 0 || searchP == "undifined" || searchP == null || searchP == undefined) {
     search = {};
   }
 
