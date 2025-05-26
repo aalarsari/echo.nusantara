@@ -7,6 +7,7 @@ import {
   ShoppingCartIcon,
   TrashIcon,
   XMarkIcon,
+  PlusIcon,
 } from "@heroicons/react/24/outline";
 import { useSession } from "next-auth/react";
 import { SaveCartLocaly } from "@/lib/cookies/cart";
@@ -20,6 +21,7 @@ import { useRouter } from "next/navigation";
 import { setCartId } from "@/lib/redux/cartId";
 import { FormatRupiah, Notifications } from "@/components";
 import { GetStock } from "@/controller/noAuth/stock";
+import { Disclosure } from "@headlessui/react";
 
 export default function DetailShopComponent({
   params,
@@ -46,7 +48,7 @@ export default function DetailShopComponent({
   const showNotification = (
     message: string,
     type: "success" | "error",
-    duration: number = 3000,
+    duration: number = 3000
   ) => {
     setNotification({ message, type, visible: true });
     setTimeout(() => {
@@ -108,7 +110,7 @@ export default function DetailShopComponent({
     if (stock === undefined) {
       showNotification(
         "Unable to fetch stock information. Please try again later.",
-        "error",
+        "error"
       );
       return;
     }
@@ -120,7 +122,7 @@ export default function DetailShopComponent({
     if (quantity > stock) {
       showNotification(
         `Quantity cannot exceed available stock: ${stock}`,
-        "error",
+        "error"
       );
       return;
     }
@@ -134,7 +136,7 @@ export default function DetailShopComponent({
         "Adding to cart with quantity:",
         quantity,
         "and stock:",
-        stock,
+        stock
       );
 
       const quantityToAdd = parseInt(quantity.toString(), 10);
@@ -149,7 +151,7 @@ export default function DetailShopComponent({
         const errorResponse = await response.json();
         showNotification(
           `Error: ${errorResponse.message || "Failed to add product to cart"}`,
-          "error",
+          "error"
         );
         return;
       }
@@ -158,7 +160,7 @@ export default function DetailShopComponent({
       showNotification(
         `${productDetail.name} added to cart successfully!`,
         "success",
-        1000,
+        1000
       );
       router.push("/shop");
 
@@ -167,7 +169,7 @@ export default function DetailShopComponent({
       console.error("Error adding product to cart:", error);
       showNotification(
         `An unexpected error occurred: ${error instanceof Error ? error.message : "Please try again later"}`,
-        "error",
+        "error"
       );
     }
   };
@@ -186,7 +188,7 @@ export default function DetailShopComponent({
     if (stock === undefined) {
       showNotification(
         "Unable to fetch stock information. Please try again later.",
-        "error",
+        "error"
       );
       return;
     }
@@ -196,7 +198,7 @@ export default function DetailShopComponent({
       if (newQuantity > stock) {
         showNotification(
           `Quantity cannot exceed available stock: ${stock}`,
-          "error",
+          "error"
         );
         return prev;
       }
@@ -208,7 +210,7 @@ export default function DetailShopComponent({
     if (stock === undefined) {
       showNotification(
         "Unable to fetch stock information. Please try again later.",
-        "error",
+        "error"
       );
       return;
     }
@@ -219,7 +221,7 @@ export default function DetailShopComponent({
       if (numericValue > stock) {
         showNotification(
           `Quantity cannot exceed available stock: ${stock}`,
-          "error",
+          "error"
         );
         return;
       }
@@ -233,7 +235,7 @@ export default function DetailShopComponent({
     if (stock === undefined) {
       showNotification(
         "Unable to fetch stock information. Please try again later.",
-        "error",
+        "error"
       );
       return;
     }
@@ -242,7 +244,7 @@ export default function DetailShopComponent({
     if (quantityToBuy > stock) {
       showNotification(
         `Quantity cannot exceed available stock: ${stock}`,
-        "error",
+        "error"
       );
       return;
     }
@@ -268,7 +270,7 @@ export default function DetailShopComponent({
     } catch (error) {
       showNotification(
         "An error occurred during login. Please try again later.",
-        "error",
+        "error"
       );
     }
   };
@@ -284,7 +286,7 @@ export default function DetailShopComponent({
 
   if (!productDetail) {
     return (
-      <div className="h-full w-full px-4 lg:px-12 lg:py-20">
+      <div className="h-full w-full lg:py-20">
         <div className="flex h-full w-full flex-col lg:flex-row">
           <div className="flex h-full w-full flex-col gap-4 lg:h-[40rem] lg:w-[60%] lg:flex-row">
             <div className="relative h-[25rem] w-full animate-pulse overflow-hidden rounded-md bg-gray-200 lg:h-[40rem] lg:w-[40rem]" />
@@ -313,8 +315,36 @@ export default function DetailShopComponent({
     );
   }
 
+  const faqData = [
+    {
+      title: "Our Product",
+      content:
+        "Produk kami terbuat dari bahan alami pilihan dan diproses dengan teknologi modern untuk menjaga kualitas dan manfaatnya.",
+    },
+    {
+      title: "Komposisi",
+      content:
+        "Mengandung ekstrak tanaman herbal, vitamin, dan mineral esensial yang diformulasikan secara ilmiah.",
+    },
+    {
+      title: "Manfaat",
+      content:
+        "Meningkatkan daya tahan tubuh, membantu detoksifikasi, dan menjaga kesehatan organ vital.",
+    },
+    {
+      title: "Cara Konsumsi",
+      content:
+        "Konsumsi 2 kapsul setiap hari setelah makan pagi dan malam atau sesuai anjuran dokter.",
+    },
+    {
+      title: "Cara Penyimpanan",
+      content:
+        "Simpan di tempat sejuk dan kering, jauhkan dari sinar matahari langsung dan jangkauan anak-anak.",
+    },
+  ];
+
   return (
-    <main className="relative h-full w-full px-4 lg:px-12 lg:py-20">
+    <main className="relative h-full w-full lg:py-20">
       <Notifications
         message={notification.message}
         type={notification.type}
@@ -354,7 +384,7 @@ export default function DetailShopComponent({
               </button>
             </div>
           )}
-          <div className="h-full w-full">
+          <div className="h-full w-full px-20 py-12">
             <div className="flex h-[3rem] flex-row items-center justify-start gap-2">
               <span className="rounded-full border-[1px] border-gray-200 px-4 py-1 text-center text-sm text-gray-400">
                 Products
@@ -367,26 +397,6 @@ export default function DetailShopComponent({
             <div className="relative mt-2 flex h-full w-full flex-col gap-6 lg:flex-row">
               {productDetail && (
                 <div className="flex h-full w-full flex-col gap-4 lg:h-[40rem] lg:w-[60%] lg:flex-row">
-                  <div className="relative h-[25rem] w-full overflow-hidden rounded-md border border-[#C1AE94]/30 bg-gray-50 lg:h-[40rem] lg:w-[40rem]">
-                    {productDetail.image1 && (
-                      <Image
-                        src={productDetail.image1 || Assets.DefaultProduct}
-                        fill
-                        style={{ objectFit: "cover" }}
-                        priority={true}
-                        alt={`${productDetail.name}`}
-                        sizes="( max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        className={`transition-all duration-500 ${hoveredIndex === 0 ? "scale-110 transform" : ""}`}
-                        onMouseEnter={() => setHoveredIndex(0)}
-                        onMouseLeave={() => setHoveredIndex(null)}
-                        onClick={() =>
-                          openModal(
-                            productDetail.image1 || Assets.DefaultProduct,
-                          )
-                        }
-                      />
-                    )}
-                  </div>
                   <div className="flex flex-row gap-4 lg:flex-col">
                     {[
                       productDetail.image2,
@@ -414,7 +424,27 @@ export default function DetailShopComponent({
                             }
                           />
                         </div>
-                      ) : null,
+                      ) : null
+                    )}
+                  </div>
+                  <div className="relative h-[25rem] w-full overflow-hidden rounded-md border border-[#C1AE94]/30 bg-gray-50 lg:h-[40rem] lg:w-[40rem]">
+                    {productDetail.image1 && (
+                      <Image
+                        src={productDetail.image1 || Assets.DefaultProduct}
+                        fill
+                        style={{ objectFit: "cover" }}
+                        priority={true}
+                        alt={`${productDetail.name}`}
+                        sizes="( max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        className={`transition-all duration-500 ${hoveredIndex === 0 ? "scale-110 transform" : ""}`}
+                        onMouseEnter={() => setHoveredIndex(0)}
+                        onMouseLeave={() => setHoveredIndex(null)}
+                        onClick={() =>
+                          openModal(
+                            productDetail.image1 || Assets.DefaultProduct
+                          )
+                        }
+                      />
                     )}
                   </div>
                 </div>
@@ -424,18 +454,18 @@ export default function DetailShopComponent({
                 <div className="flex w-full flex-col gap-2">
                   <div className="flex w-full flex-col gap-1">
                     <div className="">
-                      <h2 className="text-2xl font-semibold text-[#252525]">
+                      <h2 className="text-2xl text-center lg:text-left font-semibold text-[#252525]">
                         {productDetail?.name}
                       </h2>
                     </div>
                     <div className="flex flex-row gap-1"></div>
                   </div>
                   <div className="h-[5rem]">
-                    <h2 className="font-domine text-lg text-[#252525]">
+                    <h2 className="font-domine text-lg text-center lg:text-left text-[#252525]">
                       {productDetail?.subDescriptions}
                     </h2>
                   </div>
-                  <div className="flex h-[3rem] w-full items-center justify-between">
+                  <div className="flex h-[5rem] lg:h-[3rem] w-full flex-col lg:flex-row items-center justify-between">
                     <div className="relative flex w-full flex-row items-center">
                       <div>
                         <span className="font-josefins text-[26px] font-semibold text-[#252525]">
@@ -469,11 +499,11 @@ export default function DetailShopComponent({
                       )}
                     </div>
 
-                    <div className="my-2.5 flex flex-row gap-2">
-                      <div className="flex h-[1.75rem] w-[6rem] rounded-sm border-[0.5px] border-[#7D716A]">
+                    <div className="lg:my-2.5 flex flex-row gap-2 w-full">
+                      <div className="flex h-[1.75rem] w-full lg:w-[6rem] rounded-sm border-[0.5px] border-[#7D716A]">
                         <button
                           onClick={handleDecrease}
-                          className="mx-2 h-full w-[30%] cursor-pointer"
+                          className="h-full w-[20%] lg:w-[50%] cursor-pointer border-r-[0.5px] border-[#7D716A]"
                         >
                           -
                         </button>
@@ -486,7 +516,7 @@ export default function DetailShopComponent({
                         />
                         <button
                           onClick={handleIncrease}
-                          className="mx-2 h-full w-[30%] cursor-pointer"
+                          className="h-full w-[20%] lg:w-[50%] cursor-pointer border-l-[0.5px] border-[#7D716A]"
                         >
                           +
                         </button>
@@ -498,24 +528,23 @@ export default function DetailShopComponent({
                   </div>
                 </div>
                 <div className="flex flex-col gap-2 lg:flex-row">
-                  <div className="flex h-[48px] w-full transform items-center justify-center rounded-[4px] bg-gradient-to-t from-[#B69B78] to-[#CDB698] transition-all duration-300 ease-in-out hover:bg-gradient-to-t hover:from-[#ab9a82] hover:to-[#ab9a82] lg:w-[60%]">
-                    <button
-                      onClick={handleClickBuyNow}
-                      className="h-full w-full text-[20px] uppercase text-white"
-                    >
-                      Buy Now
-                    </button>
-                  </div>
                   <div
                     key="addToCart"
                     onClick={() =>
                       addToCart(productDetail?.id!, parseInt(quantity))
                     }
-                    className="flex h-[48px] w-full cursor-pointer flex-row items-center justify-center gap-2 rounded-[4px] border-[1px] border-[#C1AE94] lg:w-[40%]"
+                    className="flex h-[48px] w-full cursor-pointer flex-row items-center justify-center gap-2 rounded-full border-[1px] border-[#C1AE94]"
                   >
-                    <ShoppingCartIcon className="h-6 w-6 text-[#C1AE94]" />
-                    <button className="text-[20px] uppercase text-[#C1AE94]">
+                    <button className="text-[16px] text-[#C1AE94]">
                       Add to Cart
+                    </button>
+                  </div>
+                  <div className="flex h-[48px] w-full transform items-center justify-center rounded-full bg-gradient-to-t from-[#B69B78] to-[#CDB698] transition-all duration-300 ease-in-out hover:bg-gradient-to-t hover:from-[#ab9a82] hover:to-[#ab9a82] ">
+                    <button
+                      onClick={handleClickBuyNow}
+                      className="h-full w-full text-[16px] text-white"
+                    >
+                      Buy Now
                     </button>
                   </div>
                 </div>
@@ -526,7 +555,7 @@ export default function DetailShopComponent({
                     </h2>
                   </div>
                   <div className="flex w-full flex-col justify-between gap-6">
-                    <div className="flex flex-row justify-between">
+                    <div className="flex flex-col gap-6">
                       <div className="flex flex-row items-center justify-start gap-1 lg:gap-2">
                         <Image
                           src={Assets.InfoKardus}
@@ -549,8 +578,6 @@ export default function DetailShopComponent({
                           Easy 30 Days Return
                         </span>
                       </div>
-                    </div>
-                    <div className="flex flex-row justify-between">
                       <div className="flex flex-row items-center justify-start gap-1 lg:gap-2">
                         <Image
                           src={Assets.InfoTangan}
@@ -568,13 +595,44 @@ export default function DetailShopComponent({
               </div>
             </div>
           </div>
-          <div className="relative h-full w-full py-10">
-            <div
+          <div className="relative h-full w-full bg-[#F4F4F4] p-20">
+            {/* <div
               className="font-regular text-[#252525]"
               dangerouslySetInnerHTML={{
                 __html: productDetail?.descriptions || "",
               }}
-            />
+            /> */}
+            <div className="mx-auto w-full divide-y divide-black rounded-xl">
+              {faqData.map((item, index) => (
+                <Disclosure as="div" className="p-6" key={index}>
+                  {({ open }) => (
+                    <>
+                      <Disclosure.Button className="group flex w-full items-center justify-between">
+                        <h2 className="text-start text-[24px] text-[#232324] lg:text-[32px]">
+                          {item.title}
+                        </h2>
+                        <span
+                          className={`transition-transform duration-300 ${
+                            open ? "rotate-180" : "rotate-0"
+                          }`}
+                        >
+                          {open ? (
+                            <XMarkIcon className="size-6 fill-black" />
+                          ) : (
+                            <PlusIcon className="size-6 fill-black" />
+                          )}
+                        </span>
+                      </Disclosure.Button>
+                      <Disclosure.Panel className="mt-2">
+                        <h2 className="text-start text-[20px] text-[#232324] lg:text-[24px]">
+                          {item.content}
+                        </h2>
+                      </Disclosure.Panel>
+                    </>
+                  )}
+                </Disclosure>
+              ))}
+            </div>
           </div>
         </>
       )}

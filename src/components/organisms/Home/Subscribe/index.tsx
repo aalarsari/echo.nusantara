@@ -59,20 +59,20 @@ export const Subscribe = () => {
         visible={notification.visible}
         onClose={() => setNotification({ ...notification, visible: false })}
       />
-      <div className="relative flex h-[520px] w-full items-center justify-center px-[7rem]">
+      <div className="relative flex h-[520px] w-full items-center justify-center lg:px-[7rem] overflow-hidden">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex w-full flex-col items-center justify-start"
         >
           <div className="w-full relative z-[10] flex">
             <div className="flex h-full flex-col items-start justify-center gap-6">
-              <div className="w-[60%]">
-                <h2 className="text-left font-domaine font-normal  text-[24px] text-black lg:text-[36px]">
+              <div className="w-full lg:w-[60%]">
+                <h2 className="lg:text-left text-center font-domaine font-normal text-[28px] text-black lg:text-[36px]">
                   Be the first to know and get exclusive offer
                 </h2>
               </div>
-              <div className="flex w-full flex-row">
-                <div className="relative h-[14vh] w-[250px] rounded-l-[50px] p-4 ring-1 ring-[#C1AE94] md:w-full lg:h-[52px] lg:w-[449px]">
+              <div className="flex w-full flex-col lg:flex-row px-4 lg:gap-0 gap-2">
+                <div className="relative h-12 lg:h-14 w-full rounded-full lg:rounded-r-none lg:rounded-l-full p-2 lg:p-4 ring-1 ring-[#C1AE94] md:w-full lg:w-[449px]">
                   <input
                     type="text"
                     placeholder="Enter your email"
@@ -91,7 +91,7 @@ export const Subscribe = () => {
                     </p>
                   )}
                 </div>
-                <div className="relative  z-[10] flex transform ring-1 ring-[#C1AE94] items-center justify-center rounded-r-[50px] bg-gradient-to-t from-[#B69B78] to-[#CDB698] transition-all duration-300 ease-in-out hover:bg-gradient-to-t hover:from-[#ab9a82] hover:to-[#ab9a82] w-[127px] h-[52px]">
+                <div className="relative z-[10] flex transform ring-1 ring-[#C1AE94] items-center justify-center rounded-full lg:rounded-l-none lg:rounded-r-full bg-gradient-to-t from-[#B69B78] to-[#CDB698] transition-all duration-300 ease-in-out hover:bg-gradient-to-t hover:from-[#ab9a82] hover:to-[#ab9a82] w-full lg:w-[127px] h-12 lg:h-14">
                   <button
                     type="submit"
                     className="font-josefins text-[14px] uppercase text-white"
@@ -106,9 +106,8 @@ export const Subscribe = () => {
         <div className="absolute inset-0 flex h-[520px] items-center justify-center overflow-hidden rounded-[4px]">
           <Image
             src={Assets.Subscribe}
-            style={{ objectFit: "cover" }}
+            style={{ objectFit: "cover", width: "100%", height: "100%" }}
             fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             alt="Photo Subscribe"
             priority
             title="Photo Subscribe"

@@ -46,16 +46,12 @@ export const NavHome = () => {
       label: "Home",
     },
     {
-      path: "/product",
-      label: "Product",
+      path: "/shop",
+      label: "Products",
     },
     {
       path: "/about",
       label: "About Us",
-    },
-    {
-      path: "/shop",
-      label: "Shop",
     },
     {
       path: "/news",

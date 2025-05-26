@@ -196,19 +196,29 @@ export default function Contact() {
                 }}
                 error={errors.description?.message}
               /> */}
-              <InputField
-                type="text"
-                label="Message"
-                height="h-[100px]"
-                width="w-[100%]"
-                placeholder={"Message"}
-                register={register}
-                inputProps={{
-                  name: "message",
-                  autoComplete: "message",
-                }}
-                error={errors.description?.message}
-              />
+              <div className="mb-4 w-full">
+                <label
+                  htmlFor="description"
+                  className="block mb-1 font-josefins text-[16px] font-semibold text-[#7D716A]"
+                >
+                  Message
+                </label>
+                <textarea
+                  id="∂escription"
+                  placeholder="Message"
+                  {...register("description")}
+                  autoComplete="description"
+                  className={`border rounded p-2 w-full h-screen lg:h-[200px] active:outline-none ${
+                    errors.description ? "border-red-500" : "border-gray-300"
+                  }`}
+                />
+                {errors.description && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.description.message}
+                  </p>
+                )}
+              </div>
+
               <ButtonPrimary
                 text="Submit"
                 width="w-full lg:w-[267px]"

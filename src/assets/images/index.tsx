@@ -150,3 +150,10 @@ export { default as Choose1 } from "./image-chose-1.svg";
 export { default as Choose2 } from "./image-chose-2.svg";
 export { default as Choose3 } from "./image-chose-3.svg";
 export { default as Choose4 } from "./image-chose-4.svg";
+
+export { default as ArrowRight } from "./icon-arrow-right.svg";
+
+export { default as TimeWhite } from "./icon-time-white.svg";
+export { default as TimeBronze } from "./icon-time-bronze.svg";
+
+export { default as ArrowDown } from "./icon-arrow-down.svg";

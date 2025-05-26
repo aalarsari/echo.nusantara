@@ -13,8 +13,7 @@ interface Language {
 const languages: Language[] = [
   { label: "English", value: "en", logo: "/images/logo-us.svg" },
   { label: "Indonesian", value: "id", logo: "/images/logo-indo.svg" },
-  { label: "Chinese", value: "zh-CN", logo: "/images/logo-china.svg" },
-  { label: "Korean", value: "ko", logo: "/images/logo-korea.svg" },
+  { label: "Japan", value: "ja", logo: "/images/logo-jpn.svg" },
 ];
 
 const includedLanguages = languages.map((lang) => lang.value).join(",");
@@ -26,7 +25,7 @@ function googleTranslateElementInit() {
       includedLanguages,
       autoDisplay: false,
     },
-    "google_translate_element",
+    "google_translate_element"
   );
 }
 
@@ -56,7 +55,7 @@ export const GoogleTranslate: React.FC<GoogleTranslateProps> = ({
 
     setPrefLangCookie(lang);
     const element = document.querySelector(
-      ".goog-te-combo",
+      ".goog-te-combo"
     ) as HTMLSelectElement | null;
     if (element) {
       element.value = value;
