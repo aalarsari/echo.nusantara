@@ -75,7 +75,7 @@ export default function Shop() {
   const router = useRouter();
   const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(
-    null,
+    null
   );
   const [isHovered, setIsHovered] = useState<boolean>(false);
 
@@ -91,6 +91,28 @@ export default function Shop() {
   const query = searchParams.get("query") || "";
 
   const [bannerData, setBannerData] = useState<BannerItem[]>([]);
+
+  interface CustomDotProps {
+    onClick?: () => void;
+    active?: boolean;
+  }
+  const CustomDot: React.FC<CustomDotProps> = ({ onClick, active }) => {
+    return (
+      <button
+        onClick={onClick}
+        className={`mx-1 rounded-full transition-all duration-500 mb-6
+          ${
+            active
+              ? "h-3 w-8 bg-black/20 border-[1px] border-white"
+              : "relative h-3 w-3 rounded-full p-[1px]"
+          }`}
+      >
+        {!active && (
+          <span className="block h-full w-full rounded-full bg-black/20 border-[1px] border-white" />
+        )}
+      </button>
+    );
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -185,23 +207,23 @@ export default function Shop() {
 
   const filteredProducts = query
     ? productData.filter((product) =>
-        product.name.toLowerCase().includes(query.toLowerCase()),
+        product.name.toLowerCase().includes(query.toLowerCase())
       )
     : productData;
 
   return (
-    <div className="flex h-full w-full flex-col items-center justify-between gap-10 px-8 py-16 md:px-20">
+    <div className="flex h-full w-full flex-col items-center justify-between gap-10">
       {bannerData.filter((bannerItem) => bannerItem.category === "Discount")
         .length > 0 && (
-        <div className="relative mt-10 h-[45vh] w-full overflow-hidden rounded-xl">
+        <div className="relative h-screen w-full overflow-hidden ">
           <div
-            className="flex h-[45vh] items-center justify-center"
+            className="flex h-screen items-center justify-center"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
             <Carousel
               additionalTransfrom={0}
-              arrows={isHovered}
+              arrows={false}
               autoPlay
               autoPlaySpeed={4000}
               centerMode={false}
@@ -236,30 +258,24 @@ export default function Shop() {
               sliderClass=""
               slidesToSlide={1}
               swipeable
-              className="h-[80vh] w-full"
-              customDot={<CustomDot onClick={() => null} active={true} />}
-              customLeftArrow={
-                <CustomArrowLeft onClick={() => null} isHovered={isHovered} />
-              }
-              customRightArrow={
-                <CustomArrowRight onClick={() => null} isHovered={isHovered} />
-              }
+              className="h-full w-full"
+              customDot={<CustomDot />}
             >
               {bannerData
-                .filter((bannerItem) => bannerItem.category === "Discount")
+                .filter((bannerItem) => bannerItem.category === "Products")
                 .map((bannerItem, index) => (
-                  <div key={index}>
-                    <div className="flex h-[100vh] items-center justify-center">
-                      <div className="relative h-[100%] w-full bg-black">
-                        <Image
-                          src={bannerItem.path}
-                          alt={bannerItem.title}
-                          fill
-                          style={{ objectFit: "cover" }}
-                          priority={true}
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        />
-                      </div>
+                  <div
+                    key={index}
+                    className="flex h-[100vh] items-center justify-center"
+                  >
+                    <div className="relative h-[100%] w-full">
+                      <Image
+                        src={bannerItem.path}
+                        alt={bannerItem.title}
+                        fill
+                        style={{ objectFit: "cover" }}
+                        priority={true}
+                      />
                     </div>
                   </div>
                 ))}
@@ -268,73 +284,57 @@ export default function Shop() {
         </div>
       )}
 
-      <div className="mt-4 flex h-full w-full flex-col items-center justify-center gap-[4rem]">
+      <div className="mt-4 flex h-full w-full flex-col items-center justify-center gap-[4rem] px-20">
         <div className="relative flex h-full w-full flex-col gap-4">
-          <Controller
-            control={control}
-            name="categoryId"
-            rules={{ required: "Please select an option" }}
-            render={({ field }) => (
-              <Listbox
-                value={selectedCategory}
-                onChange={(selectedCategory) => {
-                  setSelectedCategory(selectedCategory);
-                  setCategoryId(selectedCategory?.id || null);
-                  field.onChange(selectedCategory?.id || null);
-                  setPage(1);
-                }}
-              >
-                {({ open }) => (
-                  <>
-                    <div className="relative">
-                      <Listbox.Button className="flex w-full cursor-pointer items-center justify-between rounded-md bg-white px-4 py-3 text-left text-gray-500 ring-[0.05rem] ring-gray-400 focus:ring-[0.05rem] focus:ring-[#C1AE94] sm:text-sm md:w-[11rem]">
-                        <span>
-                          {selectedCategory
-                            ? selectedCategory.name.toUpperCase()
-                            : "Filter"}
-                        </span>
-                        <AdjustmentsVerticalIcon
-                          className={`h-5 w-5`}
-                          aria-hidden="true"
-                        />
-                      </Listbox.Button>
-                      <Transition
-                        show={open}
-                        enter="transition duration-300 ease-out"
-                        enterFrom="transform scale-95 opacity-0"
-                        enterTo="transform scale-100 opacity-100"
-                        leave="transition duration-300 ease-out"
-                        leaveFrom="transform scale-100 opacity-100"
-                        leaveTo="transform scale-95 opacity-0"
-                      >
-                        <Listbox.Options
-                          className="absolute z-10 mt-2 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm md:w-[11rem]"
-                          style={{ display: open ? "block" : "none" }}
+          <div className="flex items-center justify-between w-full">
+            <span className="text-2xl font-semibold">
+              {productData.length} Produk
+            </span>
+            <Controller
+              control={control}
+              name="categoryId"
+              rules={{ required: "Please select an option" }}
+              render={({ field }) => (
+                <Listbox
+                  value={selectedCategory}
+                  onChange={(selectedCategory) => {
+                    setSelectedCategory(selectedCategory);
+                    setCategoryId(selectedCategory?.id || null);
+                    field.onChange(selectedCategory?.id || null);
+                    setPage(1);
+                  }}
+                >
+                  {({ open }) => (
+                    <>
+                      <div className="relative">
+                        <Listbox.Button className="flex w-full cursor-pointer items-center justify-between rounded-md bg-white px-4 py-3 text-left text-gray-500 ring-[0.05rem] ring-gray-400 focus:ring-[0.05rem] focus:ring-[#C1AE94] sm:text-sm md:w-[11rem]">
+                          <span>
+                            {selectedCategory
+                              ? selectedCategory.name.toUpperCase()
+                              : "Filter"}
+                          </span>
+                          <AdjustmentsVerticalIcon
+                            className={`h-5 w-5`}
+                            aria-hidden="true"
+                          />
+                        </Listbox.Button>
+                        <Transition
+                          show={open}
+                          enter="transition duration-300 ease-out"
+                          enterFrom="transform scale-95 opacity-0"
+                          enterTo="transform scale-100 opacity-100"
+                          leave="transition duration-300 ease-out"
+                          leaveFrom="transform scale-100 opacity-100"
+                          leaveTo="transform scale-95 opacity-0"
                         >
-                          {/* "All" option */}
-                          <Listbox.Option
-                            key={0}
-                            value={null} // Null value for "All" selection
-                            className={({ active }) =>
-                              `${active ? "bg-[#C1AE94] text-white" : "text-gray-900"} relative cursor-pointer select-none py-2 pl-3 pr-9`
-                            }
+                          <Listbox.Options
+                            className="absolute z-10 mt-2 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm md:w-[11rem]"
+                            style={{ display: open ? "block" : "none" }}
                           >
-                            {({ selected, active }) => (
-                              <>
-                                <span
-                                  className={`${selected ? "text-gray-300" : "text-black"} block truncate`}
-                                >
-                                  ALL
-                                </span>
-                              </>
-                            )}
-                          </Listbox.Option>
-
-                          {/* Existing categories */}
-                          {categories.map((category) => (
+                            {/* "All" option */}
                             <Listbox.Option
-                              key={category.id}
-                              value={category}
+                              key={0}
+                              value={null} // Null value for "All" selection
                               className={({ active }) =>
                                 `${active ? "bg-[#C1AE94] text-white" : "text-gray-900"} relative cursor-pointer select-none py-2 pl-3 pr-9`
                               }
@@ -344,29 +344,50 @@ export default function Shop() {
                                   <span
                                     className={`${selected ? "text-gray-300" : "text-black"} block truncate`}
                                   >
-                                    {category.name.toUpperCase()}
+                                    ALL
                                   </span>
                                 </>
                               )}
                             </Listbox.Option>
-                          ))}
-                        </Listbox.Options>
-                      </Transition>
-                    </div>
-                  </>
-                )}
-              </Listbox>
-            )}
-          />
+
+                            {/* Existing categories */}
+                            {categories.map((category) => (
+                              <Listbox.Option
+                                key={category.id}
+                                value={category}
+                                className={({ active }) =>
+                                  `${active ? "bg-[#C1AE94] text-white" : "text-gray-900"} relative cursor-pointer select-none py-2 pl-3 pr-9`
+                                }
+                              >
+                                {({ selected, active }) => (
+                                  <>
+                                    <span
+                                      className={`${selected ? "text-gray-300" : "text-black"} block truncate`}
+                                    >
+                                      {category.name.toUpperCase()}
+                                    </span>
+                                  </>
+                                )}
+                              </Listbox.Option>
+                            ))}
+                          </Listbox.Options>
+                        </Transition>
+                      </div>
+                    </>
+                  )}
+                </Listbox>
+              )}
+            />
+          </div>
           {productData.length > 0 ? (
-            <div className="flex flex-col gap-10 md:grid md:grid-cols-2 lg:grid lg:grid-cols-3">
+            <div className="flex flex-col gap-10 md:grid md:grid-cols-3 lg:grid lg:grid-cols-4">
               {filteredProducts.map((product) => (
                 <div
                   key={product.id}
                   onClick={() => handleProductClick(product.slug)}
                   className="relative flex w-full"
                 >
-                  <div className="relative flex h-full w-full cursor-pointer flex-col justify-between overflow-hidden rounded-xl shadow-lg shadow-gray-200">
+                  <div className="relative flex h-full w-full cursor-pointer flex-col justify-between overflow-hidden shadow-gray-200">
                     <div className="relative flex h-auto w-full flex-col justify-between overflow-hidden rounded-md">
                       <div className="relative h-[25rem] w-full">
                         <Image
@@ -377,20 +398,6 @@ export default function Shop() {
                           alt={"Foto Coba"}
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         />
-                        <button
-                          aria-label="Heart Item"
-                          className="absolute right-4 top-4 flex h-[3rem] w-[3rem] items-center justify-center rounded-full bg-white"
-                          onClick={(event) => {
-                            event.stopPropagation();
-                            handleWishlistClick(product.id);
-                          }}
-                        >
-                          {likedProducts.includes(product.id) ? (
-                            <HeartSolidIcon className="h-8 w-8 text-red-500" />
-                          ) : (
-                            <HeartOutlineIcon className="h-8 w-8 text-gray-200" />
-                          )}
-                        </button>
                       </div>
                       <div className="relative mx-4 my-2 flex h-[12rem] flex-col justify-between gap-4">
                         <div className="relative flex flex-col">
@@ -407,7 +414,7 @@ export default function Shop() {
                         </div>
                         <div className="relative flex w-full flex-row items-center">
                           <div>
-                            <span className="font-josefins text-[26px] font-semibold text-[#252525]">
+                            <span className="font-josefins text-[28px] font-semibold text-[#B69B7C]">
                               {product.Discount?.length > 0 ? (
                                 <div className="flex flex-row gap-2">
                                   <span className="ml-2 text-red-500 line-through">

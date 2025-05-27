@@ -17,15 +17,13 @@ export const ButtonPrimary: React.FC<ButtonPrimaryProps> = ({
 }) => {
   return (
     <div
-      className={`transform rounded-[4px] bg-gradient-to-t from-[#B69B78] to-[#CDB698] 
+      className={`transform cursor-pointer rounded-full bg-[#B69B7C]
       transition-all duration-300 ease-in-out ${
-        !disabled
-          ? "hover:bg-gradient-to-t hover:from-[#ab9a82] hover:to-[#ab9a82]"
-          : "cursor-not-allowed opacity-50"
+        !disabled ? "hover:bg-[#B69B7C]" : "cursor-not-allowed opacity-50"
       } ${width} ${height}`}
     >
       <button
-        className="flex h-full w-full items-center justify-center font-domaine text-[20px] text-white"
+        className="flex h-full w-full items-center justify-center font-domaine text-[20px] text-white rounded-full"
         onClick={disabled ? undefined : onClick}
         disabled={disabled}
       >

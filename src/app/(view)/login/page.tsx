@@ -85,7 +85,7 @@ export default function Login() {
       console.error("Error during login:", error);
       showNotification(
         "An error occurred during login. Please try again later.",
-        "error",
+        "error"
       );
     }
   };
@@ -110,42 +110,23 @@ export default function Login() {
         onClose={() => setNotification({ ...notification, visible: false })}
       />
       <div className="layer-bg -translate-z-[55px] scale-[1.06] bg-layer-10 bg-no-repeat" />
-      <div className="relative flex h-full w-full">
-        <div className="flex h-full w-0 items-center justify-center lg:w-[50%]">
-          <div className="">
-            <Image
-              src={Assets.LogoEcho}
-              alt="Logo Echo"
-              loading="lazy"
-              width={250}
-              height={250}
-            />
-          </div>
-          <div className="left-1/5 absolute bottom-10 hidden gap-4 lg:block">
-            <Image
-              src={Assets.Symphony}
-              alt="Logo Echo"
-              width={400}
-              height={400}
-            />
-          </div>
+      <div className="relative flex h-full w-full justify-center items-center flex-col gap-8">
+        <div className="flex w-full flex-col gap-4 md:gap-0">
+          <h2 className="text-center font-domaine text-2xl text-white md:text-3xl">
+            Welcome Back
+          </h2>
+          <p className="md:font-regular text-justify font-josefins text-lg font-light text-white md:text-center">
+            Sign in to continue your journey. Access exclusive features and
+            personalized experiences
+          </p>
         </div>
-        <div className="z-[1] w-full p-6 md:h-full lg:w-[50%]">
-          <div className="relative flex h-full w-full items-center justify-center rounded-xl border-[0.08px] border-[#E0E0E0]/30 bg-black/5 px-4 backdrop-blur-md">
+        <div className="z-[1] h-[70%] w-[50%] ">
+          <div className="relative flex h-full w-full items-center justify-center rounded-xl border-[0.08px] border-[#E0E0E0]/30 bg-white/40 px-4 backdrop-blur-md">
             <div className="flex h-full w-full flex-col items-center justify-center gap-10">
-              <div className="flex w-full flex-col gap-4 md:w-[60%] md:gap-0">
-                <h2 className="text-center font-domaine text-2xl text-white md:text-3xl">
-                  Welcome Back
-                </h2>
-                <p className="md:font-regular text-justify font-josefins text-lg font-light text-white md:text-center">
-                  Sign in to continue your journey. Access exclusive features
-                  and personalized experiences
-                </p>
-              </div>
               <div className="flex w-full items-center justify-center">
                 <form
                   onSubmit={handleSubmit(onSubmitCredential)}
-                  className="flex w-full flex-col gap-4 md:w-[60%]"
+                  className="flex w-full flex-col gap-4 px-10"
                 >
                   <div className="relative flex w-full flex-col gap-2">
                     <input
@@ -164,11 +145,12 @@ export default function Login() {
                     )}
                   </div>
                   <InputPassword
+                    label="Password"
                     showPassword={showPassword}
                     togglePassword={togglePassword}
                     register={register}
                     name="password"
-                    width="w-350px md:w-full"
+                    width="w-full"
                     height="h-[50px]"
                     placeholder="Password"
                     error={
@@ -226,9 +208,6 @@ export default function Login() {
             </div>
           </div>
         </div>
-      </div>
-      <div className="layer-content translate-z-[190px] pointer-events-none scale-[0.8]">
-        <canvas className="rain h-full w-full" />
       </div>
     </main>
   );

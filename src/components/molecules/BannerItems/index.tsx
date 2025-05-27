@@ -20,19 +20,42 @@ interface BannerItem {
 }
 
 export const BannerItems = ({ bannerData }: { bannerData: BannerItem[] }) => {
-  const [isHovered, setIsHovered] = useState<boolean>(false);
+  interface CustomDotProps {
+    onClick?: () => void;
+    active?: boolean;
+  }
+  const CustomDot: React.FC<CustomDotProps> = ({ onClick, active }) => {
+    return (
+      <button
+        onClick={onClick}
+        className={`mx-1 rounded-full transition-all duration-500
+        ${
+          active
+            ? "h-3 w-8 bg-gradient-to-tr from-[#D5BD9F] to-[#9D846D]"
+            : "relative h-3 w-3 rounded-full p-[1px]"
+        }`}
+        style={
+          !active
+            ? {
+                background: "linear-gradient(to top right, #D5BD9F, #9D846D)",
+              }
+            : undefined
+        }
+      >
+        {!active && (
+          <span className="block h-full w-full rounded-full bg-white" />
+        )}
+      </button>
+    );
+  };
 
   return (
     <div className="flex h-full w-full flex-col">
       {/* Banner */}
-      <div
-        className="flex h-[65vh] items-center justify-center"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
+      <div className="flex h-[65vh] items-center justify-center">
         <Carousel
           additionalTransfrom={0}
-          arrows={isHovered}
+          arrows={false}
           autoPlay
           autoPlaySpeed={4000}
           centerMode={false}
@@ -68,13 +91,7 @@ export const BannerItems = ({ bannerData }: { bannerData: BannerItem[] }) => {
           slidesToSlide={1}
           swipeable
           className="h-[80vh] w-full"
-          customDot={<CustomDot onClick={() => null} active={true} />}
-          customLeftArrow={
-            <CustomArrowLeft onClick={() => null} isHovered={isHovered} />
-          }
-          customRightArrow={
-            <CustomArrowRight onClick={() => null} isHovered={isHovered} />
-          }
+          customDot={<CustomDot />}
         >
           {bannerData
             .filter((bannerItem) => bannerItem.category === "Products")

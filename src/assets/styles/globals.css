@@ -485,3 +485,23 @@ a:focus-visible {
   scrollbar-width: none; /* Untuk Firefox */
   -ms-overflow-style: none; /* Untuk Edge */
 }
+
+.skiptranslate {
+  display: none !important;
+}
+
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+
+.goog-te-gadget img {
+  display: none !important;
+}
+
+#google_translate_element {
+  display: none;
+}
+
+.VIpgJd-ZVi9od-aZ2wEe-wOHMyf-ti6hGc {
+  display: none !important;
+}
