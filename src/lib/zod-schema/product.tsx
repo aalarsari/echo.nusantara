@@ -40,6 +40,10 @@ export const ProductValidation = zfd.formData(
     descriptions: z.string({
       required_error: "Descriptions is required",
     }),
+    komposisi: z.string().optional().nullable(),
+    manfaat: z.string().optional().nullable(),
+    caraKomsumsi: z.string().optional().nullable(),
+    caraPenyimpanan: z.string().optional().nullable(),
     subDescriptions: z.string().optional().nullable(),
     priceIDR: zfd.numeric(
       z.number({
@@ -165,6 +169,10 @@ export const ProductUpadateValidation = zfd.formData(
   z.object({
     name: z.string().optional().nullable(),
     descriptions: z.string().optional().nullable(),
+    komposisi: z.string().optional().nullable(),
+    manfaat: z.string().optional().nullable(),
+    caraKomsumsi: z.string().optional().nullable(),
+    caraPenyimpanan: z.string().optional().nullable(),
     subDescriptions: z.string().optional().nullable(),
     isBestSeller: z.boolean().optional().nullable(),
     recommendation: z.boolean().optional().nullable(),
