@@ -156,6 +156,10 @@ model Products {
   id              Int               @id @unique @default(autoincrement())
   name            String
   descriptions    String
+  komposisi       String?
+  manfaat         String?
+  caraKomsumsi    String?
+  caraPenyimpanan String?
   subDescriptions String?           @map("sub_descriptions")
   slug            String            @unique
   priceIDR        Float             @default(0) @db.Real

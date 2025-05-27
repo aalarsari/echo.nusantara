@@ -99,6 +99,10 @@ export async function PUT(request: NextRequest, { params }: { params: { slug: st
         subDescriptions:
           validation.subDescriptions != "null" || validation.subDescriptions != null ? validation.subDescriptions : validation.subDescriptions!,
         priceIDR: validation.priceIDR != null ? validation.priceIDR! : product?.priceIDR!,
+        komposisi: validation.komposisi != null ? validation.komposisi! : product?.komposisi!,
+        manfaat: validation.manfaat != null ? validation.manfaat! : product?.manfaat!,
+        caraKomsumsi: validation.caraKomsumsi != null ? validation.caraKomsumsi! : product?.caraKomsumsi!,
+        caraPenyimpanan: validation.caraPenyimpanan != null ? validation.caraPenyimpanan! : product?.caraPenyimpanan!,
         weight: validation.weight != null ? validation.weight! : product?.weight!,
         maxOrder: validation.maxOrder != null ? validation.maxOrder! : product?.maxOrder!,
         stock: validation.stock != null ? validation.stock! : product?.stock!,
