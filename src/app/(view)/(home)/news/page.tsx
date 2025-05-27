@@ -189,12 +189,12 @@ export default function News() {
           <div className="relative w-full h-[656px] overflow-y-scroll">
             {news.topBlog && news.topBlog.length > 0
               ? news.topBlog.map((item, index) => (
-                  <div className="flex flex-col gap-4 py-2 px-4">
-                    <div
-                      key={index}
-                      onClick={() => handleBlogClick(item.slug)}
-                      className="h-[225px] relative overflow-hidden bg-white w-full cursor-pointer shadow-product rounded-[16px] shadow-gray-100"
-                    >
+                  <div
+                    key={index}
+                    onClick={() => handleBlogClick(item.slug)}
+                    className="flex flex-col gap-4 py-2 px-4"
+                  >
+                    <div className="h-[225px] relative overflow-hidden bg-white w-full cursor-pointer shadow-product rounded-[16px] shadow-gray-100">
                       <div className="flex h-full w-full flex-row gap-2">
                         <div className="relative h-full w-[225px]">
                           <Image
@@ -298,7 +298,7 @@ export default function News() {
             news.blog.map((item, index) => (
               <div
                 key={index}
-                onClick={() => console.log("handleBlogClick", item.slug)}
+                onClick={() => router.push(`/news/${item.slug}`)}
                 className="h-[225px] relative overflow-hidden bg-white w-full cursor-pointer shadow-product rounded-[16px] shadow-gray-100"
               >
                 <div className="flex h-full w-full flex-row gap-2">
@@ -328,11 +328,11 @@ export default function News() {
                       <div className="flex flex-row gap-2 items-center">
                         <Image
                           src={Assets.TimeBronze}
-                          alt="Last News"
+                          alt="time-brown"
                           width={16}
                           height={16}
                         />
-                        <span className="font-domaine text-[14px] font-light text-black">
+                        <span className="font-domaine text-[14px] font-light text-[#B69B7C]">
                           {moment(item.updateAt).format("DD MMMM YYYY")}
                         </span>
                       </div>
