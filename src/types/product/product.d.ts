@@ -3,6 +3,12 @@ interface Products {
    id?: number;
    name?: string;
    descriptions?: string;
+   komposisi?: string | null;
+   manfaat?: string | null;
+   caraKomsumsi?: string | null;
+   caraPenyimpanan?: string | null;
+   bestSeller?: boolean | null;
+   recommendation?: boolean | null;
    subDescriptions?: string | null;
    slug?: string;
    // priceUSD?: number;
