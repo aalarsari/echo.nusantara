@@ -263,6 +263,7 @@ export async function GET(request: NextRequest) {
       name: true,
       slug: true,
       stock: true,
+      bestseller: true,
       categoryId: true,
       size: true,
       updateAt: true,
