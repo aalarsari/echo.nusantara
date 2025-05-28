@@ -9,12 +9,9 @@ export default function HomeLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const pathname = usePathname();
-  const showNavbar = pathname !== "/";
-
   return (
     <>
-      {showNavbar && <Navbar />}
+      <Navbar />
       {children}
       <Subscribe />
       <Footer />

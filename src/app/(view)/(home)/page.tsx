@@ -3,16 +3,22 @@
 import { useEffect, useState } from "react";
 import Image, { StaticImageData } from "next/image";
 import { Assets } from "@/assets";
-import { ModalForceClose, NavHome } from "@/components";
+import { FormatRupiah, ModalForceClose, NavHome } from "@/components";
 import { useSession } from "next-auth/react";
 import { Dialog } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import Carousel from "react-multi-carousel";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useMediaQuery } from "react-responsive";
+import { blog } from "@/types/blog/blog";
+import moment from "moment";
+import { GetBlog } from "@/controller/noAuth/blog";
+import { getListShop } from "@/controller/noAuth/shop";
+import { AppDispatch } from "@/app/store";
+import { useDispatch } from "react-redux";
 
 interface CustomDotProps {
   onClick?: () => void;
@@ -44,13 +50,49 @@ const CustomDot: React.FC<CustomDotProps> = ({ onClick, active }) => {
   );
 };
 
+interface Discount {
+  id: number;
+  subject: string;
+  discount: number;
+  expireDate: string;
+}
+
+interface ProductItem {
+  id: number;
+  image1: string;
+  name: string;
+  slug: string;
+  weight: number;
+  descriptions: string;
+  priceIDR: number;
+  Discount: Discount[];
+  WishlistProduct: { id: number; productsId: number }[];
+  subDescriptions: string;
+}
+
 export default function Home() {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [showSymphony, setShowSymphony] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
-  const { data: session } = useSession();
+  var dispatch: AppDispatch = useDispatch();
+
+  const session = useSession();
+  // const { data: session } = useSession();
   const router = useRouter();
   const isMobile = useMediaQuery({ maxWidth: 767 });
+  const [news, setNewsData] = useState<{
+    blog: blog[];
+  }>({
+    blog: [],
+  });
+  const [pageSize, setPageSize] = useState<number>(6);
+  const [page, setPage] = useState<number>(1);
+  const [productData, setProductData] = useState<ProductItem[]>([]);
+  const [likedProducts, setLikedProducts] = useState<number[]>([]);
+  const [categoryId, setCategoryId] = useState<number | null>(null);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const searchParams = useSearchParams();
+  const query = searchParams.get("query") || "";
 
   useEffect(() => {
     const handleScroll = () => setScrollPosition(window.scrollY);
@@ -91,51 +133,71 @@ export default function Home() {
     setStep((prev) => (prev - 1 + totalSteps) % totalSteps);
   const goToSlide = (index: number) => setStep(index);
 
-  const products = [
-    {
-      image: Assets.Pandan,
-      title: "Minuman Sarang Burung Walet - Rasa Pandan",
-      subtitle: "Contains 3.5 Grams of Premium Bird's Nest",
-      price: "Rp. 275.000",
-      link: "/shop/minuman-sarang-burung-walet-rasa-pandan",
-    },
-    {
-      image: Assets.Kurma,
-      title: "Minuman Sarang Burung Walet - Rasa Kurma",
-      subtitle: "Contains 3.5 Grams of Premium Bird's Nest",
-      price: "Rp. 275.000",
-      link: "/shop/minuman-sarang-burung-walet-rasa-kurma",
-    },
-    {
-      image: Assets.Teja,
-      title: "Teja Pandan - Minuman Sarang Burung Walet",
-      subtitle: "Contains 3.5 Grams of Premium Bird's Nest",
-      price: "Rp. 115.500",
-      link: "/shop/teja-pandan-minuman-sarang-burung-walet",
-    },
-    {
-      image: Assets.HampersPremium,
-      title: "Minuman Sarang Burung Walet Hampers Premium",
-      subtitle: "Contains 3.5 Grams of Premium Bird's Nest",
-      price: "Rp 3.080.000",
-      link: "/shop/minuman-sarang-burung-walet-hampers-premium-isi-8-botol",
-    },
-    {
-      image: Assets.HampersA,
-      title: "Minuman Sarang Burung Walet Hampers Deluxe A",
-      subtitle: "Contains 3.5 Grams of Premium Bird's Nest",
-      price: "Rp 3.850.000",
-      link: "/shop/minuman-sarang-burung-walet-hampers-deluxe-a-8-botol-serat-kering",
-    },
-  ];
+  useEffect(() => {
+    const fetchDataBlog = async () => {
+      try {
+        const response = await GetBlog(page, pageSize);
+        if (response.ok) {
+          const result = await response.json();
+          setNewsData(result?.data);
+          console.log(result?.data, "dasda fadata");
+        } else {
+          console.error("Failed to fetch data");
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchDataBlog();
+  }, [page, pageSize]);
+
+  const handleProductClick = (slug: string) => {
+    try {
+      router.push(`/shop/${slug}`);
+    } catch (error) {
+      console.error("Error navigating to product detail:", error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getListShop(pageSize, page, categoryId!);
+        if (response.ok) {
+          const result = await response.json();
+          const { product, productTotal } = result.data;
+          setProductData(product);
+          console.log(product, "Product");
+          setTotalPages(Math.ceil(productTotal / pageSize));
+          const wishlistIds = result?.data.product
+            .flatMap((product: ProductItem) => product.WishlistProduct)
+            .map((wishlist: { productsId: any }) => wishlist.productsId);
+          setLikedProducts(wishlistIds);
+        } else {
+          console.error("Failed to fetch data");
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, [page, pageSize, categoryId, session.status]);
+
+  const filteredProducts = query
+    ? productData.filter((product) =>
+        product.name.toLowerCase().includes(query.toLowerCase())
+      )
+    : productData;
 
   return (
     <>
       <ModalForceClose session={session} />
       <main className="relative min-h-screen">
-        <NavHome />
         {/* Section #1 */}
-        <div className="relative min-h-screen overflow-hidden">
+        <div
+          onClick={() => router.push("/shop")}
+          className="relative min-h-screen overflow-hidden cursor-pointer"
+        >
           <div className="absolute top-0 left-0 z-0 h-full w-full">
             <Image
               src={Assets.Home1}
@@ -182,30 +244,49 @@ export default function Home() {
                 customDot={<CustomDot />}
                 showDots={true}
               >
-                {products.map((product, index) => (
+                {filteredProducts.map((product) => (
                   <div
-                    key={index}
+                    key={product.id}
                     className="w-full px-2"
-                    onClick={() => router.push(product.link)}
+                    onClick={() => handleProductClick(product.slug)}
                   >
-                    <div className="relative h-[450px] w-full cursor-pointer shadow-product bg-transparent shadow-gray-100 group">
+                    <div className="relative h-[480px] w-full cursor-pointer shadow-product bg-transparent shadow-gray-100 group">
                       <div className="flex h-full w-full flex-col gap-2">
                         {/* Gambar produk */}
                         <div className="relative h-[18rem] w-full overflow-hidden rounded-[8px]">
-                          <Image
-                            src={product.image}
+                          {/* <Image
+                            src={product.image1}
                             priority
-                            className="w-full h-full object-cover"
-                            alt={product.title}
+                            style={{
+                              objectFit: "cover",
+                              width: "100%",
+                              height: "100%",
+                            }}
+                            // className="w-full h-full object-cover"
+                            alt={product.name}
+                          /> */}
+                          <Image
+                            src={product.image1}
+                            alt={product.name}
+                            fill
+                            priority
+                            style={{ objectFit: "cover" }}
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                           />
 
                           {/* Tombol hover (desktop only) */}
                           <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden md:flex items-center justify-center">
                             <div className="flex gap-2 translate-y-6 group-hover:translate-y-0 transition-all duration-300 w-full px-4">
-                              <button className="bg-white border border-[#B69B7C] text-black w-full text-sm rounded-full py-3 hover:bg-[#B69B7C] hover:text-white transition">
+                              <button
+                                onClick={() => handleProductClick(product.slug)}
+                                className="bg-white border border-[#B69B7C] text-black w-full text-sm rounded-full py-3 hover:bg-[#B69B7C] hover:text-white transition"
+                              >
                                 Add to Cart
                               </button>
-                              <button className="bg-[#B69B7C] text-white w-full text-sm rounded-full py-3 hover:bg-white hover:text-black transition">
+                              <button
+                                onClick={() => handleProductClick(product.slug)}
+                                className="bg-[#B69B7C] text-white w-full text-sm rounded-full py-3 hover:bg-white hover:text-black transition"
+                              >
                                 Buy Now
                               </button>
                             </div>
@@ -213,25 +294,57 @@ export default function Home() {
                         </div>
 
                         {/* Informasi produk */}
-                        <div className="flex flex-col gap-2">
+                        <div className="flex flex-col justify-between h-[35%]">
                           <div className="flex flex-col gap-1 py-1">
                             <span className="font-domaine text-[18px] font-light text-black">
-                              {product.title}
+                              {product.name}
                             </span>
                             <span className="font-domaine text-[14px] text-black">
-                              {product.subtitle}
+                              {product.subDescriptions}
                             </span>
                           </div>
-                          <span className="font-josefins font-semibold text-[24px] text-[#B69B7C]">
-                            {product.price}
-                          </span>
+                          <div className="relative flex w-full flex-row items-center">
+                            <div>
+                              <span className="font-josefins text-[28px] font-semibold text-[#B69B7C]">
+                                {product.Discount?.length > 0 ? (
+                                  <div className="flex flex-row gap-2">
+                                    <span className="ml-2 text-red-500 line-through">
+                                      <FormatRupiah
+                                        price={product.priceIDR || 0}
+                                      />
+                                    </span>
+                                    <FormatRupiah
+                                      price={
+                                        product.priceIDR -
+                                        product.priceIDR *
+                                          (product.Discount[0]?.discount || 0)
+                                      }
+                                    />
+                                  </div>
+                                ) : (
+                                  <FormatRupiah price={product.priceIDR || 0} />
+                                )}
+                              </span>
+                            </div>
+                            {product.Discount?.[0]?.discount && (
+                              <div className="absolute -top-10 animate-bounce rounded bg-red-500 p-1 text-[18px] text-white">
+                                {`${(product.Discount[0].discount * 100).toFixed(0)}%`}
+                              </div>
+                            )}
+                          </div>
 
                           {/* Tombol tampil langsung di mobile */}
                           <div className="flex flex-row md:hidden gap-2 mt-2">
-                            <button className="bg-white border border-[#B69B7C] text-black w-full text-sm rounded-full py-3 hover:bg-[#B69B7C] hover:text-white transition">
+                            <button
+                              onClick={() => handleProductClick(product.slug)}
+                              className="bg-white border border-[#B69B7C] text-black w-full text-sm rounded-full py-3 hover:bg-[#B69B7C] hover:text-white transition"
+                            >
                               Add to Cart
                             </button>
-                            <button className="bg-[#B69B7C] text-white w-full text-sm rounded-full py-3 hover:bg-white hover:text-black transition">
+                            <button
+                              onClick={() => handleProductClick(product.slug)}
+                              className="bg-[#B69B7C] text-white w-full text-sm rounded-full py-3 hover:bg-white hover:text-black transition"
+                            >
                               Buy Now
                             </button>
                           </div>
@@ -470,52 +583,73 @@ export default function Home() {
                 customRightArrow={<ChevronRight size={24} />}
                 customDot={<CustomDot />}
               >
-                {products.map((product, index) => (
-                  <div key={index} className="w-full px-4">
-                    <div className="lg:h-[460px] h-full relative overflow-hidden w-full cursor-pointer shadow-product rounded-[16px] shadow-gray-100 lg:hover:scale-105 transition-all duration-900 group">
-                      <div className="flex h-screen relative lg:h-full w-full flex-col lg:flex-row gap-2">
-                        <div className="relative h-full w-[460px]">
-                          <Image
-                            src={product.image}
-                            fill
-                            style={{
-                              objectFit: "cover",
-                              width: "100%",
-                              height: "100%",
-                            }}
-                            priority={true}
-                            alt={product.title}
-                          />
-                        </div>
-                        <div className="flex flex-col justify-center items-left relative gap-8 lg:h-full w-full lg:w-[50%] px-4 py-2">
-                          <div className="w-full">
-                            <div className="flex flex-col gap-1">
-                              <span className="font-domaine uppercase text-[14px] font-light text-black">
-                                Category
-                              </span>
-                              <span className="font-domaine text-[20px] lg:text-[28px] font-semibold text-black">
-                                Lorem Ipsum is simply dummy text of the printing
+                {news.blog && news.blog.length > 0 ? (
+                  news.blog.slice(0, 5).map((item, index) => (
+                    <div
+                      key={index}
+                      onClick={() => router.push(`/news/${item.slug}`)}
+                      className="w-full px-4"
+                    >
+                      <div className="lg:h-[460px] h-full relative overflow-hidden w-full cursor-pointer shadow-product rounded-[16px] shadow-gray-100 lg:hover:scale-105 transition-all duration-900 group">
+                        <div className="flex h-screen relative lg:h-full w-full flex-col lg:flex-row gap-2">
+                          <div className="relative h-full w-[460px]">
+                            <Image
+                              src={item.image?.[0] || Assets.DefaultImage}
+                              fill
+                              style={{
+                                objectFit: "cover",
+                                width: "100%",
+                                height: "100%",
+                              }}
+                              priority={true}
+                              alt={item.title}
+                            />
+                          </div>
+                          <div className="flex flex-col justify-center items-left relative gap-8 lg:h-full w-full lg:w-[50%] px-4 py-2">
+                            <div className="w-full">
+                              <div className="flex flex-col gap-1">
+                                <span className="font-domaine uppercase text-[14px] font-light text-black">
+                                  {item.category?.name ?? "No Category"}
+                                </span>
+                                <span className="font-domaine text-[20px] lg:text-[28px] font-semibold text-black">
+                                  {item.title}
+                                </span>
+                              </div>
+                              <span className="font-domaine text-[16px] text-black">
+                                {item.subtitle}
                               </span>
                             </div>
-                            <span className="font-domaine text-[16px] text-black">
-                              It is a long established fact that a reader will
-                              be distracted by the readable content of a page
-                              when looking at its layout.
-                            </span>
-                          </div>
-                          <div className="w-full flex justify-between items-center">
-                            <span className="font-domaine text-[14px] font-light text-black">
-                              1 May 2025
-                            </span>
-                            <button className="font-domaine text-[14px] rounded-full px-4 py-1 font-semibold text-[#B69B7C] ring-1 ring-[#7D716A] transition-colors duration-300 group-hover:bg-[#B69B7C] group-hover:text-white">
-                              Read More
-                            </button>
+                            <div className="w-full flex justify-between items-center">
+                              <div className="flex flex-row gap-2 items-center">
+                                <Image
+                                  src={Assets.TimeBronze}
+                                  alt="time-bronze"
+                                  width={16}
+                                  height={16}
+                                />
+                                <span className="font-domaine text-[14px] font-light text-[#B69B7C]">
+                                  {moment(item.updateAt).format("DD MMMM YYYY")}
+                                </span>
+                              </div>
+                              <button
+                                onClick={() =>
+                                  router.push(`/news/${item.slug}`)
+                                }
+                                className="font-domaine text-[14px] rounded-full px-4 py-1 font-semibold text-[#B69B7C] ring-1 ring-[#7D716A] transition-colors duration-300 group-hover:bg-[#B69B7C] group-hover:text-white"
+                              >
+                                Read More
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
+                  ))
+                ) : (
+                  <div className="text-center text-gray-500 col-span-full">
+                    No blog posts found.
                   </div>
-                ))}
+                )}
               </Carousel>
             </div>
           </div>

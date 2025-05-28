@@ -67,7 +67,7 @@ export default function DetailNewsComponent({
     const fetchBlog = async () => {
       const orderBy = selectedOption === "Newest" ? "desc" : "asc";
       try {
-        const res = await GetBlog(page, limit, orderBy); // pakai state
+        const res = await GetBlog(page, limit, orderBy);
         const json = await res.json();
         setBlogData(json?.data || []);
       } catch (err) {
@@ -76,13 +76,13 @@ export default function DetailNewsComponent({
     };
 
     fetchBlog();
-  }, [selectedOption, page, limit]); // ✅ dependencies disesuaikan
+  }, [selectedOption, page, limit]);
 
   const handleSelect = (option: string) => {
     setSelectedOption(option);
-    setPage(1); // reset ke halaman 1 saat urutan diubah
+    setPage(1);
     setIsOpen(false);
-    console.log("Selected option:", option); // ✅ Cek opsi terpilih
+    console.log("Selected option:", option);
   };
 
   return (
@@ -117,13 +117,13 @@ export default function DetailNewsComponent({
             </div>
             <div
               style={{ position: "relative" }}
-              className="h-[40vh] w-full overflow-hidden rounded-[8px]"
+              className="h-[676px] w-full overflow-hidden rounded-[8px]"
             >
               <Image
                 src={blogDetail.image[0] || Assets.DefaultImage}
                 alt={blogDetail.title}
                 fill
-                style={{ objectFit: "contain" }}
+                style={{ objectFit: "cover", width: "100%", height: "100%" }}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 // className="object-cover"
               />
@@ -224,7 +224,10 @@ export default function DetailNewsComponent({
                                 {moment(item.updateAt).format("DD MMMM YYYY")}
                               </span>
                             </div>
-                            <button className="font-domaine text-[14px] rounded-full px-4 py-1 font-semibold text-[#B69B7C] ring-1 ring-[#7D716A]">
+                            <button
+                              onClick={() => router.push(`/news/${item.slug}`)}
+                              className="font-domaine text-[14px] rounded-full px-4 py-1 font-semibold text-[#B69B7C] ring-1 ring-[#7D716A]"
+                            >
                               Read More
                             </button>
                           </div>

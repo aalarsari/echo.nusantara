@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Script from "next/script";
 import React, { useEffect, useState } from "react";
-import { GlobeAltIcon } from "@heroicons/react/24/outline";
 import { setPrefLangCookie } from "../Translate/translate";
 
 interface Language {
@@ -11,17 +10,18 @@ interface Language {
 }
 
 const languages: Language[] = [
-  { label: "English", value: "en", logo: "/images/logo-us.svg" },
-  { label: "Indonesian", value: "id", logo: "/images/logo-indo.svg" },
-  { label: "Japan", value: "ja", logo: "/images/logo-jpn.svg" },
+  { label: "Eng", value: "en", logo: "/images/logo-us.svg" },
+  { label: "Ind", value: "id", logo: "/images/logo-indo.svg" },
+  { label: "Jpn", value: "ja", logo: "/images/logo-jpn.svg" },
 ];
 
 const includedLanguages = languages.map((lang) => lang.value).join(",");
 
+// Google Translate initialization
 function googleTranslateElementInit() {
   new (window as any).google.translate.TranslateElement(
     {
-      pageLanguage: "auto",
+      pageLanguage: "en", // Set default page language (avoid "Auto")
       includedLanguages,
       autoDisplay: false,
     },
@@ -35,11 +35,12 @@ interface GoogleTranslateProps {
 
 export const GoogleTranslate: React.FC<GoogleTranslateProps> = ({
   prefLangCookie,
-}: GoogleTranslateProps) => {
+}) => {
   const [langCookie, setLangCookie] = useState<string>("");
 
   useEffect(() => {
-    setLangCookie(decodeURIComponent(prefLangCookie));
+    const lang = decodeURIComponent(prefLangCookie || "en");
+    setLangCookie(lang);
     (window as any).googleTranslateElementInit = googleTranslateElementInit;
   }, [prefLangCookie]);
 
@@ -50,10 +51,9 @@ export const GoogleTranslate: React.FC<GoogleTranslateProps> = ({
   };
 
   const handleLanguageChange = (value: string) => {
-    const lang = "/en/" + value;
-    setLangCookie(lang);
+    setLangCookie(value);
+    setPrefLangCookie(value);
 
-    setPrefLangCookie(lang);
     const element = document.querySelector(
       ".goog-te-combo"
     ) as HTMLSelectElement | null;
@@ -61,38 +61,74 @@ export const GoogleTranslate: React.FC<GoogleTranslateProps> = ({
       element.value = value;
       element.dispatchEvent(new Event("change"));
     }
+
     setIsLanguageListOpen(false);
   };
 
+  const currentLang = langCookie || "en";
+  const currentLangObj = languages.find((l) => l.value === currentLang);
+
   return (
     <div className="relative">
+      {/* Hidden Google Translate DOM Element */}
       <div id="google_translate_element" style={{ display: "none" }}></div>
+
+      {/* Language Selector Button */}
       <div className="relative">
         <button
           onClick={handleLanguageClick}
-          className="block items-center rounded-md text-sm "
+          className="flex items-center gap-2 rounded-full border border-[#B69B7C] px-4 py-[6px] shadow-sm transition hover:shadow-md"
         >
-          <GlobeAltIcon width={30} height={30} className="text-[#C1AE94]" />
+          <Image
+            src={currentLangObj?.logo || "/images/logo-us.svg"}
+            alt="flag"
+            width={20}
+            height={20}
+            className="rounded-full"
+          />
+          <span className="text-sm font-semibold text-[#717582] uppercase">
+            {currentLangObj?.label || "Eng"}
+          </span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-4 w-4 text-black"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
         </button>
+
+        {/* Dropdown List */}
         {isLanguageListOpen && (
-          <div className="bg- border-white/50shadow-lg absolute top-10 z-10 rounded-md border-[0.75px]">
+          <div className="absolute top-12 z-10 w-full rounded-md border border-[#E4E4E4] bg-white shadow-md">
             {languages.map((lang) => (
               <button
                 key={lang.value}
                 onClick={() => handleLanguageChange(lang.value)}
-                className="flex h-[3rem] w-[3rem] items-center justify-center rounded-md  bg-[#BCBCBC]/10 p-2 text-white transition-all duration-300 ease-in-out hover:bg-white/25 focus:border-[#C9B192] focus:outline-none focus:ring-[0.5px] focus:ring-[#C9B192]"
+                className="flex w-full items-center gap-3 px-4 py-2 text-sm hover:bg-gray-100"
               >
                 <Image
                   src={lang.logo}
-                  alt="Language Logo"
-                  width={25}
-                  height={25}
+                  alt={lang.label}
+                  width={20}
+                  height={20}
+                  className="rounded-full"
                 />
+                <span className="text-[#333] uppercase">{lang.value}</span>
               </button>
             ))}
           </div>
         )}
       </div>
+
+      {/* Google Translate Script */}
       <Script
         src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
         strategy="afterInteractive"

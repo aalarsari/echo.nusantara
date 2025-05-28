@@ -171,23 +171,23 @@ export const Navbar: React.FC = () => {
     setIsSearchOpen((prev) => !prev);
   };
 
-  const handleWishlistIconClick = async () => {
-    setIsWishlistAnimating(true);
-    setIsWishlistOpen(!isWishlistOpen);
-    document.body.style.overflow = isWishlistOpen ? "auto" : "hidden";
+  // const handleWishlistIconClick = async () => {
+  //   setIsWishlistAnimating(true);
+  //   setIsWishlistOpen(!isWishlistOpen);
+  //   document.body.style.overflow = isWishlistOpen ? "auto" : "hidden";
 
-    try {
-      if (isLoggedIn === true) {
-        const res = await GetListWishlist();
-        const body = await res.json();
-        setWishlistHome(body.data);
-      } else {
-        var data = await GetWishlistCookies();
-      }
-    } catch (error) {
-      console.error("Error fetching wishlist data:", error);
-    }
-  };
+  //   try {
+  //     if (isLoggedIn === true) {
+  //       const res = await GetListWishlist();
+  //       const body = await res.json();
+  //       setWishlistHome(body.data);
+  //     } else {
+  //       var data = await GetWishlistCookies();
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching wishlist data:", error);
+  //   }
+  // };
 
   const IconLinks = [
     {
@@ -195,11 +195,11 @@ export const Navbar: React.FC = () => {
       alt: "Icon Search",
       onClick: toggleSearch,
     },
-    {
-      src: Assets.IconLove,
-      alt: "Icon Love",
-      onClick: handleWishlistIconClick,
-    },
+    // {
+    //   src: Assets.IconLove,
+    //   alt: "Icon Love",
+    //   onClick: handleWishlistIconClick,
+    // },
     {
       src: Assets.IconCart,
       alt: "Icon Cart",
@@ -388,68 +388,73 @@ export const Navbar: React.FC = () => {
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                   />
                   <LogoEcho />
-                  <GoogleTranslate prefLangCookie={prefLangCookie} />
                 </div>
-                <div className="flex w-[50%] justify-center">
-                  <ul className="hidden items-center space-x-12 lg:flex">
-                    {NavLinks.map((link, index) => (
-                      <li
-                        key={index}
-                        className="flex h-full items-center justify-center"
-                      >
-                        <ButtonNavLink href={link.path}>
-                          {link.label}
-                        </ButtonNavLink>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="relative flex w-full justify-end md:w-[25%]">
-                  <div className="flex flex-row items-center justify-center gap-4">
-                    {IconLinks.map((icon, index) => (
-                      <div
-                        key={index}
-                        className="relative transition-all duration-300 hover:scale-110"
-                      >
-                        {icon.alt === "Icon Search" && isSearchOpen && (
-                          <div
-                            ref={searchInputRef}
-                            className="absolute right-0 top-full mt-2 w-[15rem]"
-                          >
-                            <input
-                              type="text"
-                              placeholder="Search..."
-                              onChange={(e) => handleSearch(e.target.value)}
-                              className="w-full rounded-md border border-[#C1AE94] px-3 py-2 text-sm outline-none focus:border-[#C1AE94] focus:outline-none"
-                            />
-                          </div>
-                        )}
-                        <Image
-                          src={icon.src}
-                          alt={icon.alt}
-                          style={{ width: "auto", height: "auto" }}
-                          className="cursor-pointer"
-                          onClick={icon.onClick}
+                <div className="flex flex-row items-center justify-center gap-12">
+                  <div className="flex w-full justify-center">
+                    <ul className="hidden items-center justify-center lg:flex w-full gap-12">
+                      {NavLinks.map((link, index) => (
+                        <li
+                          key={index}
+                          className="flex items-center justify-center whitespace-nowrap h-full"
+                        >
+                          <ButtonNavLink href={link.path}>
+                            {link.label}
+                          </ButtonNavLink>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="relative w-full inline-flex justify-end">
+                    <div className="flex flex-row items-center justify-center gap-4">
+                      {IconLinks.map((icon, index) => (
+                        <div
+                          key={index}
+                          className="relative transition-all duration-300 hover:scale-110 border border-[#B69B7C] rounded-full p-2"
+                        >
+                          {icon.alt === "Icon Search" && isSearchOpen && (
+                            <div
+                              ref={searchInputRef}
+                              className="absolute right-0 top-full mt-2 w-[15rem] bg-white"
+                            >
+                              <input
+                                type="text"
+                                placeholder="Search..."
+                                onChange={(e) => handleSearch(e.target.value)}
+                                className="w-full rounded-md border border-[#B69B7C] px-3 py-2 text-sm outline-none focus:border-[#C1AE94] focus:outline-none"
+                              />
+                            </div>
+                          )}
+                          <Image
+                            src={icon.src}
+                            alt={icon.alt}
+                            style={{ width: "18px", height: "18px" }}
+                            className="cursor-pointer"
+                            onClick={icon.onClick}
+                          />
+                          {icon.alt === "Icon Cart" && cartCount > 0 && (
+                            <span className="absolute -right-2 -top-2 flex h-[1.05rem] w-[1.05rem] items-center justify-center rounded-full bg-red-600 text-[10px] font-extrabold text-white ring-1 ring-white">
+                              {cartCount}
+                            </span>
+                          )}
+                        </div>
+                      ))}
+                      {isLoggedIn ? (
+                        <UserMenu
+                          onProfileClick={handleProfile}
+                          onLogout={handleLogout}
                         />
-                        {icon.alt === "Icon Cart" && cartCount > 0 && (
-                          <span className="absolute -right-2 -top-2 flex h-[1.05rem] w-[1.05rem] items-center justify-center rounded-full bg-red-600 text-[10px] font-extrabold text-white ring-1 ring-white">
-                            {cartCount}
-                          </span>
-                        )}
-                      </div>
-                    ))}
-                    {isLoggedIn ? (
-                      <UserMenu
-                        onProfileClick={handleProfile}
-                        onLogout={handleLogout}
-                      />
-                    ) : (
-                      <Link href={"/login"} className="h-[34px] w-[97px]">
-                        <button className="font-cardo h-full w-full rounded-[4px] border-[1px] border-[#C1AE94] text-[16px] text-[#C1AE94] transition-all duration-300 hover:bg-[#C1AE94] hover:text-white">
-                          Login
-                        </button>
-                      </Link>
-                    )}
+                      ) : (
+                        <Link
+                          href={"/login"}
+                          className="h-[38px] cursor-pointer"
+                        >
+                          <button className="font-cardo px-4 py-1 h-full w-full rounded-full text-[16px] bg-[#B69B7C] text-white transition-all duration-300">
+                            Login/Register
+                          </button>
+                        </Link>
+                      )}
+                      <GoogleTranslate prefLangCookie={prefLangCookie} />
+                    </div>
                   </div>
                 </div>
               </nav>

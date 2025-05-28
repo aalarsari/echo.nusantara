@@ -3,7 +3,11 @@
 import { useRouter } from "next/navigation";
 import { ButtonPrimary } from "@/components/atoms";
 import { useEffect, useState } from "react";
-import { ListProductAdmin, DeleteProduct } from "@/controller/admin/product";
+import {
+  ListProductAdmin,
+  DeleteProduct,
+  UpdateBestSeller,
+} from "@/controller/admin/product";
 import { Products } from "@prisma/client";
 import { Assets } from "@/assets";
 import Image from "next/image";
@@ -20,6 +24,7 @@ export default function Product() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [orderBy, setOrderBy] = useState<string>("name");
   const [orderDirection, setOrderDirection] = useState<string>("asc");
+  const [isBestSeller, setIsBestSeller] = useState<boolean | null>(null);
 
   const handleAddProduct = () => {
     router.push("/dashboard/product/create");
@@ -33,7 +38,7 @@ export default function Product() {
           pageSize,
           searchQuery,
           orderDirection,
-          orderBy,
+          orderBy
         );
         const result = await response.json();
         const { products, productTotal } = result.data;
@@ -91,7 +96,7 @@ export default function Product() {
           }`}
         >
           {i}
-        </button>,
+        </button>
       );
     }
     return pageNumbers;
@@ -99,7 +104,7 @@ export default function Product() {
 
   const handleDelete = async (slug: string) => {
     const confirmed = window.confirm(
-      "Are you sure you want to delete this product?",
+      "Are you sure you want to delete this product?"
     );
     if (confirmed) {
       try {
@@ -117,6 +122,21 @@ export default function Product() {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
+
+  const handleToggleBestSeller = async (slug: string) => {
+    try {
+      await UpdateBestSeller(slug);
+      setProducts((prevProducts) =>
+        prevProducts.map((product) =>
+          product.slug === slug
+            ? { ...product, bestseller: !product.bestseller }
+            : product
+        )
+      );
+    } catch (error) {
+      console.error("Failed to update best seller status:", error);
+    }
+  };
 
   return (
     <main className="flex h-full w-full flex-col gap-2">
@@ -182,13 +202,10 @@ export default function Product() {
                 Stock
               </th>
               <th className="px-6 py-3 text-center text-[14px] font-medium uppercase tracking-wider text-[#252525]">
-                Size
-              </th>
-              <th className="px-6 py-3 text-center text-[14px] font-medium uppercase tracking-wider text-[#252525]">
-                Category
-              </th>
-              <th className="px-6 py-3 text-center text-[14px] font-medium uppercase tracking-wider text-[#252525]">
                 Latest Update
+              </th>
+              <th className="px-6 py-3 text-center text-[14px] font-medium uppercase tracking-wider text-[#252525]">
+                Best Seller
               </th>
               <th className="px-6 py-3 text-center text-[14px] font-medium uppercase tracking-wider text-[#252525]">
                 Actions
@@ -208,17 +225,29 @@ export default function Product() {
                   {product.priceIDR}
                 </td>
                 <td className="max-w-xs overflow-hidden overflow-ellipsis whitespace-nowrap px-6 py-4 text-center text-sm text-gray-900">
-                  {product.stock}
-                </td>
-                <td className="max-w-xs overflow-hidden overflow-ellipsis whitespace-nowrap px-6 py-4 text-center text-sm text-gray-900">
-                  {product.size}
-                </td>
-                <td className="max-w-xs overflow-hidden overflow-ellipsis whitespace-nowrap px-6 py-4 text-center text-sm text-gray-900">
                   {product.categoryId}
                 </td>
                 <td className="max-w-xs overflow-hidden overflow-ellipsis whitespace-nowrap px-6 py-4 text-center text-sm text-gray-900">
                   {moment(product.updateAt).format("DD MMM YYYY")}
                 </td>
+                <td className="max-w-xs overflow-hidden overflow-ellipsis whitespace-nowrap px-6 py-4 text-center text-sm text-gray-900">
+                  <div className="flex items-center justify-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={product.bestseller === true}
+                      onChange={() => handleToggleBestSeller(product.slug)}
+                      className="h-4 w-4 rounded border-gray-300 text-green-500 focus:ring-green-500 cursor-pointer"
+                    />
+                    <span
+                      className={`font-semibold ${
+                        product.bestseller ? "text-green-500" : "text-red-500"
+                      }`}
+                    >
+                      {product.bestseller ? "Best Seller" : "Not Best Seller"}
+                    </span>
+                  </div>
+                </td>
+
                 <td className="flex justify-center space-x-2 px-6 py-4 text-center text-sm font-medium">
                   <button
                     className="text-[#B69B7C]"
