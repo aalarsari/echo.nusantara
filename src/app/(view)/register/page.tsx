@@ -97,25 +97,32 @@ export default function Login() {
         onClose={() => setNotification({ ...notification, visible: false })}
       />
       <div className="layer-bg -translate-z-[55px] scale-[1.06] bg-layer-10 bg-no-repeat" />
-      <div className="relative flex h-full w-full flex-col gap-8 justify-center items-center">
-        <div className="flex w-full flex-col gap-4 md:w-[60%] md:gap-0">
-          <h2 className="text-center font-domaine text-2xl text-white md:text-3xl">
-            Welcome Back
+      <div className="relative flex h-full overflow-auto w-full flex-col gap-8 justify-center items-center px-4 py-20 lg:py-0">
+        <div className="flex w-full flex-col items-center gap-4 md:w-[60%] md:gap-0">
+          <h2 className="text-center font-domaine text-[52px] text-white ">
+            Welcome
           </h2>
-          <p className="md:font-regular text-justify font-josefins text-lg font-light text-white md:text-center">
-            Sign in to continue your journey. Access exclusive features and
-            personalized experiences
-          </p>
+          <div className="w-[60%] lg:w-full">
+            <p className="md:font-regular text-center font-josefins text-[16px] font-light text-white md:text-center">
+              Register to continue your journey. Access exclusive features and
+              personalized experiences
+            </p>
+          </div>
         </div>
-        <div className="z-[1] h-auto w-[50%] px-10">
-          <div className="relative flex h-full w-full items-center justify-center rounded-xl border-[0.08px] border-[#E0E0E0]/30 bg-white/40 p-10 backdrop-blur-md">
+        <div className="z-[1] h-auto w-full lg:w-[50%]">
+          <div className="relative flex h-full w-full items-center justify-center rounded-xl border-[0.08px] border-[#E0E0E0]/30 bg-white/40 py-10 px-4 lg:p-10 backdrop-blur-md">
             <div className="flex h-full w-full flex-col items-center justify-center gap-10 ">
               <div className="flex w-full items-center justify-center">
                 <form
                   onSubmit={handleSubmit(onSubmit)}
-                  className="flex w-full flex-col gap-6"
+                  className="flex w-full flex-col gap-2"
                 >
                   <div className="relative flex w-full flex-col gap-2">
+                    <label htmlFor="name">
+                      <span className="font-josefins text-[16px] text-white">
+                        Full Name
+                      </span>
+                    </label>
                     <input
                       type={"text"}
                       placeholder={"Name"}
@@ -133,6 +140,11 @@ export default function Login() {
                   </div>
                   <div className="flex flex-col gap-2 lg:flex-row">
                     <div className="relative flex w-full flex-col gap-2">
+                      <label htmlFor="email">
+                        <span className="font-josefins text-[16px] text-white">
+                          Email
+                        </span>
+                      </label>
                       <input
                         type={"text"}
                         placeholder={"Email"}
@@ -149,6 +161,11 @@ export default function Login() {
                       )}
                     </div>
                     <div className="relative flex w-full flex-col gap-2">
+                      <label htmlFor="phone">
+                        <span className="font-josefins text-[16px] text-white">
+                          Phone
+                        </span>
+                      </label>
                       <input
                         type={"text"}
                         placeholder={"Phone"}
@@ -167,6 +184,7 @@ export default function Login() {
                   </div>
                   <div className="flex flex-col gap-2 lg:flex-row">
                     <InputPassword
+                      label="Password"
                       showPassword={showPassword}
                       togglePassword={togglePassword}
                       register={register}
@@ -183,6 +201,7 @@ export default function Login() {
                       }
                     />
                     <InputPassword
+                      label="Confirm Password"
                       showPassword={showConfirmPassword}
                       togglePassword={toggleConfirmPassword}
                       register={register}
@@ -199,7 +218,7 @@ export default function Login() {
                       }
                     />
                   </div>
-                  <div className="flex w-full justify-between items-center">
+                  <div className="flex flex-col gap-2 lg:flex-row w-full justify-between items-center">
                     <ButtonPrimary
                       text="Login"
                       width="w-[238px]"

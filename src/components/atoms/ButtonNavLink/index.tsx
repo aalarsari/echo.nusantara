@@ -26,8 +26,8 @@ export const ButtonNavLink: React.FC<ButtonNavLinkProps> = ({
     <a
       href={href}
       onClick={onClick}
-      className={`group relative inline-block appearance-none overflow-hidden font-domaine text-[18px] font-light uppercase text-[#221F20] no-underline transition-all duration-300 hover:text-[#C1AE94] hover:no-underline focus:text-[#C1AE94] focus:no-underline focus:outline-none focus-visible:outline-none ${
-        pathname === href ? "text-[#C1AE94]" : ""
+      className={`group relative w-full inline-block appearance-none overflow-hidden font-domaine text-[18px] font-light uppercase text-[#221F20] no-underline transition-all duration-300 hover:text-[#C1AE94] hover:no-underline focus:text-black focus:no-underline focus:outline-none focus-visible:outline-none ${
+        pathname === href ? "text-black" : ""
       }`}
       style={{
         WebkitTapHighlightColor: "transparent",
@@ -41,7 +41,7 @@ export const ButtonNavLink: React.FC<ButtonNavLinkProps> = ({
           left: 0,
           width: showBorder ? "100%" : 0,
           height: "1.5px",
-          backgroundColor: "#C1AE94",
+          backgroundColor: "#000000",
           transition: "width 0.5s ease",
         }}
       ></span>

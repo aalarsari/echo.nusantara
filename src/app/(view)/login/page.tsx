@@ -102,7 +102,7 @@ export default function Login() {
   // }, []);
 
   return (
-    <main className="relative h-screen overflow-hidden">
+    <main className="relative h-screen overflow-auto">
       <Notifications
         message={notification.message}
         type={notification.type}
@@ -110,25 +110,33 @@ export default function Login() {
         onClose={() => setNotification({ ...notification, visible: false })}
       />
       <div className="layer-bg -translate-z-[55px] scale-[1.06] bg-layer-10 bg-no-repeat" />
-      <div className="relative flex h-full w-full justify-center items-center flex-col gap-8">
-        <div className="flex w-full flex-col gap-4 md:gap-0">
-          <h2 className="text-center font-domaine text-2xl text-white md:text-3xl">
-            Welcome Back
-          </h2>
-          <p className="md:font-regular text-justify font-josefins text-lg font-light text-white md:text-center">
-            Sign in to continue your journey. Access exclusive features and
-            personalized experiences
-          </p>
+      <div className="relative flex h-full w-full justify-center items-center flex-col gap-8 px-4 py-20 lg:py-0 overflow-auto ">
+        <div className="flex w-full flex-col items-center justify-center gap-4 md:gap-0">
+          <div className="w-[60%] lg:w-full">
+            <h2 className="text-center font-domaine text-[52px] text-white">
+              Welcome Back
+            </h2>
+          </div>
+          <div className="w-[80%] lg:w-full">
+            <p className="md:font-regular text-center font-josefins text-lg font-light text-white md:text-center">
+              Sign in to continue your journey. Access exclusive features and
+              personalized experiences
+            </p>
+          </div>
         </div>
-        <div className="z-[1] h-[70%] w-[50%] ">
+        {/* ikuti isi konten jadi di mobile akan overflow */}
+        <div className="z-[1] h-full lg:h-[70%] w-full lg:w-[50%]">
           <div className="relative flex h-full w-full items-center justify-center rounded-xl border-[0.08px] border-[#E0E0E0]/30 bg-white/40 px-4 backdrop-blur-md">
-            <div className="flex h-full w-full flex-col items-center justify-center gap-10">
+            <div className="flex h-full w-full flex-col items-center justify-center gap-10 py-10">
               <div className="flex w-full items-center justify-center">
                 <form
                   onSubmit={handleSubmit(onSubmitCredential)}
-                  className="flex w-full flex-col gap-4 px-10"
+                  className="flex w-full flex-col gap-4 lg:px-10"
                 >
                   <div className="relative flex w-full flex-col gap-2">
+                    <label className="font-josefins text-sm font-semibold text-gray-300">
+                      Email
+                    </label>
                     <input
                       type={"text"}
                       placeholder={"Email"}

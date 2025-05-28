@@ -37,7 +37,7 @@ export default function CreateProduct() {
   const router = useRouter();
   const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(
-    null,
+    null
   );
   const [notification, setNotification] = useState({
     message: "",
@@ -171,6 +171,78 @@ export default function CreateProduct() {
                 {errors.descriptions && (
                   <p className="text-sm text-red-500">
                     {errors.descriptions.message}
+                  </p>
+                )}
+              </div>
+              <div className="flex w-full flex-col gap-2">
+                <label className="font-josefins text-[16px] text-[#202020]">
+                  Komposisi
+                </label>
+                <div className="w-full max-w-2xl">
+                  <Controller
+                    name="komposisi"
+                    control={control}
+                    render={({ field }) => (
+                      <ReactQuill
+                        {...field}
+                        theme="snow"
+                        placeholder="Write product description..."
+                        value={field.value ?? ""}
+                      />
+                    )}
+                  />
+                </div>
+                {errors.komposisi && (
+                  <p className="text-sm text-red-500">
+                    {errors.komposisi.message}
+                  </p>
+                )}
+              </div>
+              <div className="flex w-full flex-col gap-2">
+                <label className="font-josefins text-[16px] text-[#202020]">
+                  Cara Konsumsi
+                </label>
+                <div className="w-full max-w-2xl">
+                  <Controller
+                    name="caraKomsumsi"
+                    control={control}
+                    render={({ field }) => (
+                      <ReactQuill
+                        {...field}
+                        theme="snow"
+                        placeholder="Write product description..."
+                        value={field.value ?? ""}
+                      />
+                    )}
+                  />
+                </div>
+                {errors.caraKomsumsi && (
+                  <p className="text-sm text-red-500">
+                    {errors.caraKomsumsi.message}
+                  </p>
+                )}
+              </div>
+              <div className="flex w-full flex-col gap-2">
+                <label className="font-josefins text-[16px] text-[#202020]">
+                  Cara Penyimpanan
+                </label>
+                <div className="w-full max-w-2xl">
+                  <Controller
+                    name="caraPenyimpanan"
+                    control={control}
+                    render={({ field }) => (
+                      <ReactQuill
+                        {...field}
+                        theme="snow"
+                        placeholder="Write product description..."
+                        value={field.value ?? ""}
+                      />
+                    )}
+                  />
+                </div>
+                {errors.caraPenyimpanan && (
+                  <p className="text-sm text-red-500">
+                    {errors.caraPenyimpanan.message}
                   </p>
                 )}
               </div>

@@ -155,6 +155,7 @@ export { default as ArrowRight } from "./icon-arrow-right.svg";
 
 export { default as TimeWhite } from "./icon-time-white.svg";
 export { default as TimeBronze } from "./icon-time-bronze.svg";
+export { default as TimeBrown } from "./icon-time-brown.svg";
 
 export { default as ArrowDown } from "./icon-arrow-down.svg";
 

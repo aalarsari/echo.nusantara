@@ -26,11 +26,6 @@ import { FormatRupiah } from "@/components";
 import { ProductController } from "@/controller/noAuth/product";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import {
-  CustomArrowLeft,
-  CustomArrowRight,
-  CustomDot,
-} from "@/components/atoms/ButtomCustom";
 
 interface Discount {
   id: number;
@@ -395,7 +390,7 @@ export default function Shop() {
                           style={{ objectFit: "cover" }}
                           fill
                           priority={true}
-                          alt={"Foto Coba"}
+                          alt={product.name}
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         />
                       </div>
