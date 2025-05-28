@@ -7,7 +7,7 @@ interface Products {
    manfaat?: string | null;
    caraKomsumsi?: string | null;
    caraPenyimpanan?: string | null;
-   bestSeller?: boolean | null;
+   bestseller?: boolean | null;
    recommendation?: boolean | null;
    subDescriptions?: string | null;
    slug?: string;
