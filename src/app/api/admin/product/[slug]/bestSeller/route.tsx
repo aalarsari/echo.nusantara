@@ -6,7 +6,6 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function PUT(request: NextRequest, { params }: { params: { slug: string } }) {
   const session = await getServerSession(authOptions);
-  const body = await request.json();
 
   const checkProduct = await prisma.products.findFirst({
     where: {
