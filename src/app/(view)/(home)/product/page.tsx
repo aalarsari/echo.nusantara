@@ -24,13 +24,14 @@ interface CategoryItem {
   Description: string;
 }
 
-interface ProductItem {
+interface ProductItem extends Products {
   id: number;
   image1: string;
   name: string;
   slug: string;
   weight: number;
   priceIDR: number;
+
 }
 
 export default function Product() {

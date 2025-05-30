@@ -1,10 +1,6 @@
 // Filter
 
-export async function getListShop(
-  pageSize: number,
-  page: number,
-  cataegoryId?: number,
-) {
+export async function getListShop(pageSize: number, page: number, cataegoryId?: number) {
   var url;
   if (cataegoryId) {
     url = `/api/shop?page=${page}&pageSize=${pageSize}&category=${cataegoryId}`;
