@@ -28,6 +28,7 @@ export async function GET(request: NextRequest, { params }: { params: { slug: st
          updateAt: true,
          updateBy: true,
          category: true,
+         isShow: true,
       },
    });
    return NextResponse.json({

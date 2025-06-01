@@ -24,17 +24,14 @@ export async function POST(request: NextRequest) {
       },
       {
         status: HttpStatusCode.UnprocessableEntity,
-      },
+      }
     );
   }
 
   var image1 = data?.photo as File;
   var imageBuffer1 = Buffer.from(await image1.arrayBuffer());
   var imageName1 = image1.name.replaceAll(" ", "-");
-  await writeFile(
-    path.join(process.cwd(), `${directoryPath}/${imageName1}`),
-    imageBuffer1 as unknown as Uint8Array,
-  );
+  await writeFile(path.join(process.cwd(), `${directoryPath}/${imageName1}`), imageBuffer1 as unknown as Uint8Array);
   var banner = await prisma.banner.create({
     data: {
       title: data?.title!,
@@ -59,6 +56,7 @@ export async function GET(request: NextRequest) {
       subtitle: true,
       path: true,
       isActive: true,
+      isShow: true,
     },
     orderBy: {
       createdAt: "desc",

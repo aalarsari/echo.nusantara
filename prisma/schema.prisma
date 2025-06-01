@@ -173,6 +173,7 @@ model Products {
   image4          String?
   image5          String?
   size            String?
+  isShow Boolean @default(true)
   recommendation  Boolean           @default(false)
   bestseller      Boolean           @default(false)
   createdAt       DateTime?         @default(now()) @db.Timestamptz()
@@ -304,6 +305,7 @@ model Banner {
   category  CategoryBanner @default(Products)
   path      String
   isActive  Boolean        @default(true)
+  isShow Boolean @default(true)
   createdAt DateTime       @default(now()) @db.Timestamptz()
 
   @@map("Banner")
@@ -380,6 +382,7 @@ model Blog {
   subtitle     String
   content      String         @db.Text
   categoryId   Int?           @map("category_id")
+  isShow Boolean @default(true)
   image        String[]
   createdAt    DateTime       @default(now()) @db.Timestamptz()
   createdBy    String

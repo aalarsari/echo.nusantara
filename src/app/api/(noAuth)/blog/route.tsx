@@ -12,6 +12,7 @@ export async function GET(request: NextRequest) {
       slug: true,
       title: true,
       subtitle: true,
+      isShow: true,
       image: true,
       category: {
         select: {

@@ -77,3 +77,10 @@ export async function DeleteDiscountProduct(id: number, slug: string) {
   });
   return response;
 }
+
+export async function updateShowProduct(id: number) {
+  var response = await fetch(`/api/admin/product/${id}/show`,{
+    method: "PUT",
+  });
+  return response;
+}
