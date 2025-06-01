@@ -372,7 +372,10 @@ export const Navbar: React.FC = () => {
   return (
     <>
       <ModalForceClose session={session} />
-      <div className="fixed top-0 z-[99] w-full" style={{ transition: "0.5s" }}>
+      <div
+        className="fixed top-0 z-[999999] w-full"
+        style={{ transition: "0.5s" }}
+      >
         <div className="block w-full">
           <div className="relative">
             <div
