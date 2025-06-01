@@ -12,19 +12,19 @@ import {
 import moment from "moment";
 import { blog } from "@/types/blog/blog";
 import { useRouter } from "next/navigation";
-import { CategoryBlog } from "@prisma/client";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { CategoryBlog } from "@prisma/client";
 
 export default function News() {
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const [news, setNewsData] = useState<{
     blog: blog[];
     lastNews: any | null;
-    category: Category[];
+    // category: Category[];
     topBlog: blog[];
   }>({
     blog: [],
-    category: [],
+    // category: [],
     lastNews: null,
     topBlog: [],
   });
@@ -141,10 +141,7 @@ export default function News() {
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
 
-                {/* Overlay hitam transparan */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black to-black/0 z-[10]" />
-
-                {/* Teks di atas overlay */}
                 <div className="absolute inset-0 z-20 py-10 px-4 ">
                   <div className="flex flex-col justify-end items-end relative gap-8 h-full w-full px-4">
                     <div className="w-full">
@@ -186,7 +183,7 @@ export default function News() {
               </div>
             </div>
           ) : null}
-          <div className="relative w-full h-[656px] overflow-y-scroll">
+          {/* <div className="relative w-full h-[656px] overflow-y-scroll">
             {news.topBlog && news.topBlog.length > 0
               ? news.topBlog.map((item, index) => (
                   <div
@@ -245,7 +242,7 @@ export default function News() {
                   </div>
                 ))
               : null}
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="relative flex lg:h-screen w-full px-4 py-10 lg:p-10 bg-[#FDF8F8] flex-col gap-4">
