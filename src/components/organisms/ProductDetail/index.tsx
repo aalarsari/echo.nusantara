@@ -85,13 +85,13 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ slug }) => {
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(
-    null,
+    null
   );
   const [startDate, setStartDate] = useState<string>(
-    moment().startOf("year").format("YYYY-MM-DD"),
+    moment().startOf("year").format("YYYY-MM-DD")
   );
   const [endDate, setEndDate] = useState<string>(
-    moment().endOf("day").format("YYYY-MM-DD"),
+    moment().endOf("day").format("YYYY-MM-DD")
   );
   const [showDateRangePicker, setShowDateRangePicker] = useState(false);
   const [notification, setNotification] = useState({
@@ -150,7 +150,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ slug }) => {
 
   const handleFileChange = (
     event: React.ChangeEvent<HTMLInputElement>,
-    key: string,
+    key: string
   ) => {
     if (event.target.files?.[0]) {
       const file = event.target.files[0];
@@ -176,6 +176,9 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ slug }) => {
       categoryId: formData.categoryId,
       descriptions: formData.descriptions,
       subDescriptions: formData.subDescriptions,
+      komposisi: formData.komposisi,
+      caraKomsumsi: formData.caraKomsumsi,
+      caraPenyimpanan: formData.caraPenyimpanan,
       stock: formData.stock,
       weight: formData.weight,
       size: formData.size,
@@ -200,7 +203,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ slug }) => {
         const updateMessage = await updateResponse.json();
         showNotification(
           `Error updating product: ${updateMessage.message}`,
-          "error",
+          "error"
         );
       }
     } catch (error) {
@@ -235,7 +238,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ slug }) => {
         const discountMessage = await discountResponse.json();
         showNotification(
           `Error creating discount: ${discountMessage.message}`,
-          "error",
+          "error"
         );
       }
     } catch (error) {
@@ -256,13 +259,13 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ slug }) => {
       } else {
         showNotification(
           `Failed to delete discount. Status: ${response.status}`,
-          "error",
+          "error"
         );
       }
     } catch (error) {
       showNotification(
         "An error occurred while deleting the discount",
-        "error",
+        "error"
       );
     } finally {
       setLoading(false);
@@ -345,6 +348,78 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ slug }) => {
                   {errors.descriptions && (
                     <p className="text-sm text-red-500">
                       {errors.descriptions.message}
+                    </p>
+                  )}
+                </div>
+                <div className="flex w-full flex-col gap-2">
+                  <label className="font-josefins text-[16px] text-[#202020]">
+                    Komposisi
+                  </label>
+                  <div className="w-full max-w-2xl">
+                    <Controller
+                      name="komposisi"
+                      control={control}
+                      render={({ field }) => (
+                        <ReactQuill
+                          {...field}
+                          theme="snow"
+                          placeholder="Write product description..."
+                          value={field.value ?? ""}
+                        />
+                      )}
+                    />
+                  </div>
+                  {errors.komposisi && (
+                    <p className="text-sm text-red-500">
+                      {errors.komposisi.message}
+                    </p>
+                  )}
+                </div>
+                <div className="flex w-full flex-col gap-2">
+                  <label className="font-josefins text-[16px] text-[#202020]">
+                    Cara Konsumsi
+                  </label>
+                  <div className="w-full max-w-2xl">
+                    <Controller
+                      name="caraKomsumsi"
+                      control={control}
+                      render={({ field }) => (
+                        <ReactQuill
+                          {...field}
+                          theme="snow"
+                          placeholder="Write product description..."
+                          value={field.value ?? ""}
+                        />
+                      )}
+                    />
+                  </div>
+                  {errors.caraKomsumsi && (
+                    <p className="text-sm text-red-500">
+                      {errors.caraKomsumsi.message}
+                    </p>
+                  )}
+                </div>
+                <div className="flex w-full flex-col gap-2">
+                  <label className="font-josefins text-[16px] text-[#202020]">
+                    Cara Penyimpanan
+                  </label>
+                  <div className="w-full max-w-2xl">
+                    <Controller
+                      name="caraPenyimpanan"
+                      control={control}
+                      render={({ field }) => (
+                        <ReactQuill
+                          {...field}
+                          theme="snow"
+                          placeholder="Write product description..."
+                          value={field.value ?? ""}
+                        />
+                      )}
+                    />
+                  </div>
+                  {errors.caraPenyimpanan && (
+                    <p className="text-sm text-red-500">
+                      {errors.caraPenyimpanan.message}
                     </p>
                   )}
                 </div>
@@ -789,7 +864,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ slug }) => {
                               onClick={() =>
                                 handleClickDelete(
                                   item.id!,
-                                  productDetails.slug!,
+                                  productDetails.slug!
                                 )
                               }
                               disabled={loading}
@@ -799,7 +874,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ slug }) => {
                             </button>
                           </td>
                         </tr>
-                      ),
+                      )
                     )
                   ) : (
                     <tr>

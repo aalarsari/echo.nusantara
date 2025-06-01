@@ -249,7 +249,7 @@ export default function News() {
         </div>
       </div>
       <div className="relative flex lg:h-screen w-full px-4 py-10 lg:p-10 bg-[#FDF8F8] flex-col gap-4">
-        <div className="flex w-full flex-col gap-2 lg:flex-row justify-center lg:justify-between items-center lg:items-start">
+        {/* <div className="flex w-full flex-col gap-2 lg:flex-row justify-center lg:justify-between items-center lg:items-start">
           <h1 className="text-[52px] font-thin text-black font-domaine text-center">
             All Post
           </h1>
@@ -291,9 +291,9 @@ export default function News() {
               </div>
             )}
           </div>
-        </div>
+        </div> */}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 px-4 py-4">
+        {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 px-4 py-4">
           {news.blog && news.blog.length > 0 ? (
             news.blog.map((item, index) => (
               <div
@@ -349,7 +349,7 @@ export default function News() {
               No blog posts found.
             </div>
           )}
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -64,6 +64,7 @@ interface ProductItem {
   slug: string;
   weight: number;
   descriptions: string;
+  bestseller: boolean;
   priceIDR: number;
   Discount: Discount[];
   WishlistProduct: { id: number; productsId: number }[];
@@ -244,39 +245,94 @@ export default function Home() {
                 customDot={<CustomDot />}
                 showDots={true}
               >
-                {filteredProducts.map((product) => (
-                  <div
-                    key={product.id}
-                    className="w-full px-2"
-                    onClick={() => handleProductClick(product.slug)}
-                  >
-                    <div className="relative h-[480px] w-full cursor-pointer shadow-product bg-transparent shadow-gray-100 group">
-                      <div className="flex h-full w-full flex-col gap-2">
-                        {/* Gambar produk */}
-                        <div className="relative h-[18rem] w-full overflow-hidden rounded-[8px]">
-                          {/* <Image
-                            src={product.image1}
-                            priority
-                            style={{
-                              objectFit: "cover",
-                              width: "100%",
-                              height: "100%",
-                            }}
-                            // className="w-full h-full object-cover"
-                            alt={product.name}
-                          /> */}
-                          <Image
-                            src={product.image1}
-                            alt={product.name}
-                            fill
-                            priority
-                            style={{ objectFit: "cover" }}
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                          />
+                {filteredProducts
+                  .filter((product) => product.bestseller === true)
+                  .map((product) => (
+                    <div
+                      key={product.id}
+                      className="w-full px-2"
+                      onClick={() => handleProductClick(product.slug)}
+                    >
+                      <div className="relative h-[480px] w-full cursor-pointer shadow-product bg-transparent shadow-gray-100 group">
+                        <div className="flex h-full w-full flex-col gap-2">
+                          {/* Gambar produk */}
+                          <div className="relative h-[18rem] w-full overflow-hidden rounded-[8px]">
+                            <Image
+                              src={product.image1}
+                              alt={product.name}
+                              fill
+                              priority
+                              style={{ objectFit: "cover" }}
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            />
 
-                          {/* Tombol hover (desktop only) */}
-                          <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden md:flex items-center justify-center">
-                            <div className="flex gap-2 translate-y-6 group-hover:translate-y-0 transition-all duration-300 w-full px-4">
+                            {/* Tombol hover (desktop only) */}
+                            <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden md:flex items-center justify-center">
+                              <div className="flex gap-2 translate-y-6 group-hover:translate-y-0 transition-all duration-300 w-full px-4">
+                                <button
+                                  onClick={() =>
+                                    handleProductClick(product.slug)
+                                  }
+                                  className="bg-white border border-[#B69B7C] text-black w-full text-sm rounded-full py-3 hover:bg-[#B69B7C] hover:text-white transition"
+                                >
+                                  Add to Cart
+                                </button>
+                                <button
+                                  onClick={() =>
+                                    handleProductClick(product.slug)
+                                  }
+                                  className="bg-[#B69B7C] text-white w-full text-sm rounded-full py-3 hover:bg-white hover:text-black transition"
+                                >
+                                  Buy Now
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Informasi produk */}
+                          <div className="flex flex-col justify-between h-[35%]">
+                            <div className="flex flex-col gap-1 py-1">
+                              <span className="font-domaine text-[18px] font-light text-black">
+                                {product.name}
+                              </span>
+                              <span className="font-domaine text-[14px] text-black">
+                                {product.subDescriptions}
+                              </span>
+                            </div>
+                            <div className="relative flex w-full flex-row items-center">
+                              <div>
+                                <span className="font-josefins text-[28px] font-semibold text-[#B69B7C]">
+                                  {product.Discount?.length > 0 ? (
+                                    <div className="flex flex-row gap-2">
+                                      <span className="ml-2 text-red-500 line-through">
+                                        <FormatRupiah
+                                          price={product.priceIDR || 0}
+                                        />
+                                      </span>
+                                      <FormatRupiah
+                                        price={
+                                          product.priceIDR -
+                                          product.priceIDR *
+                                            (product.Discount[0]?.discount || 0)
+                                        }
+                                      />
+                                    </div>
+                                  ) : (
+                                    <FormatRupiah
+                                      price={product.priceIDR || 0}
+                                    />
+                                  )}
+                                </span>
+                              </div>
+                              {product.Discount?.[0]?.discount && (
+                                <div className="absolute -top-10 animate-bounce rounded bg-red-500 p-1 text-[18px] text-white">
+                                  {`${(product.Discount[0].discount * 100).toFixed(0)}%`}
+                                </div>
+                              )}
+                            </div>
+
+                            {/* Tombol tampil langsung di mobile */}
+                            <div className="flex flex-row md:hidden gap-2 mt-2">
                               <button
                                 onClick={() => handleProductClick(product.slug)}
                                 className="bg-white border border-[#B69B7C] text-black w-full text-sm rounded-full py-3 hover:bg-[#B69B7C] hover:text-white transition"
@@ -292,67 +348,9 @@ export default function Home() {
                             </div>
                           </div>
                         </div>
-
-                        {/* Informasi produk */}
-                        <div className="flex flex-col justify-between h-[35%]">
-                          <div className="flex flex-col gap-1 py-1">
-                            <span className="font-domaine text-[18px] font-light text-black">
-                              {product.name}
-                            </span>
-                            <span className="font-domaine text-[14px] text-black">
-                              {product.subDescriptions}
-                            </span>
-                          </div>
-                          <div className="relative flex w-full flex-row items-center">
-                            <div>
-                              <span className="font-josefins text-[28px] font-semibold text-[#B69B7C]">
-                                {product.Discount?.length > 0 ? (
-                                  <div className="flex flex-row gap-2">
-                                    <span className="ml-2 text-red-500 line-through">
-                                      <FormatRupiah
-                                        price={product.priceIDR || 0}
-                                      />
-                                    </span>
-                                    <FormatRupiah
-                                      price={
-                                        product.priceIDR -
-                                        product.priceIDR *
-                                          (product.Discount[0]?.discount || 0)
-                                      }
-                                    />
-                                  </div>
-                                ) : (
-                                  <FormatRupiah price={product.priceIDR || 0} />
-                                )}
-                              </span>
-                            </div>
-                            {product.Discount?.[0]?.discount && (
-                              <div className="absolute -top-10 animate-bounce rounded bg-red-500 p-1 text-[18px] text-white">
-                                {`${(product.Discount[0].discount * 100).toFixed(0)}%`}
-                              </div>
-                            )}
-                          </div>
-
-                          {/* Tombol tampil langsung di mobile */}
-                          <div className="flex flex-row md:hidden gap-2 mt-2">
-                            <button
-                              onClick={() => handleProductClick(product.slug)}
-                              className="bg-white border border-[#B69B7C] text-black w-full text-sm rounded-full py-3 hover:bg-[#B69B7C] hover:text-white transition"
-                            >
-                              Add to Cart
-                            </button>
-                            <button
-                              onClick={() => handleProductClick(product.slug)}
-                              className="bg-[#B69B7C] text-white w-full text-sm rounded-full py-3 hover:bg-white hover:text-black transition"
-                            >
-                              Buy Now
-                            </button>
-                          </div>
-                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
               </Carousel>
             </div>
           </div>
