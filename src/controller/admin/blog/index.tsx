@@ -58,3 +58,11 @@ export async function UpdateCategoryBlog(
   });
   return response;
 }
+
+
+export async function updateShowBlog(id: number) {
+  var response = await fetch(`/api/admin/blog/${id}/show`,{
+    method: "PUT",
+  });
+  return response;
+}

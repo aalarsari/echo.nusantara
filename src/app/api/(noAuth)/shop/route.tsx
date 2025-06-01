@@ -80,6 +80,7 @@ export async function GET(request: NextRequest) {
         slug: true,
         name: true,
         recommendation: true,
+        isShow: true,
         priceIDR: true,
         weight: true,
         Discount: {

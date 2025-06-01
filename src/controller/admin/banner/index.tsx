@@ -30,10 +30,7 @@ export async function UpdateBanner(data: Banner) {
   return response;
 }
 
-export async function UpdateDetailBanner(
-  data: z.infer<typeof UpdateBannerValidation>,
-  id: number,
-) {
+export async function UpdateDetailBanner(data: z.infer<typeof UpdateBannerValidation>, id: number) {
   var response = await fetch(`/api/admin/banner/${id}/detail`, {
     method: "PUT",
     body: JSON.stringify(data),
@@ -54,6 +51,13 @@ export async function ListBanner() {
 export async function DeleteBanner(data: Banner) {
   var response = await fetch(`/api/admin/banner/${data.id}`, {
     method: "DELETE",
+  });
+  return response;
+}
+
+export async function updateShowBanner(id: number) {
+  var response = await fetch(`/api/admin/banner/${id}/show`, {
+    method: "PUT",
   });
   return response;
 }

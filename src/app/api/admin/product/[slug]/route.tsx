@@ -29,6 +29,7 @@ export async function GET(request: NextRequest, { params }: { params: { slug: st
       stock: true,
       maxOrder: true,
       bestseller: true,
+      isShow: true,
       categoryId: true,
       recommendation: true,
       image1: true,
