@@ -4,15 +4,9 @@ import { Assets } from "@/assets";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { GetBlog, GetCategoryBlog } from "@/controller/noAuth/blog";
-import Carousel from "react-multi-carousel";
-import {
-  CustomArrowLeft,
-  CustomArrowRight,
-} from "@/components/atoms/ButtomCustom";
 import moment from "moment";
 import { blog } from "@/types/blog/blog";
 import { useRouter } from "next/navigation";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { CategoryBlog } from "@prisma/client";
 
 export default function News() {
@@ -193,70 +187,76 @@ export default function News() {
             )}
           </div>
 
-          {/* <div className="relative w-full h-[656px] overflow-y-scroll">
-            {news.topBlog && news.topBlog.length > 0
-              ? news.topBlog.map((item, index) => (
-                  <div
-                    key={index}
-                    onClick={() => handleBlogClick(item.slug)}
-                    className="flex flex-col gap-4 py-2 px-4"
-                  >
-                    <div className="h-[225px] relative overflow-hidden bg-white w-full cursor-pointer shadow-product rounded-[16px] shadow-gray-100">
-                      <div className="flex h-full w-full flex-row gap-2">
-                        <div className="relative h-full w-[225px]">
-                          <Image
-                            src={item.image[0] || Assets.DefaultImage}
-                            fill
-                            style={{ objectFit: "cover" }}
-                            priority={true}
-                            alt={`Top Blog ${index + 1}`}
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                          />
-                        </div>
-                        <div className="flex flex-col justify-center items-start gap-8 h-full w-[60%] px-4 relative overflow-hidden">
-                          <div className="w-full">
-                            <div className="flex flex-col gap-1">
-                              <span className="font-domaine uppercase text-[14px] font-light text-black">
-                                {item.category?.name ?? "No Category"}
-                              </span>
-                              <h2 className="font-domaine text-[24px] font-semibold text-black truncate w-full">
-                                {item.title}
-                              </h2>
-                            </div>
-                            <h2 className="font-domaine text-[16px] font-normal text-black truncate w-[300px]">
-                              {item.subtitle}
+          <div className="relative w-full h-[656px] overflow-y-scroll">
+            {news.topBlog && news.topBlog.length > 0 ? (
+              news.topBlog.map((item, index) => (
+                <div
+                  key={index}
+                  onClick={() => handleBlogClick(item.slug)}
+                  className="flex flex-col gap-4 py-2 px-4"
+                >
+                  <div className="h-[225px] relative overflow-hidden bg-white w-full cursor-pointer shadow-product rounded-[16px] shadow-gray-100">
+                    <div className="flex h-full w-full flex-row gap-2">
+                      <div className="relative h-full w-[225px]">
+                        <Image
+                          src={item.image[0] || Assets.DefaultImage}
+                          fill
+                          style={{ objectFit: "cover" }}
+                          priority={true}
+                          alt={`Top Blog ${index + 1}`}
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                      </div>
+                      <div className="flex flex-col justify-center items-start gap-8 h-full w-[60%] px-4 relative overflow-hidden">
+                        <div className="w-full">
+                          <div className="flex flex-col gap-1">
+                            <span className="font-domaine uppercase text-[14px] font-light text-black">
+                              {item.category?.name ?? "No Category"}
+                            </span>
+                            <h2 className="font-domaine text-[24px] font-semibold text-black truncate w-full">
+                              {item.title}
                             </h2>
                           </div>
-                          <div className="w-full flex justify-between items-center">
-                            <div className="flex flex-row gap-2 items-center justify-center">
-                              <Image
-                                src={Assets.TimeBronze}
-                                alt="Last News"
-                                width={16}
-                                height={16}
-                              />
-                              <span className="font-domaine text-[14px] font-light text-black">
-                                {moment(item.updateAt).format("DD MMMM YYYY")}
-                              </span>
-                            </div>
-                            <button
-                              onClick={() => handleBlogClick(item.slug)}
-                              className="font-domaine text-[14px] rounded-full px-4 py-1 font-semibold text-[#B69B7C] ring-1 ring-[#7D716A]"
-                            >
-                              Read More
-                            </button>
+                          <h2 className="font-domaine text-[16px] font-normal text-black truncate w-[300px]">
+                            {item.subtitle}
+                          </h2>
+                        </div>
+                        <div className="w-full flex justify-between items-center">
+                          <div className="flex flex-row gap-2 items-center justify-center">
+                            <Image
+                              src={Assets.TimeBronze}
+                              alt="Last News"
+                              width={16}
+                              height={16}
+                            />
+                            <span className="font-domaine text-[14px] font-light text-black">
+                              {moment(item.updateAt).format("DD MMMM YYYY")}
+                            </span>
                           </div>
+                          <button
+                            onClick={() => handleBlogClick(item.slug)}
+                            className="font-domaine text-[14px] rounded-full px-4 py-1 font-semibold text-[#B69B7C] ring-1 ring-[#7D716A]"
+                          >
+                            Read More
+                          </button>
                         </div>
                       </div>
                     </div>
                   </div>
-                ))
-              : null}
-          </div> */}
+                </div>
+              ))
+            ) : (
+              <div className="w-full h-full flex items-center justify-center bg-gray-100 lg:rounded-[10px] animate-pulse">
+                <span className="text-gray-500 text-sm">
+                  Loading News . . .
+                </span>
+              </div>
+            )}
+          </div>
         </div>
       </div>
       <div className="relative flex lg:h-screen w-full px-4 py-10 lg:p-10 bg-[#FDF8F8] flex-col gap-4">
-        {/* <div className="flex w-full flex-col gap-2 lg:flex-row justify-center lg:justify-between items-center lg:items-start">
+        <div className="flex w-full flex-col gap-2 lg:flex-row justify-center lg:justify-between items-center lg:items-start">
           <h1 className="text-[52px] font-thin text-black font-domaine text-center">
             All Post
           </h1>
@@ -298,9 +298,9 @@ export default function News() {
               </div>
             )}
           </div>
-        </div> */}
+        </div>
 
-        {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 px-4 py-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 px-4 py-4">
           {news.blog && news.blog.length > 0 ? (
             news.blog.map((item, index) => (
               <div
@@ -356,7 +356,7 @@ export default function News() {
               No blog posts found.
             </div>
           )}
-        </div> */}
+        </div>
       </div>
     </div>
   );
