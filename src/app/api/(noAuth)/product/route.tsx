@@ -141,6 +141,8 @@ export async function GET(request: NextRequest) {
       subtitle: true,
       path: true,
       category: true,
+      isActive: true,
+      isShow: true,
     },
     orderBy: {
       createdAt: "desc",
