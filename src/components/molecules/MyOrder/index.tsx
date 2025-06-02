@@ -39,10 +39,10 @@ export const MyOrder = () => {
   const [filterBy, setFilterBy] = useState<string>("status");
   const [filterWith, setFilterWith] = useState<string>("ALL");
   const [startDate, setStartDate] = useState<string>(
-    moment().startOf("year").format("YYYY-MM-DD"),
+    moment().startOf("year").format("YYYY-MM-DD")
   );
   const [endDate, setEndDate] = useState<string>(
-    moment().endOf("day").format("YYYY-MM-DD"),
+    moment().endOf("day").format("YYYY-MM-DD")
   );
 
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
@@ -61,7 +61,7 @@ export const MyOrder = () => {
           startDate,
           endDate,
           page,
-          pageSize,
+          pageSize
         );
 
         const responseData = await response.json();
@@ -143,7 +143,7 @@ export const MyOrder = () => {
           }`}
         >
           {i}
-        </button>,
+        </button>
       );
     }
     return pageNumbers;
@@ -178,7 +178,7 @@ export const MyOrder = () => {
                 "flex w-[55%] flex-shrink-0 cursor-pointer items-center justify-center gap-2 px-4 py-2 font-josefins text-[16px] text-[#7D716A] md:w-[25%]",
                 selectedTab === tab
                   ? "border-b-[2px] border-[#7D716A]"
-                  : "border-0",
+                  : "border-0"
               )}
               onClick={() => {
                 handleTabSelection(tab);
