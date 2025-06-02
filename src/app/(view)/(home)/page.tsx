@@ -19,6 +19,7 @@ import { GetBlog } from "@/controller/noAuth/blog";
 import { getListShop } from "@/controller/noAuth/shop";
 import { AppDispatch } from "@/app/store";
 import { useDispatch } from "react-redux";
+import { ProductController } from "@/controller/noAuth/product";
 
 interface CustomDotProps {
   onClick?: () => void;
@@ -71,12 +72,19 @@ interface ProductItem {
   subDescriptions: string;
 }
 
+interface BannerItem {
+  id: number;
+  path: string;
+  subtitle: string;
+  title: string;
+  category: string;
+}
 export default function Home() {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [showSymphony, setShowSymphony] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   var dispatch: AppDispatch = useDispatch();
-
+  const [isHovered, setIsHovered] = useState<boolean>(false);
   const session = useSession();
   // const { data: session } = useSession();
   const router = useRouter();
@@ -94,6 +102,7 @@ export default function Home() {
   const [totalPages, setTotalPages] = useState<number>(1);
   const searchParams = useSearchParams();
   const query = searchParams.get("query") || "";
+  const [bannerData, setBannerData] = useState<BannerItem[]>([]);
 
   useEffect(() => {
     const handleScroll = () => setScrollPosition(window.scrollY);
@@ -133,6 +142,25 @@ export default function Home() {
   const prevSlide = () =>
     setStep((prev) => (prev - 1 + totalSteps) % totalSteps);
   const goToSlide = (index: number) => setStep(index);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await ProductController();
+        if (response.ok) {
+          const result = await response.json();
+          setBannerData(result?.data.benner || []);
+          console.log(result?.data.benner, "banner");
+        } else {
+          console.error("Failed to fetch data");
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   useEffect(() => {
     const fetchDataBlog = async () => {
@@ -195,18 +223,76 @@ export default function Home() {
       <ModalForceClose session={session} />
       <main className="relative min-h-screen">
         {/* Section #1 */}
-        <div
-          onClick={() => router.push("/shop")}
-          className="relative min-h-screen overflow-hidden cursor-pointer"
-        >
-          <div className="absolute top-0 left-0 z-0 h-full w-full">
-            <Image
-              src={Assets.Home1}
-              alt="Home"
-              className="w-full h-full object-cover object-[20%_90%] md:object-[1%_90%] lg::object-[center_top]"
-            />
+        {bannerData.filter((item) => item.category === "Products").length >
+          0 && (
+          <div className="relative h-screen w-full overflow-hidden ">
+            <div
+              className="flex h-screen items-center justify-center"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              <Carousel
+                additionalTransfrom={0}
+                arrows={false}
+                autoPlay
+                autoPlaySpeed={4000}
+                centerMode={false}
+                containerClass="carousel-container"
+                dotListClass=""
+                draggable
+                focusOnSelect={false}
+                infinite
+                itemClass="h-[100vh]"
+                keyBoardControl
+                minimumTouchDrag={80}
+                renderButtonGroupOutside={false}
+                renderDotsOutside={false}
+                responsive={{
+                  desktop: {
+                    breakpoint: { max: 3000, min: 1024 },
+                    items: 1,
+                    partialVisibilityGutter: 40,
+                  },
+                  tablet: {
+                    breakpoint: { max: 1024, min: 464 },
+                    items: 1,
+                    partialVisibilityGutter: 30,
+                  },
+                  mobile: {
+                    breakpoint: { max: 464, min: 0 },
+                    items: 1,
+                    partialVisibilityGutter: 30,
+                  },
+                }}
+                showDots={true}
+                sliderClass=""
+                slidesToSlide={1}
+                swipeable
+                className="h-full w-full"
+                customDot={<CustomDot />}
+              >
+                {bannerData
+                  .filter((bannerItem) => bannerItem.category === "Products")
+                  .map((bannerItem, index) => (
+                    <div
+                      key={index}
+                      className="flex h-[100vh] items-center justify-center"
+                    >
+                      <div className="relative h-[100%] w-full">
+                        <Image
+                          src={bannerItem.path}
+                          alt={bannerItem.title}
+                          fill
+                          style={{ objectFit: "cover" }}
+                          priority={true}
+                        />
+                      </div>
+                    </div>
+                  ))}
+              </Carousel>
+            </div>
           </div>
-        </div>
+        )}
         <div className="relative flex h-full w-full flex-col items-center justify-center gap-2 py-20 bg-[#F4F4F4]">
           <div className="w-full flex items-center justify-center flex-col gap-2">
             <h1 className="text-[52px] font-medium text-black font-domaine text-center">
