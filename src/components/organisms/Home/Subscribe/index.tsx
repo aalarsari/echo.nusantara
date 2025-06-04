@@ -4,12 +4,10 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { Assets } from "@/assets";
 import { useForm } from "react-hook-form";
-import { Subscriber } from "@prisma/client";
 import { Notifications } from "@/components/atoms";
 
 import { z } from "zod";
 import { SubscriberValidation } from "@/lib/zod-schema/subscriber";
-import { CreateSubscribeAdmin } from "@/controller/admin/subscribe";
 import { postSubscirbe } from "@/controller/noAuth/subscribe";
 
 export const Subscribe = () => {
@@ -42,9 +40,14 @@ export const Subscribe = () => {
       const response = await postSubscirbe(data);
 
       if (!response.ok) {
-        throw new Error("Subscription failed. Please try again.");
+        if (response.status === 400) {
+          throw new Error("Email Anda sudah terdaftar.");
+        } else {
+          throw new Error("Gagal berlangganan. Silakan coba lagi.");
+        }
       }
-      showNotification("Subscribed successfully!", "success");
+
+      showNotification("Berhasil berlangganan!", "success");
       reset();
     } catch (error: any) {
       showNotification(error.message, "error");

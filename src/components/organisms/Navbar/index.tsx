@@ -412,7 +412,7 @@ export const Navbar: React.FC = () => {
                       {IconLinks.map((icon, index) => (
                         <div
                           key={index}
-                          className="relative transition-all duration-300 hover:scale-110 border border-[#B69B7C] rounded-full p-2"
+                          className="relative transition-all duration-300 hover:scale-110 border border-[#B69B7C] rounded-full p-2 hidden lg:block"
                         >
                           {icon.alt === "Icon Search" && isSearchOpen && (
                             <div
@@ -423,7 +423,7 @@ export const Navbar: React.FC = () => {
                                 type="text"
                                 placeholder="Search..."
                                 onChange={(e) => handleSearch(e.target.value)}
-                                className="w-full rounded-md border border-[#B69B7C] px-3 py-2 text-sm outline-none focus:border-[#C1AE94] focus:outline-none"
+                                className="w-full rounded-md border border-[#B69B7C] px-3 py-2 text-sm outline-none focus:border-[#C1AE94] focus:outline-none hidden lg:block"
                               />
                             </div>
                           )}
@@ -435,7 +435,7 @@ export const Navbar: React.FC = () => {
                             onClick={icon.onClick}
                           />
                           {icon.alt === "Icon Cart" && cartCount > 0 && (
-                            <span className="absolute -right-2 -top-2 flex h-[1.05rem] w-[1.05rem] items-center justify-center rounded-full bg-red-600 text-[10px] font-extrabold text-white ring-1 ring-white">
+                            <span className="absolute -right-2 -top-2 lg:flex h-[1.05rem] w-[1.05rem] items-center justify-center rounded-full bg-red-600 text-[10px] font-extrabold text-white ring-1 ring-white hidden ">
                               {cartCount}
                             </span>
                           )}

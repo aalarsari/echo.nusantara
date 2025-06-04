@@ -140,7 +140,7 @@ export default function News() {
                       <div className="w-full">
                         <div className="flex flex-col gap-1">
                           <span className="font-domaine uppercase text-[14px] font-light text-white text-left">
-                            {news.lastNews.category.name ?? "No Category"}
+                            {news?.lastNews?.category?.name ?? "No Category"}
                           </span>
                           <h2 className="font-domaine text-[24px] font-semibold text-white text-left">
                             {news.lastNews.title}
@@ -210,7 +210,7 @@ export default function News() {
                         <div className="w-full">
                           <div className="flex flex-col gap-1">
                             <span className="font-domaine uppercase text-[14px] font-light text-black">
-                              {item.category?.name ?? "No Category"}
+                              {item?.category?.name ?? "No Category"}
                             </span>
                             <h2 className="font-domaine text-[24px] font-semibold text-black truncate w-full">
                               {item.title}
@@ -318,7 +318,7 @@ export default function News() {
                     <div className="w-full">
                       <div className="flex flex-col gap-1">
                         <span className="font-domaine uppercase text-[14px] font-light text-black">
-                          {item.category?.name ?? "No Category"}
+                          {item?.category?.name ?? "No Category"}
                         </span>
                         <h2 className="font-domaine text-[24px] font-semibold text-black truncate w-full">
                           {item.title}

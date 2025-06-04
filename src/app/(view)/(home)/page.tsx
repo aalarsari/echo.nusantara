@@ -136,7 +136,6 @@ export default function Home() {
   );
 
   const [step, setStep] = useState(0);
-  const totalSteps = 4;
 
   const nextSlide = () => setStep((prev) => (prev + 1) % totalSteps);
   const prevSlide = () =>
@@ -217,6 +216,35 @@ export default function Home() {
         product.name.toLowerCase().includes(query.toLowerCase())
       )
     : productData;
+
+  const slides = [
+    {
+      title: "Purely Organic",
+      description:
+        "Sourced directly from nature, our offerings are purely organic. Only filtered water and organic rock sugar are used for some bottled products.",
+      icon: Assets.IconNatural,
+      image: Assets.Choose1,
+      bg: "linear-gradient(to top right, #D5BD9F, #9D846D)",
+    },
+    {
+      title: "Sustainable Harvesting",
+      description:
+        "We prioritize sustainability and respect in our operations. We harvest only from empty nests and in a way that does not disturb nesting birds.",
+      icon: Assets.IconEthical,
+      image: Assets.Choose2,
+      bg: "linear-gradient(to bottom right, #7D716A, #5C4E45)",
+    },
+    {
+      title: "Chemical-Free",
+      description:
+        "We stand against the use of any chemicals in our products. Our products are free of nitrates, heavy metals, bleach, coloring, and pesticides.",
+      icon: Assets.IconChemical,
+      image: Assets.Choose3,
+      bg: "linear-gradient(to bottom right, #7D8699, #5B6475)",
+    },
+  ];
+
+  const totalSteps = slides.length;
 
   return (
     <>
@@ -448,14 +476,8 @@ export default function Home() {
           </h1>
           <div className="group relative mx-auto flex h-full pb-20 md:pb-0 md:h-[70vh] w-full max-w-6xl flex-col items-center overflow-hidden px-4">
             <div className="relative w-full h-full md:h-[70vh] flex flex-col md:flex-row">
-              {/* Teks Deskripsi */}
               <div className="relative w-full h-full md:w-1/2 md:h-full overflow-hidden">
-                {[
-                  "Sourced directly from nature, our offerings are purely organic. They exemplify nature's genuine authenticity. Only filtered water and organic rock sugar are used for some bottled products.",
-                  "We prioritize sustainability and respect in our operations. We harvest only from empty nests and in a way that does not disturb nesting birds in the same area.",
-                  "We stand against the use of any chemicals in our products. Our products are free of nitrates, heavy metals, chemical bleach and colouring agent, preservatives and pesticides.",
-                  "We stand against the use of any chemicals in our products. Our products are free of nitrates, heavy metals, chemical bleach and colouring agent, preservatives and pesticides.",
-                ].map((num, index) => (
+                {slides.map((slide, index) => (
                   <motion.div
                     key={index}
                     initial={
@@ -469,29 +491,31 @@ export default function Home() {
                         : { y: (index - step) * 100 + "%" }
                     }
                     transition={{ duration: 0.5 }}
-                    className="absolute top-0 left-0 flex w-full h-full items-center justify-center text-[16px] text-center font-thin text-white"
-                    style={{
-                      backgroundColor: [
-                        "#D5BD9F",
-                        "#7D8699",
-                        "#7D716A",
-                        "#CDB698",
-                      ][index],
-                    }}
+                    className="absolute top-0 left-0 flex w-full h-full items-center justify-center text-white px-6"
+                    style={{ background: slide.bg }}
                   >
-                    <div className="w-[60%]">{num}</div>
+                    <div className="flex flex-col items-center text-center gap-4 max-w-md">
+                      <Image
+                        src={slide.icon}
+                        alt={slide.title}
+                        width={100}
+                        height={100}
+                        className="object-contain"
+                      />
+                      <h3 className="text-xl md:text-[30px] font-semibold font-domaine">
+                        {slide.title}
+                      </h3>
+                      <p className="text-sm md:text-[16px] font-light">
+                        {slide.description}
+                      </p>
+                    </div>
                   </motion.div>
                 ))}
               </div>
 
               {/* Images */}
               <div className="relative w-full h-full md:w-1/2 md:h-full overflow-hidden">
-                {[
-                  Assets.Choose1,
-                  Assets.Choose2,
-                  Assets.Choose3,
-                  Assets.Choose4,
-                ].map((img, index) => (
+                {slides.map((slide, index) => (
                   <motion.div
                     key={index}
                     initial={
@@ -508,8 +532,8 @@ export default function Home() {
                     className="absolute top-0 left-0 w-full h-full"
                   >
                     <Image
-                      src={img}
-                      alt={`Image ${index + 1}`}
+                      src={slide.image}
+                      alt={`Slide ${index + 1}`}
                       style={{
                         objectFit: "cover",
                         width: "100%",
