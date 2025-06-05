@@ -575,29 +575,31 @@ export default function DetailShopComponent({
                     title: "Our Product",
                     content:
                       productDetail?.descriptions ??
-                      "Tidak ada deskripsi tersedia.",
+                      "Deskripsi belum tersedia.",
                   },
                   {
                     title: "Komposisi",
                     content:
-                      productDetail?.komposisi ?? "Tidak ada data komposisi.",
+                      productDetail?.komposisi ??
+                      "Data komposisi belum tersedia.",
                   },
                   {
                     title: "Manfaat",
                     content:
-                      productDetail?.manfaat ?? "Tidak ada informasi manfaat.",
+                      productDetail?.manfaat ??
+                      "Informasi manfaat belum tersedia.",
                   },
                   {
                     title: "Cara Konsumsi",
                     content:
                       productDetail?.caraKomsumsi ??
-                      "Tidak ada informasi konsumsi.",
+                      "Informasi cara konsumsi belum tersedia.",
                   },
                   {
                     title: "Cara Penyimpanan",
                     content:
                       productDetail?.caraPenyimpanan ??
-                      "Tidak ada informasi penyimpanan.",
+                      "Informasi cara penyimpanan belum tersedia.",
                   },
                 ].map((item, index) => (
                   <Disclosure as="div" className="p-6" key={index}>
