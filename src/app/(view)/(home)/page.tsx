@@ -3,7 +3,12 @@
 import { useEffect, useState } from "react";
 import Image, { StaticImageData } from "next/image";
 import { Assets } from "@/assets";
-import { FormatRupiah, ModalForceClose, NavHome } from "@/components";
+import {
+  ButtonPrimary,
+  FormatRupiah,
+  ModalForceClose,
+  NavHome,
+} from "@/components";
 import { useSession } from "next-auth/react";
 import { Dialog } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
@@ -649,6 +654,11 @@ export default function Home() {
                   reestablish that innate connection
                 </h2>
               </div>
+              <ButtonPrimary
+                text="Contact Us"
+                width="w-[200px]"
+                height="h-[50px]"
+              />
             </div>
           </div>
         </div>
@@ -743,7 +753,7 @@ export default function Home() {
                                 onClick={() =>
                                   router.push(`/news/${item.slug}`)
                                 }
-                                className="font-domaine text-[14px] rounded-full px-4 py-1 font-semibold text-[#B69B7C] ring-1 ring-[#7D716A] transition-colors duration-300 group-hover:bg-[#B69B7C] group-hover:text-white"
+                                className="font-domaine text-[14px] rounded-full px-4 py-1 font-semibold text-[#B69B7C] ring-1 ring-[#B69B7C] transition-colors duration-300 group-hover:bg-[#B69B7C] group-hover:text-white"
                               >
                                 Read More
                               </button>
