@@ -316,7 +316,7 @@ export default function Home() {
                           src={bannerItem.path}
                           alt={bannerItem.title}
                           fill
-                          style={{ objectFit: "cover" }}
+                          style={{ objectFit: "contain" }}
                           priority={true}
                         />
                       </div>
