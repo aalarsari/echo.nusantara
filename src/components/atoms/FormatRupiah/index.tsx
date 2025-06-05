@@ -15,7 +15,7 @@ export const FormatRupiah: React.FC<FormatRupiahProps> = ({ price, size }) => {
   }).format();
 
   return (
-    <span className={`font-josefins font-semibold text-[#231F20] ${size}`}>
+    <span className={`font-josefins font-semibold text-[#B69B7C] ${size}`}>
       {formattedValue}
     </span>
   );

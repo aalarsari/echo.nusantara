@@ -412,7 +412,7 @@ export default function Home() {
                           {/* Informasi produk */}
                           <div className="flex flex-col justify-between h-[35%]">
                             <div className="flex flex-col gap-1 py-1">
-                              <span className="font-domaine text-[18px] font-light text-black">
+                              <span className="font-domaine text-[18px] font-semibold text-black">
                                 {product.name}
                               </span>
                               <span className="font-domaine text-[14px] text-black">

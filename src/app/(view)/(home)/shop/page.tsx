@@ -370,15 +370,15 @@ export default function Shop() {
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         />
                       </div>
-                      <div className="relative mx-4 my-2 flex h-[12rem] flex-col justify-between gap-4">
+                      <div className="relative my-2 flex h-[12rem] flex-col justify-between gap-4">
                         <div className="relative flex flex-col">
                           <div>
-                            <span className="text-[20px] font-medium text-[#C1AE94]">
+                            <span className="text-[18px] font-semibold font-domaine text-black">
                               {product.name}
                             </span>
                           </div>
                           <div className="h-[3.5rem] w-full">
-                            <span className="text-[16px] font-light text-black">
+                            <span className="text-[14px] font-light text-black">
                               {product.subDescriptions}
                             </span>
                           </div>
