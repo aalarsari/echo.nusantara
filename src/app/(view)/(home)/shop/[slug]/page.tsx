@@ -622,9 +622,12 @@ export default function DetailShopComponent({
                           </span>
                         </Disclosure.Button>
                         <Disclosure.Panel className="mt-2">
-                          <h2 className="text-start text-[20px] text-[#232324] lg:text-[24px]">
-                            {item.content}
-                          </h2>
+                          <div
+                            className="font-regular text-[#252525]"
+                            dangerouslySetInnerHTML={{
+                              __html: item.content || "",
+                            }}
+                          />
                         </Disclosure.Panel>
                       </>
                     )}
