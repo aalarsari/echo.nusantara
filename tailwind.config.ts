@@ -22,6 +22,7 @@ const config = {
     fontFamily: {
       josefins: ["Josefins", "sans-serif"],
       domaine: ["Domaine", "sans-serif"],
+      althea: ["var(--font-althea)"],
     },
   },
   plugins: [require("tailwind-scrollbar-hide")],

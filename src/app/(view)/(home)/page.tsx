@@ -637,13 +637,13 @@ export default function Home() {
               style={{ objectFit: "cover", width: "5%", height: "5%" }}
             />
             <div className="flex flex-col gap-4 justify-center items-center w-full h-full">
-              <div className="flex flex-col justify-center items-center">
-                <span className="text-[28px] lg:text-[64px] font-thin text-black font-domaine text-left">
-                  SYMPHONY
-                </span>
-                <span className="text-[28px] lg:text-[64px] font-thin text-black font-domaine text-left">
-                  OF NATURE
-                </span>
+              <div className="flex flex-col lg:gap-4 justify-start items-start">
+                <div className="relative w-[250px] h-[50px] lg:w-[400px] lg:h-[70px]">
+                  <Image src={Assets.Symphonyy} alt="Symphony" fill />
+                </div>
+                <div className="relative w-[250px] h-[50px] lg:w-[400px] lg:h-[70px]">
+                  <Image src={Assets.OffNature} alt="Symphony" fill />
+                </div>
               </div>
               <div className="px-4 lg:w-[50%]">
                 <h2 className="text-[16px] lg:text-[24px] font-thin text-center text-black font-domaine leading-6 lg:leading-10">
