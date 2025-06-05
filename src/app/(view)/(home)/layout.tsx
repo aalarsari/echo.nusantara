@@ -9,11 +9,15 @@ export default function HomeLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
+
+  const isProfilePage = pathname.startsWith("/profile");
+
   return (
     <>
       <Navbar />
       {children}
-      <Subscribe />
+      {!isProfilePage && <Subscribe />}
       <Footer />
     </>
   );

@@ -71,7 +71,7 @@ export const MyPassword = () => {
               label="Old Password"
               register={register}
               name="oldPassword"
-              width="w-[50%]"
+              width="w-full lg:w-[50%]"
               height="h-[50px]"
               placeholder="Old Password"
               error={
@@ -88,7 +88,7 @@ export const MyPassword = () => {
               label="Password"
               register={register}
               name="password"
-              width="w-[50%]"
+              width="w-full lg:w-[50%]"
               height="h-[50px]"
               placeholder="Password"
               error={
@@ -105,7 +105,7 @@ export const MyPassword = () => {
               label="Confirm Password"
               register={register}
               name="confirmPassword"
-              width="w-[50%]"
+              width="w-full lg:w-[50%]"
               height="h-[50px]"
               placeholder="Confirm Password"
               error={
@@ -140,7 +140,7 @@ export const MyPassword = () => {
           </div>
           <ButtonPrimary
             text="Change Password"
-            width="w-[50%]"
+            width="w-full lg:w-[50%]"
             height="h-[50px]"
           />
         </div>

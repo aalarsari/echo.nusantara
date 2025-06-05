@@ -177,29 +177,6 @@ export default function Shop() {
     fetchCategories();
   }, []);
 
-  const handleWishlistClick = async (productId: number) => {
-    try {
-      const wishlistData = { productId };
-      const isLiked = likedProducts.includes(productId);
-      if (isLiked) {
-        setLikedProducts(likedProducts.filter((id) => id !== productId));
-        const response = await Wishlist(wishlistData);
-        if (!response.ok) {
-          throw new Error("Failed to update wishlist");
-        }
-      } else {
-        setLikedProducts([...likedProducts, productId]);
-        const response = await Wishlist(wishlistData);
-        if (!response.ok) {
-          throw new Error("Failed to update wishlist");
-        }
-      }
-      dispatch(isLiked ? decrementWishlist(1) : incrementWishlist(1));
-    } catch (error) {
-      console.error("Error handling wishlist:", error);
-    }
-  };
-
   const filteredProducts = query
     ? productData.filter((product) =>
         product.name.toLowerCase().includes(query.toLowerCase())
@@ -208,8 +185,7 @@ export default function Shop() {
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-between gap-10">
-      {bannerData.filter((bannerItem) => bannerItem.category === "Discount")
-        .length > 0 && (
+      {bannerData.filter((item) => item.category === "Discount").length > 0 && (
         <div className="relative h-screen w-full overflow-hidden ">
           <div
             className="flex h-screen items-center justify-center"
@@ -257,7 +233,7 @@ export default function Shop() {
               customDot={<CustomDot />}
             >
               {bannerData
-                .filter((bannerItem) => bannerItem.category === "Products")
+                .filter((bannerItem) => bannerItem.category === "Discount")
                 .map((bannerItem, index) => (
                   <div
                     key={index}
@@ -268,7 +244,7 @@ export default function Shop() {
                         src={bannerItem.path}
                         alt={bannerItem.title}
                         fill
-                        style={{ objectFit: "cover" }}
+                        style={{ objectFit: "contain" }}
                         priority={true}
                       />
                     </div>

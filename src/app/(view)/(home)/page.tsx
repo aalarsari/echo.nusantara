@@ -3,7 +3,12 @@
 import { useEffect, useState } from "react";
 import Image, { StaticImageData } from "next/image";
 import { Assets } from "@/assets";
-import { FormatRupiah, ModalForceClose, NavHome } from "@/components";
+import {
+  ButtonPrimary,
+  FormatRupiah,
+  ModalForceClose,
+  NavHome,
+} from "@/components";
 import { useSession } from "next-auth/react";
 import { Dialog } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
@@ -19,6 +24,7 @@ import { GetBlog } from "@/controller/noAuth/blog";
 import { getListShop } from "@/controller/noAuth/shop";
 import { AppDispatch } from "@/app/store";
 import { useDispatch } from "react-redux";
+import { ProductController } from "@/controller/noAuth/product";
 
 interface CustomDotProps {
   onClick?: () => void;
@@ -71,12 +77,19 @@ interface ProductItem {
   subDescriptions: string;
 }
 
+interface BannerItem {
+  id: number;
+  path: string;
+  subtitle: string;
+  title: string;
+  category: string;
+}
 export default function Home() {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [showSymphony, setShowSymphony] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   var dispatch: AppDispatch = useDispatch();
-
+  const [isHovered, setIsHovered] = useState<boolean>(false);
   const session = useSession();
   // const { data: session } = useSession();
   const router = useRouter();
@@ -94,6 +107,7 @@ export default function Home() {
   const [totalPages, setTotalPages] = useState<number>(1);
   const searchParams = useSearchParams();
   const query = searchParams.get("query") || "";
+  const [bannerData, setBannerData] = useState<BannerItem[]>([]);
 
   useEffect(() => {
     const handleScroll = () => setScrollPosition(window.scrollY);
@@ -127,12 +141,30 @@ export default function Home() {
   );
 
   const [step, setStep] = useState(0);
-  const totalSteps = 4;
 
   const nextSlide = () => setStep((prev) => (prev + 1) % totalSteps);
   const prevSlide = () =>
     setStep((prev) => (prev - 1 + totalSteps) % totalSteps);
   const goToSlide = (index: number) => setStep(index);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await ProductController();
+        if (response.ok) {
+          const result = await response.json();
+          setBannerData(result?.data.benner || []);
+          console.log(result?.data.benner, "banner");
+        } else {
+          console.error("Failed to fetch data");
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   useEffect(() => {
     const fetchDataBlog = async () => {
@@ -190,23 +222,110 @@ export default function Home() {
       )
     : productData;
 
+  const slides = [
+    {
+      title: "Purely Organic",
+      description:
+        "Sourced directly from nature, our offerings are purely organic. Only filtered water and organic rock sugar are used for some bottled products.",
+      icon: Assets.IconNatural,
+      image: Assets.Choose1,
+      bg: "linear-gradient(to top right, #D5BD9F, #9D846D)",
+    },
+    {
+      title: "Sustainable Harvesting",
+      description:
+        "We prioritize sustainability and respect in our operations. We harvest only from empty nests and in a way that does not disturb nesting birds.",
+      icon: Assets.IconEthical,
+      image: Assets.Choose2,
+      bg: "linear-gradient(to bottom right, #7D716A, #5C4E45)",
+    },
+    {
+      title: "Chemical-Free",
+      description:
+        "We stand against the use of any chemicals in our products. Our products are free of nitrates, heavy metals, bleach, coloring, and pesticides.",
+      icon: Assets.IconChemical,
+      image: Assets.Choose3,
+      bg: "linear-gradient(to bottom right, #7D8699, #5B6475)",
+    },
+  ];
+
+  const totalSteps = slides.length;
+
   return (
     <>
       <ModalForceClose session={session} />
       <main className="relative min-h-screen">
         {/* Section #1 */}
-        <div
-          onClick={() => router.push("/shop")}
-          className="relative min-h-screen overflow-hidden cursor-pointer"
-        >
-          <div className="absolute top-0 left-0 z-0 h-full w-full">
-            <Image
-              src={Assets.Home1}
-              alt="Home"
-              className="w-full h-full object-cover object-[20%_90%] md:object-[1%_90%] lg::object-[center_top]"
-            />
+        {bannerData.filter((item) => item.category === "Products").length >
+          0 && (
+          <div className="relative h-screen w-full overflow-hidden ">
+            <div
+              className="flex h-screen items-center justify-center"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              <Carousel
+                additionalTransfrom={0}
+                arrows={false}
+                autoPlay
+                autoPlaySpeed={4000}
+                centerMode={false}
+                containerClass="carousel-container"
+                dotListClass=""
+                draggable
+                focusOnSelect={false}
+                infinite
+                itemClass="h-[100vh]"
+                keyBoardControl
+                minimumTouchDrag={80}
+                renderButtonGroupOutside={false}
+                renderDotsOutside={false}
+                responsive={{
+                  desktop: {
+                    breakpoint: { max: 3000, min: 1024 },
+                    items: 1,
+                    partialVisibilityGutter: 40,
+                  },
+                  tablet: {
+                    breakpoint: { max: 1024, min: 464 },
+                    items: 1,
+                    partialVisibilityGutter: 30,
+                  },
+                  mobile: {
+                    breakpoint: { max: 464, min: 0 },
+                    items: 1,
+                    partialVisibilityGutter: 30,
+                  },
+                }}
+                showDots={true}
+                sliderClass=""
+                slidesToSlide={1}
+                swipeable
+                className="h-full w-full"
+                customDot={<CustomDot />}
+              >
+                {bannerData
+                  .filter((bannerItem) => bannerItem.category === "Products")
+                  .map((bannerItem, index) => (
+                    <div
+                      key={index}
+                      className="flex h-[100vh] items-center justify-center"
+                    >
+                      <div className="relative h-[100%] w-full">
+                        <Image
+                          src={bannerItem.path}
+                          alt={bannerItem.title}
+                          fill
+                          style={{ objectFit: "contain" }}
+                          priority={true}
+                        />
+                      </div>
+                    </div>
+                  ))}
+              </Carousel>
+            </div>
           </div>
-        </div>
+        )}
         <div className="relative flex h-full w-full flex-col items-center justify-center gap-2 py-20 bg-[#F4F4F4]">
           <div className="w-full flex items-center justify-center flex-col gap-2">
             <h1 className="text-[52px] font-medium text-black font-domaine text-center">
@@ -262,7 +381,7 @@ export default function Home() {
                               alt={product.name}
                               fill
                               priority
-                              style={{ objectFit: "cover" }}
+                              style={{ objectFit: "contain" }}
                               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             />
 
@@ -362,14 +481,8 @@ export default function Home() {
           </h1>
           <div className="group relative mx-auto flex h-full pb-20 md:pb-0 md:h-[70vh] w-full max-w-6xl flex-col items-center overflow-hidden px-4">
             <div className="relative w-full h-full md:h-[70vh] flex flex-col md:flex-row">
-              {/* Teks Deskripsi */}
               <div className="relative w-full h-full md:w-1/2 md:h-full overflow-hidden">
-                {[
-                  "Sourced directly from nature, our offerings are purely organic. They exemplify nature's genuine authenticity. Only filtered water and organic rock sugar are used for some bottled products.",
-                  "We prioritize sustainability and respect in our operations. We harvest only from empty nests and in a way that does not disturb nesting birds in the same area.",
-                  "We stand against the use of any chemicals in our products. Our products are free of nitrates, heavy metals, chemical bleach and colouring agent, preservatives and pesticides.",
-                  "We stand against the use of any chemicals in our products. Our products are free of nitrates, heavy metals, chemical bleach and colouring agent, preservatives and pesticides.",
-                ].map((num, index) => (
+                {slides.map((slide, index) => (
                   <motion.div
                     key={index}
                     initial={
@@ -383,29 +496,31 @@ export default function Home() {
                         : { y: (index - step) * 100 + "%" }
                     }
                     transition={{ duration: 0.5 }}
-                    className="absolute top-0 left-0 flex w-full h-full items-center justify-center text-[16px] text-center font-thin text-white"
-                    style={{
-                      backgroundColor: [
-                        "#D5BD9F",
-                        "#7D8699",
-                        "#7D716A",
-                        "#CDB698",
-                      ][index],
-                    }}
+                    className="absolute top-0 left-0 flex w-full h-full items-center justify-center text-white px-6"
+                    style={{ background: slide.bg }}
                   >
-                    <div className="w-[60%]">{num}</div>
+                    <div className="flex flex-col items-center text-center gap-4 max-w-md">
+                      <Image
+                        src={slide.icon}
+                        alt={slide.title}
+                        width={100}
+                        height={100}
+                        className="object-contain"
+                      />
+                      <h3 className="text-xl md:text-[30px] font-semibold font-domaine">
+                        {slide.title}
+                      </h3>
+                      <p className="text-sm md:text-[16px] font-light">
+                        {slide.description}
+                      </p>
+                    </div>
                   </motion.div>
                 ))}
               </div>
 
               {/* Images */}
               <div className="relative w-full h-full md:w-1/2 md:h-full overflow-hidden">
-                {[
-                  Assets.Choose1,
-                  Assets.Choose2,
-                  Assets.Choose3,
-                  Assets.Choose4,
-                ].map((img, index) => (
+                {slides.map((slide, index) => (
                   <motion.div
                     key={index}
                     initial={
@@ -422,8 +537,8 @@ export default function Home() {
                     className="absolute top-0 left-0 w-full h-full"
                   >
                     <Image
-                      src={img}
-                      alt={`Image ${index + 1}`}
+                      src={slide.image}
+                      alt={`Slide ${index + 1}`}
                       style={{
                         objectFit: "cover",
                         width: "100%",
@@ -539,6 +654,12 @@ export default function Home() {
                   reestablish that innate connection
                 </h2>
               </div>
+              <ButtonPrimary
+                onClick={() => router.push("/contact")}
+                text="Contact Us"
+                width="w-[200px]"
+                height="h-[50px]"
+              />
             </div>
           </div>
         </div>
@@ -633,7 +754,7 @@ export default function Home() {
                                 onClick={() =>
                                   router.push(`/news/${item.slug}`)
                                 }
-                                className="font-domaine text-[14px] rounded-full px-4 py-1 font-semibold text-[#B69B7C] ring-1 ring-[#7D716A] transition-colors duration-300 group-hover:bg-[#B69B7C] group-hover:text-white"
+                                className="font-domaine text-[14px] rounded-full px-4 py-1 font-semibold text-[#B69B7C] ring-1 ring-[#B69B7C] transition-colors duration-300 group-hover:bg-[#B69B7C] group-hover:text-white"
                               >
                                 Read More
                               </button>

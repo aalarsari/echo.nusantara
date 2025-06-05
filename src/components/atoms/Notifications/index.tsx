@@ -32,7 +32,7 @@ export const Notifications = ({
     ? createPortal(
         <div
           className={classNames(
-            "fixed z-[99999] w-full max-w-md text-center",
+            "fixed z-[9999999] w-full max-w-md text-center",
             "rounded p-4 text-white shadow-lg",
             {
               "bg-green-500": type === "success",
@@ -41,7 +41,7 @@ export const Notifications = ({
             "sm:left-[15%]",
             "md:left-[22%]",
             "lg:left-[35%]",
-            "transform lg:-translate-x-1/2",
+            "transform lg:-translate-x-1/2"
           )}
           style={{
             top: `${top}rem`,
@@ -51,7 +51,7 @@ export const Notifications = ({
         >
           {message}
         </div>,
-        document.body,
+        document.body
       )
     : null;
 };

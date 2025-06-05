@@ -4,19 +4,12 @@ import { Assets } from "@/assets";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { GetBlog, GetCategoryBlog } from "@/controller/noAuth/blog";
-import Carousel from "react-multi-carousel";
-import {
-  CustomArrowLeft,
-  CustomArrowRight,
-} from "@/components/atoms/ButtomCustom";
 import moment from "moment";
 import { blog } from "@/types/blog/blog";
 import { useRouter } from "next/navigation";
 import { CategoryBlog } from "@prisma/client";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function News() {
-  const [isHovered, setIsHovered] = useState<boolean>(false);
   const [news, setNewsData] = useState<{
     blog: blog[];
     lastNews: any | null;
@@ -95,7 +88,7 @@ export default function News() {
     const fetchBlog = async () => {
       const orderBy = selectedOption === "Newest" ? "desc" : "asc";
       try {
-        const res = await GetBlog(page, limit, orderBy); // pakai state
+        const res = await GetBlog(page, limit, orderBy);
         const json = await res.json();
         setBlogData(json?.data || []);
       } catch (err) {
@@ -104,13 +97,13 @@ export default function News() {
     };
 
     fetchBlog();
-  }, [selectedOption, page, limit]); // ✅ dependencies disesuaikan
+  }, [selectedOption, page, limit]);
 
   const handleSelect = (option: string) => {
     setSelectedOption(option);
-    setPage(1); // reset ke halaman 1 saat urutan diubah
+    setPage(1);
     setIsOpen(false);
-    console.log("Selected option:", option); // ✅ Cek opsi terpilih
+    console.log("Selected option:", option);
   };
 
   return (
@@ -122,134 +115,145 @@ export default function News() {
       </div>
       <div className="flex w-full flex-col items-center justify-center">
         <div className="flex w-full h-screen items-center flex-col lg:flex-row gap-2 justify-center bg-[#F4F4F4] lg:py-10 lg:px-10">
-          {news.lastNews ? (
-            <div
-              onClick={() => handleLastNewsClick(news.lastNews.slug)}
-              className="w-full h-[656px]"
-            >
+          <div className="w-full h-[656px]">
+            {news.lastNews ? (
               <div
-                style={{ position: "relative" }}
-                className="flex h-full w-full justify-center overflow-hidden lg:rounded-[10px]"
+                onClick={() => handleLastNewsClick(news.lastNews.slug)}
+                className="w-full h-full"
               >
-                {/* Gambar */}
-                <Image
-                  src={news.lastNews.image[0] || Assets.DefaultImage}
-                  alt="Last News"
-                  fill
-                  priority
-                  style={{ objectFit: "contain" }}
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                />
-
-                {/* Overlay hitam transparan */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black to-black/0 z-[10]" />
-
-                {/* Teks di atas overlay */}
-                <div className="absolute inset-0 z-20 py-10 px-4 ">
-                  <div className="flex flex-col justify-end items-end relative gap-8 h-full w-full px-4">
-                    <div className="w-full">
-                      <div className="flex flex-col gap-1">
-                        <span className="font-domaine uppercase text-[14px] font-light text-white text-left">
-                          {news.lastNews.category ?? "No Category"}
-                        </span>
-                        <h2 className="font-domaine text-[24px] font-semibold text-white text-left">
-                          {news.lastNews.title}
-                        </h2>
-                      </div>
-                      <span className="font-domaine text-[16px] text-white text-left">
-                        {news.lastNews.subtitle}
-                      </span>
-                    </div>
-                    <div className="w-full flex justify-between items-center">
-                      <div className="flex flex-row gap-2 justify-center items-center">
-                        <Image
-                          src={Assets.TimeWhite}
-                          alt="Last News"
-                          width={16}
-                          height={16}
-                        />
-                        <span className="font-domaine text-[14px] font-light text-white">
-                          {moment(news.lastNews.createdAt).format(
-                            "DD MMMM YYYY"
-                          )}
+                <div
+                  style={{ position: "relative" }}
+                  className="flex h-full w-full justify-center overflow-hidden lg:rounded-[10px]"
+                >
+                  {/* Gambar */}
+                  <Image
+                    src={news.lastNews.image[0] || Assets.DefaultImage}
+                    alt="Last News"
+                    fill
+                    priority
+                    style={{ objectFit: "contain" }}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black to-black/0 z-[10]" />
+                  <div className="absolute inset-0 z-20 py-10 px-4 ">
+                    <div className="flex flex-col justify-end items-end relative gap-8 h-full w-full px-4">
+                      <div className="w-full">
+                        <div className="flex flex-col gap-1">
+                          <span className="font-domaine uppercase text-[14px] font-light text-white text-left">
+                            {news?.lastNews?.category?.name ?? "No Category"}
+                          </span>
+                          <h2 className="font-domaine text-[24px] font-semibold text-white text-left">
+                            {news.lastNews.title}
+                          </h2>
+                        </div>
+                        <span className="font-domaine text-[16px] text-white text-left">
+                          {news.lastNews.subtitle}
                         </span>
                       </div>
-                      <button
-                        onClick={() => handleLastNewsClick(news.lastNews.slug)}
-                        className="font-domaine text-[14px] rounded-full px-4 py-1 font-semibold bg-white text-[#B69B7C] ring-1 ring-[#7D716A]"
-                      >
-                        Read More
-                      </button>
+                      <div className="w-full flex justify-between items-center">
+                        <div className="flex flex-row gap-2 justify-center items-center">
+                          <Image
+                            src={Assets.TimeWhite}
+                            alt="Time"
+                            width={16}
+                            height={16}
+                          />
+                          <span className="font-domaine text-[14px] font-light text-white">
+                            {moment(news.lastNews.updateAt).format(
+                              "DD MMMM YYYY"
+                            )}
+                          </span>
+                        </div>
+                        <button
+                          onClick={() =>
+                            handleLastNewsClick(news.lastNews.slug)
+                          }
+                          className="font-domaine text-[14px] rounded-full px-4 py-1 font-semibold bg-white text-[#B69B7C] ring-1 ring-[#7D716A]"
+                        >
+                          Read More
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ) : null}
+            ) : (
+              <div className="w-full h-full flex items-center justify-center bg-gray-100 lg:rounded-[10px] animate-pulse">
+                <span className="text-gray-500 text-sm">
+                  Loading latest news...
+                </span>
+              </div>
+            )}
+          </div>
+
           <div className="relative w-full h-[656px] overflow-y-scroll">
-            {news.topBlog && news.topBlog.length > 0
-              ? news.topBlog.map((item, index) => (
-                  <div
-                    key={index}
-                    onClick={() => handleBlogClick(item.slug)}
-                    className="flex flex-col gap-4 py-2 px-4"
-                  >
-                    <div className="h-[225px] relative overflow-hidden bg-white w-full cursor-pointer shadow-product rounded-[16px] shadow-gray-100">
-                      <div className="flex h-full w-full flex-row gap-2">
-                        <div className="relative h-full w-[225px]">
-                          <Image
-                            src={item.image[0] || Assets.DefaultImage}
-                            fill
-                            style={{ objectFit: "cover" }}
-                            priority={true}
-                            alt={`Top Blog ${index + 1}`}
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                          />
-                        </div>
-                        <div className="flex flex-col justify-center items-start gap-8 h-full w-[60%] px-4 relative overflow-hidden">
-                          <div className="w-full">
-                            <div className="flex flex-col gap-1">
-                              <span className="font-domaine uppercase text-[14px] font-light text-black">
-                                {item.category?.name ?? "No Category"}
-                              </span>
-                              <h2 className="font-domaine text-[24px] font-semibold text-black truncate w-full">
-                                {item.title}
-                              </h2>
-                            </div>
-                            <h2 className="font-domaine text-[16px] font-normal text-black truncate w-[300px]">
-                              {item.subtitle}
+            {news.topBlog && news.topBlog.length > 0 ? (
+              news.topBlog.map((item, index) => (
+                <div
+                  key={index}
+                  onClick={() => handleBlogClick(item.slug)}
+                  className="flex flex-col gap-4 py-2 px-4"
+                >
+                  <div className="h-[225px] relative overflow-hidden bg-white w-full cursor-pointer shadow-product rounded-[16px] shadow-gray-100">
+                    <div className="flex h-full w-full flex-row gap-2">
+                      <div className="relative h-full w-[225px]">
+                        <Image
+                          src={item.image[0] || Assets.DefaultImage}
+                          fill
+                          style={{ objectFit: "cover" }}
+                          priority={true}
+                          alt={`Top Blog ${index + 1}`}
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                      </div>
+                      <div className="flex flex-col justify-center items-start gap-8 h-full w-[60%] px-4 relative overflow-hidden">
+                        <div className="w-full">
+                          <div className="flex flex-col gap-1">
+                            <span className="font-domaine uppercase text-[14px] font-light text-black">
+                              {item?.category?.name ?? "No Category"}
+                            </span>
+                            <h2 className="font-domaine text-[24px] font-semibold text-black truncate w-full">
+                              {item.title}
                             </h2>
                           </div>
-                          <div className="w-full flex justify-between items-center">
-                            <div className="flex flex-row gap-2 items-center justify-center">
-                              <Image
-                                src={Assets.TimeBronze}
-                                alt="Last News"
-                                width={16}
-                                height={16}
-                              />
-                              <span className="font-domaine text-[14px] font-light text-black">
-                                {moment(item.updateAt).format("DD MMMM YYYY")}
-                              </span>
-                            </div>
-                            <button
-                              onClick={() => handleBlogClick(item.slug)}
-                              className="font-domaine text-[14px] rounded-full px-4 py-1 font-semibold text-[#B69B7C] ring-1 ring-[#7D716A]"
-                            >
-                              Read More
-                            </button>
+                          <h2 className="font-domaine text-[16px] font-normal text-black truncate w-[300px]">
+                            {item.subtitle}
+                          </h2>
+                        </div>
+                        <div className="w-full flex justify-between items-center">
+                          <div className="flex flex-row gap-2 items-center justify-center">
+                            <Image
+                              src={Assets.TimeBronze}
+                              alt="Last News"
+                              width={16}
+                              height={16}
+                            />
+                            <span className="font-domaine text-[14px] font-light text-black">
+                              {moment(item.updateAt).format("DD MMMM YYYY")}
+                            </span>
                           </div>
+                          <button
+                            onClick={() => handleBlogClick(item.slug)}
+                            className="font-domaine text-[14px] rounded-full px-4 py-1 font-semibold text-[#B69B7C] ring-1 ring-[#7D716A]"
+                          >
+                            Read More
+                          </button>
                         </div>
                       </div>
                     </div>
                   </div>
-                ))
-              : null}
+                </div>
+              ))
+            ) : (
+              <div className="w-full h-full flex items-center justify-center bg-gray-100 lg:rounded-[10px] animate-pulse">
+                <span className="text-gray-500 text-sm">Loading News . .</span>
+              </div>
+            )}
           </div>
         </div>
       </div>
       <div className="relative flex lg:h-screen w-full px-4 py-10 lg:p-10 bg-[#FDF8F8] flex-col gap-4">
-        {/* <div className="flex w-full flex-col gap-2 lg:flex-row justify-center lg:justify-between items-center lg:items-start">
+        <div className="flex w-full flex-col gap-2 lg:flex-row justify-center lg:justify-between items-center lg:items-start">
           <h1 className="text-[52px] font-thin text-black font-domaine text-center">
             All Post
           </h1>
@@ -291,9 +295,9 @@ export default function News() {
               </div>
             )}
           </div>
-        </div> */}
+        </div>
 
-        {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 px-4 py-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 px-4 py-4">
           {news.blog && news.blog.length > 0 ? (
             news.blog.map((item, index) => (
               <div
@@ -314,7 +318,7 @@ export default function News() {
                     <div className="w-full">
                       <div className="flex flex-col gap-1">
                         <span className="font-domaine uppercase text-[14px] font-light text-black">
-                          {item.category?.name ?? "No Category"}
+                          {item?.category?.name ?? "No Category"}
                         </span>
                         <h2 className="font-domaine text-[24px] font-semibold text-black truncate w-full">
                           {item.title}
@@ -349,7 +353,7 @@ export default function News() {
               No blog posts found.
             </div>
           )}
-        </div> */}
+        </div>
       </div>
     </div>
   );

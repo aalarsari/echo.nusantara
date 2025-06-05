@@ -138,51 +138,6 @@ export const MyProfile = () => {
         visible={notification.visible}
         onClose={() => setNotification({ ...notification, visible: false })}
       />
-      <div className="relative flex flex-col items-center justify-center gap-6 md:flex-row md:justify-start">
-        <div className="group relative h-32 w-40">
-          <Image
-            src={getImageSrc()}
-            alt="Photo Profile"
-            fill
-            priority={true}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover"
-          />
-          <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 transition-opacity duration-300 hover:bg-opacity-70 group-hover:opacity-100">
-            <label htmlFor="file-input" className="cursor-pointer">
-              <Image
-                src={Assets.Edit}
-                alt="Camera Icon"
-                width={24}
-                height={24}
-                className="text-white"
-              />
-            </label>
-            <input
-              id="file-input"
-              type="file"
-              accept="image/jpeg, image/png"
-              onChange={handleFileChange}
-              className="hidden"
-            />
-          </div>
-        </div>
-        <div className="flex w-full flex-col items-center gap-2 md:items-start">
-          <div className="flex flex-row gap-2">
-            <ButtonPrimary
-              text="Update Photo"
-              width="w-[10rem]"
-              height="h-[2.5rem]"
-              onClick={handleSave}
-            />
-          </div>
-          <div className="w-full">
-            <h2 className="text-center font-josefins text-[16px] font-thin md:text-start md:text-[14px]">
-              *Upload photos in JPEG or PNG format, maximum size 2MB
-            </h2>
-          </div>
-        </div>
-      </div>
       <div className="flex flex-row items-center justify-start gap-6">
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -191,8 +146,8 @@ export const MyProfile = () => {
           <div className="flex w-full flex-col gap-4 md:flex-row">
             <InputField
               type="text"
-              placeholder={profileData?.name || "Name"}
-              label="Name"
+              placeholder={profileData?.name || "Full Name"}
+              label="Full Name"
               register={register}
               height="h-[48px]"
               inputProps={{

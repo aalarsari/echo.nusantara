@@ -139,7 +139,7 @@ export const Footer = () => {
                 </div>
               </div>
               <div className="flex flex-row justify-between lg:gap-24">
-                <div className="flex flex-col items-start  lg:items-center gap-4">
+                {/* <div className="flex flex-col items-start  lg:items-center gap-4">
                   <h2 className="text-lg font-bold text-white">Social Media</h2>
                   {socialMediaLinks.filter(
                     (link) =>
@@ -173,7 +173,7 @@ export const Footer = () => {
                         ))}
                     </div>
                   )}
-                </div>
+                </div> */}
                 <div className="flex flex-col items-start lg:items-center gap-4">
                   <h2 className="text-lg font-bold text-white">Follow Us</h2>
                   {socialMediaLinks.filter(
@@ -244,7 +244,7 @@ export const Footer = () => {
                     title="Logo HALAL"
                   />
                 </a>
-                <a href="# " target="_blank" rel="noopener noreferrer">
+                <a href="/news" target="_blank" rel="noopener noreferrer">
                   <Image
                     src={Assets.NKV}
                     alt={"NKV"}

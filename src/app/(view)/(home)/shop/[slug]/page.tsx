@@ -3,7 +3,12 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { Assets } from "@/assets";
-import { ShoppingCartIcon, TrashIcon, XMarkIcon, PlusIcon } from "@heroicons/react/24/outline";
+import {
+  ShoppingCartIcon,
+  TrashIcon,
+  XMarkIcon,
+  PlusIcon,
+} from "@heroicons/react/24/outline";
 import { useSession } from "next-auth/react";
 import { SaveCartLocaly } from "@/lib/cookies/cart";
 import { DetailShop } from "@/controller/noAuth/shop";
@@ -18,7 +23,11 @@ import { FormatRupiah, Notifications } from "@/components";
 import { GetStock } from "@/controller/noAuth/stock";
 import { Disclosure } from "@headlessui/react";
 
-export default function DetailShopComponent({ params }: { params: { slug: string } }) {
+export default function DetailShopComponent({
+  params,
+}: {
+  params: { slug: string };
+}) {
   const router = useRouter();
   const [productDetail, setProductDetail] = useState<Products | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -36,7 +45,11 @@ export default function DetailShopComponent({ params }: { params: { slug: string
     type: "success" as "success" | "error",
     visible: false,
   });
-  const showNotification = (message: string, type: "success" | "error", duration: number = 3000) => {
+  const showNotification = (
+    message: string,
+    type: "success" | "error",
+    duration: number = 3000
+  ) => {
     setNotification({ message, type, visible: true });
     setTimeout(() => {
       setNotification({ message: "", type, visible: false });
@@ -95,7 +108,10 @@ export default function DetailShopComponent({ params }: { params: { slug: string
 
   const addToCart = async (productId: number, quantity: number) => {
     if (stock === undefined) {
-      showNotification("Unable to fetch stock information. Please try again later.", "error");
+      showNotification(
+        "Unable to fetch stock information. Please try again later.",
+        "error"
+      );
       return;
     }
 
@@ -104,7 +120,10 @@ export default function DetailShopComponent({ params }: { params: { slug: string
       return;
     }
     if (quantity > stock) {
-      showNotification(`Quantity cannot exceed available stock: ${stock}`, "error");
+      showNotification(
+        `Quantity cannot exceed available stock: ${stock}`,
+        "error"
+      );
       return;
     }
 
@@ -113,7 +132,12 @@ export default function DetailShopComponent({ params }: { params: { slug: string
         showNotification("Product details not found.", "error");
         return;
       }
-      console.log("Adding to cart with quantity:", quantity, "and stock:", stock);
+      console.log(
+        "Adding to cart with quantity:",
+        quantity,
+        "and stock:",
+        stock
+      );
 
       const quantityToAdd = parseInt(quantity.toString(), 10);
 
@@ -125,18 +149,28 @@ export default function DetailShopComponent({ params }: { params: { slug: string
 
       if (!response.ok) {
         const errorResponse = await response.json();
-        showNotification(`Error: ${errorResponse.message || "Failed to add product to cart"}`, "error");
+        showNotification(
+          `Error: ${errorResponse.message || "Failed to add product to cart"}`,
+          "error"
+        );
         return;
       }
 
       dispatch(incrementCart(1));
-      showNotification(`${productDetail.name} added to cart successfully!`, "success", 1000);
+      showNotification(
+        `${productDetail.name} added to cart successfully!`,
+        "success",
+        1000
+      );
       router.push("/shop");
 
       await fetchStock(productId);
     } catch (error) {
       console.error("Error adding product to cart:", error);
-      showNotification(`An unexpected error occurred: ${error instanceof Error ? error.message : "Please try again later"}`, "error");
+      showNotification(
+        `An unexpected error occurred: ${error instanceof Error ? error.message : "Please try again later"}`,
+        "error"
+      );
     }
   };
 
@@ -152,14 +186,20 @@ export default function DetailShopComponent({ params }: { params: { slug: string
 
   const handleIncrease = () => {
     if (stock === undefined) {
-      showNotification("Unable to fetch stock information. Please try again later.", "error");
+      showNotification(
+        "Unable to fetch stock information. Please try again later.",
+        "error"
+      );
       return;
     }
 
     SetQuantity((prev) => {
       const newQuantity = parseInt(prev) + 1;
       if (newQuantity > stock) {
-        showNotification(`Quantity cannot exceed available stock: ${stock}`, "error");
+        showNotification(
+          `Quantity cannot exceed available stock: ${stock}`,
+          "error"
+        );
         return prev;
       }
       return newQuantity.toString();
@@ -168,7 +208,10 @@ export default function DetailShopComponent({ params }: { params: { slug: string
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (stock === undefined) {
-      showNotification("Unable to fetch stock information. Please try again later.", "error");
+      showNotification(
+        "Unable to fetch stock information. Please try again later.",
+        "error"
+      );
       return;
     }
 
@@ -176,7 +219,10 @@ export default function DetailShopComponent({ params }: { params: { slug: string
     if (/^\d*$/.test(newValue)) {
       const numericValue = parseInt(newValue) || 0;
       if (numericValue > stock) {
-        showNotification(`Quantity cannot exceed available stock: ${stock}`, "error");
+        showNotification(
+          `Quantity cannot exceed available stock: ${stock}`,
+          "error"
+        );
         return;
       }
       SetQuantity(newValue);
@@ -187,13 +233,19 @@ export default function DetailShopComponent({ params }: { params: { slug: string
     if (!productDetail) return;
 
     if (stock === undefined) {
-      showNotification("Unable to fetch stock information. Please try again later.", "error");
+      showNotification(
+        "Unable to fetch stock information. Please try again later.",
+        "error"
+      );
       return;
     }
 
     const quantityToBuy = parseInt(quantity);
     if (quantityToBuy > stock) {
-      showNotification(`Quantity cannot exceed available stock: ${stock}`, "error");
+      showNotification(
+        `Quantity cannot exceed available stock: ${stock}`,
+        "error"
+      );
       return;
     }
 
@@ -216,7 +268,10 @@ export default function DetailShopComponent({ params }: { params: { slug: string
         router.push(`/checkout`);
       }
     } catch (error) {
-      showNotification("An error occurred during login. Please try again later.", "error");
+      showNotification(
+        "An error occurred during login. Please try again later.",
+        "error"
+      );
     }
   };
 
@@ -231,25 +286,28 @@ export default function DetailShopComponent({ params }: { params: { slug: string
 
   if (!productDetail) {
     return (
-      <div className='h-full w-full lg:py-20'>
-        <div className='flex h-full w-full flex-col lg:flex-row'>
-          <div className='flex h-full w-full flex-col gap-4 lg:h-[40rem] lg:w-[60%] lg:flex-row'>
-            <div className='relative h-[25rem] w-full animate-pulse overflow-hidden rounded-md bg-gray-200 lg:h-[40rem] lg:w-[40rem]' />
-            <div className='flex flex-row gap-4 lg:flex-col'>
+      <div className="h-full w-full lg:py-20">
+        <div className="flex h-full w-full flex-col lg:flex-row">
+          <div className="flex h-full w-full flex-col gap-4 lg:h-[40rem] lg:w-[60%] lg:flex-row">
+            <div className="relative h-[25rem] w-full animate-pulse overflow-hidden rounded-md bg-gray-200 lg:h-[40rem] lg:w-[40rem]" />
+            <div className="flex flex-row gap-4 lg:flex-col">
               {Array(4)
                 .fill(0)
                 .map((_, index) => (
-                  <div key={index} className='h-[6rem] w-[6rem] animate-pulse rounded-md bg-gray-200 lg:h-[10rem] lg:w-[10rem]' />
+                  <div
+                    key={index}
+                    className="h-[6rem] w-[6rem] animate-pulse rounded-md bg-gray-200 lg:h-[10rem] lg:w-[10rem]"
+                  />
                 ))}
             </div>
           </div>
-          <div className='flex flex-col gap-6 lg:h-[35rem] lg:w-[40%] lg:gap-4'>
-            <div className='h-6 w-3/4 animate-pulse rounded bg-gray-200' />
-            <div className='h-20 w-full animate-pulse rounded bg-gray-200' />
-            <div className='h-10 w-1/3 animate-pulse rounded bg-gray-200' />
-            <div className='flex flex-row gap-2'>
-              <div className='h-10 w-1/4 animate-pulse rounded bg-gray-200' />
-              <div className='h-10 w-1/4 animate-pulse rounded bg-gray-200' />
+          <div className="flex flex-col gap-6 lg:h-[35rem] lg:w-[40%] lg:gap-4">
+            <div className="h-6 w-3/4 animate-pulse rounded bg-gray-200" />
+            <div className="h-20 w-full animate-pulse rounded bg-gray-200" />
+            <div className="h-10 w-1/3 animate-pulse rounded bg-gray-200" />
+            <div className="flex flex-row gap-2">
+              <div className="h-10 w-1/4 animate-pulse rounded bg-gray-200" />
+              <div className="h-10 w-1/4 animate-pulse rounded bg-gray-200" />
             </div>
           </div>
         </div>
@@ -257,31 +315,8 @@ export default function DetailShopComponent({ params }: { params: { slug: string
     );
   }
 
-  const faqData = [
-    {
-      title: "Our Product",
-      content: "Produk kami terbuat dari bahan alami pilihan dan diproses dengan teknologi modern untuk menjaga kualitas dan manfaatnya.",
-    },
-    {
-      title: "Komposisi",
-      content: "Mengandung ekstrak tanaman herbal, vitamin, dan mineral esensial yang diformulasikan secara ilmiah.",
-    },
-    {
-      title: "Manfaat",
-      content: "Meningkatkan daya tahan tubuh, membantu detoksifikasi, dan menjaga kesehatan organ vital.",
-    },
-    {
-      title: "Cara Konsumsi",
-      content: "Konsumsi 2 kapsul setiap hari setelah makan pagi dan malam atau sesuai anjuran dokter.",
-    },
-    {
-      title: "Cara Penyimpanan",
-      content: "Simpan di tempat sejuk dan kering, jauhkan dari sinar matahari langsung dan jangkauan anak-anak.",
-    },
-  ];
-
   return (
-    <main className='relative h-full w-full lg:py-20'>
+    <main className="relative h-full w-full lg:py-20">
       <Notifications
         message={notification.message}
         type={notification.type}
@@ -291,35 +326,60 @@ export default function DetailShopComponent({ params }: { params: { slug: string
       {!isLoading && productDetail && (
         <>
           {isModalOpen && (
-            <div className='fixed left-0 top-0 z-[999] flex h-screen w-full items-center justify-center bg-gray-900 bg-opacity-75 lg:w-full'>
-              <div className=''>
-                <div className='block md:hidden'>
-                  <Image src={modalImageUrl} alt='Product' width={500} height={500} objectFit='contain' className='z-[99]' />
+            <div className="fixed left-0 top-0 z-[999] flex h-screen w-full items-center justify-center bg-gray-900 bg-opacity-75 lg:w-full">
+              <div className="">
+                <div className="block md:hidden">
+                  <Image
+                    src={modalImageUrl}
+                    alt="Product"
+                    width={500}
+                    height={500}
+                    objectFit="contain"
+                    className="z-[99]"
+                  />
                 </div>
-                <div className='hidden md:block'>
-                  <Image src={modalImageUrl} alt='Product' width={500} height={500} className='z-[99]' />
+                <div className="hidden md:block">
+                  <Image
+                    src={modalImageUrl}
+                    alt="Product"
+                    width={500}
+                    height={500}
+                    className="z-[99]"
+                  />
                 </div>
               </div>
-              <button onClick={() => setIsModalOpen(false)} className='absolute right-6 top-4  z-[999] text-white focus:outline-none'>
-                <XMarkIcon className='h-6 w-6' />
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="absolute right-6 top-4  z-[999] text-white focus:outline-none"
+              >
+                <XMarkIcon className="h-6 w-6" />
               </button>
             </div>
           )}
-          <div className='h-full w-full px-20 py-12'>
-            <div className='flex h-[3rem] flex-row items-center justify-start gap-2'>
-              <span className='rounded-full border-[1px] border-gray-200 px-4 py-1 text-center text-sm text-gray-400'>Products</span>
-              <span className='text-2xl text-gray-300'>/</span>
-              <span className='rounded-full border-[1px] border-gray-200 px-4 py-1 text-center text-sm text-[#252525]'>Detail</span>
+          <div className="h-full w-full px-20 py-12">
+            <div className="flex h-[3rem] flex-row items-center justify-start gap-2">
+              <span className="rounded-full border-[1px] border-gray-200 px-4 py-1 text-center text-sm text-gray-400">
+                Products
+              </span>
+              <span className="text-2xl text-gray-300">/</span>
+              <span className="rounded-full border-[1px] border-gray-200 px-4 py-1 text-center text-sm text-[#252525]">
+                Detail
+              </span>
             </div>
-            <div className='relative mt-2 flex h-full w-full flex-col gap-6 lg:flex-row'>
+            <div className="relative mt-2 flex h-full w-full flex-col gap-6 lg:flex-row">
               {productDetail && (
-                <div className='flex h-full w-full flex-col gap-4 lg:h-[40rem] lg:w-[60%] lg:flex-row'>
-                  <div className='flex flex-row gap-4 lg:flex-col'>
-                    {[productDetail.image2, productDetail.image3, productDetail.image4, productDetail.image5].map((image, index) =>
+                <div className="flex h-full w-full flex-col gap-4 lg:h-[40rem] lg:w-[60%] lg:flex-row">
+                  <div className="flex flex-row gap-4 lg:flex-col">
+                    {[
+                      productDetail.image2,
+                      productDetail.image3,
+                      productDetail.image4,
+                      productDetail.image5,
+                    ].map((image, index) =>
                       image ? (
                         <div
                           key={index}
-                          className='relative flex h-[6rem] w-full transform items-center justify-center overflow-hidden rounded-md border-[0.75px] border-gray-200 bg-gray-50 transition-all duration-100 hover:border-[1px] hover:border-[#C1AE94] lg:h-[10rem] lg:w-[10rem]'
+                          className="relative flex h-[6rem] w-full transform items-center justify-center overflow-hidden rounded-md border-[0.75px] border-gray-200 bg-gray-50 transition-all duration-100 hover:border-[1px] hover:border-[#C1AE94] lg:h-[10rem] lg:w-[10rem]"
                         >
                           <Image
                             src={image || Assets.DefaultProduct}
@@ -327,17 +387,19 @@ export default function DetailShopComponent({ params }: { params: { slug: string
                             style={{ objectFit: "cover" }}
                             priority={true}
                             alt={`${productDetail.name}`}
-                            sizes='( max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+                            sizes="( max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             className={`transition-all duration-500 ${hoveredIndex === index + 1 ? "scale-110 transform" : ""}`}
                             onMouseEnter={() => setHoveredIndex(index + 1)}
                             onMouseLeave={() => setHoveredIndex(null)}
-                            onClick={() => openModal(image || Assets.DefaultProduct)}
+                            onClick={() =>
+                              openModal(image || Assets.DefaultProduct)
+                            }
                           />
                         </div>
                       ) : null
                     )}
                   </div>
-                  <div className='relative h-[25rem] w-full overflow-hidden rounded-md border border-[#C1AE94]/30 bg-gray-50 lg:h-[40rem] lg:w-[40rem]'>
+                  <div className="relative h-[25rem] w-full overflow-hidden rounded-md border border-[#C1AE94]/30 bg-gray-50 lg:h-[40rem] lg:w-[40rem]">
                     {productDetail.image1 && (
                       <Image
                         src={productDetail.image1 || Assets.DefaultProduct}
@@ -345,41 +407,54 @@ export default function DetailShopComponent({ params }: { params: { slug: string
                         style={{ objectFit: "cover" }}
                         priority={true}
                         alt={`${productDetail.name}`}
-                        sizes='( max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+                        sizes="( max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         className={`transition-all duration-500 ${hoveredIndex === 0 ? "scale-110 transform" : ""}`}
                         onMouseEnter={() => setHoveredIndex(0)}
                         onMouseLeave={() => setHoveredIndex(null)}
-                        onClick={() => openModal(productDetail.image1 || Assets.DefaultProduct)}
+                        onClick={() =>
+                          openModal(
+                            productDetail.image1 || Assets.DefaultProduct
+                          )
+                        }
                       />
                     )}
                   </div>
                 </div>
               )}
 
-              <div className='flex flex-col gap-6 lg:h-[35rem] lg:w-[40%] lg:gap-4'>
-                <div className='flex w-full flex-col gap-2'>
-                  <div className='flex w-full flex-col gap-1'>
-                    <div className=''>
-                      <h2 className='text-2xl text-center lg:text-left font-semibold text-[#252525]'>{productDetail?.name}</h2>
+              <div className="flex flex-col gap-6 lg:h-[35rem] lg:w-[40%] lg:gap-4">
+                <div className="flex w-full flex-col gap-2">
+                  <div className="flex w-full flex-col gap-1">
+                    <div className="">
+                      <h2 className="text-2xl text-center lg:text-left font-semibold text-[#252525]">
+                        {productDetail?.name}
+                      </h2>
                     </div>
-                    <div className='flex flex-row gap-1'></div>
+                    <div className="flex flex-row gap-1"></div>
                   </div>
-                  <div className='h-[5rem]'>
-                    <h2 className='font-domine text-lg text-center lg:text-left text-[#252525]'>{productDetail?.subDescriptions}</h2>
+                  <div className="h-[5rem]">
+                    <h2 className="font-domine text-lg text-center lg:text-left text-[#252525]">
+                      {productDetail?.subDescriptions}
+                    </h2>
                   </div>
-                  <div className='flex h-[5rem] lg:h-[3rem] w-full flex-col lg:flex-row items-center justify-between'>
-                    <div className='relative flex w-full flex-row items-center'>
+                  <div className="flex h-[5rem] lg:h-[3rem] w-full flex-col lg:flex-row items-center justify-between">
+                    <div className="relative flex w-full flex-row items-center">
                       <div>
-                        <span className='font-josefins text-[26px] font-semibold text-[#252525]'>
+                        <span className="font-josefins text-[26px] font-semibold text-[#252525]">
                           {productDetail.Discount?.length > 0 ? (
-                            <div className='flex flex-row gap-2'>
-                              <span className='ml-2 text-red-500 line-through'>
-                                <FormatRupiah price={productDetail?.priceIDR || 0} />
+                            <div className="flex flex-row gap-2">
+                              <span className="ml-2 text-red-500 line-through">
+                                <FormatRupiah
+                                  price={productDetail?.priceIDR || 0}
+                                />
                               </span>
                               <FormatRupiah
                                 price={
-                                  productDetail?.priceIDR && productDetail?.Discount[0]?.discount
-                                    ? productDetail.priceIDR - productDetail.priceIDR * productDetail.Discount[0].discount
+                                  productDetail?.priceIDR &&
+                                  productDetail?.Discount[0]?.discount
+                                    ? productDetail.priceIDR -
+                                      productDetail.priceIDR *
+                                        productDetail.Discount[0].discount
                                     : productDetail?.priceIDR || 0
                                 }
                               />
@@ -390,65 +465,101 @@ export default function DetailShopComponent({ params }: { params: { slug: string
                         </span>
                       </div>
                       {productDetail.Discount?.[0]?.discount && (
-                        <div className='absolute -top-10 animate-bounce rounded bg-red-500 p-1 text-[18px] text-white'>
+                        <div className="absolute -top-10 animate-bounce rounded bg-red-500 p-1 text-[18px] text-white">
                           {`${(productDetail.Discount[0].discount * 100).toFixed(0)}%`}
                         </div>
                       )}
                     </div>
 
-                    <div className='lg:my-2.5 flex flex-row gap-2 w-full'>
-                      <div className='flex h-[1.75rem] w-full lg:w-[6rem] rounded-sm border-[0.5px] border-[#7D716A]'>
-                        <button onClick={handleDecrease} className='h-full w-[20%] lg:w-[50%] cursor-pointer border-r-[0.5px] border-[#7D716A]'>
+                    <div className="lg:my-2.5 flex flex-row gap-2 w-full">
+                      <div className="flex h-[1.75rem] w-full lg:w-[6rem] rounded-sm border-[0.5px] border-[#7D716A]">
+                        <button
+                          onClick={handleDecrease}
+                          className="h-full w-[20%] lg:w-[50%] cursor-pointer border-r-[0.5px] border-[#7D716A]"
+                        >
                           -
                         </button>
                         <input
-                          type='number'
+                          type="number"
                           value={quantity}
                           onChange={handleChange}
-                          min='0'
-                          className='h-full w-full appearance-none px-[2px] text-center outline-none'
+                          min="0"
+                          className="h-full w-full appearance-none px-[2px] text-center outline-none"
                         />
-                        <button onClick={handleIncrease} className='h-full w-[20%] lg:w-[50%] cursor-pointer border-l-[0.5px] border-[#7D716A]'>
+                        <button
+                          onClick={handleIncrease}
+                          className="h-full w-[20%] lg:w-[50%] cursor-pointer border-l-[0.5px] border-[#7D716A]"
+                        >
                           +
                         </button>
                       </div>
-                      <button className='flex h-[1.75rem] w-[1.75rem] items-center justify-center rounded-sm border-[0.5px] border-[#7D716A]'>
-                        <TrashIcon className='h-5 w-5 text-[#7D716A]' />
+                      <button className="flex h-[1.75rem] w-[1.75rem] items-center justify-center rounded-sm border-[0.5px] border-[#7D716A]">
+                        <TrashIcon className="h-5 w-5 text-[#7D716A]" />
                       </button>
                     </div>
                   </div>
                 </div>
-                <div className='flex flex-col gap-2 lg:flex-row'>
+                <div className="flex flex-col gap-2 lg:flex-row">
                   <div
-                    key='addToCart'
-                    onClick={() => addToCart(productDetail?.id!, parseInt(quantity))}
-                    className='flex h-[48px] w-full cursor-pointer flex-row items-center justify-center gap-2 rounded-full border-[1px] border-[#C1AE94]'
+                    key="addToCart"
+                    onClick={() =>
+                      addToCart(productDetail?.id!, parseInt(quantity))
+                    }
+                    className="flex h-[48px] w-full cursor-pointer flex-row items-center justify-center gap-2 rounded-full border-[1px] border-[#C1AE94]"
                   >
-                    <button className='text-[16px] text-[#C1AE94]'>Add to Cart</button>
+                    <button className="text-[16px] text-[#C1AE94]">
+                      Add to Cart
+                    </button>
                   </div>
-                  <div className='flex h-[48px] w-full transform items-center justify-center rounded-full bg-gradient-to-t from-[#B69B78] to-[#CDB698] transition-all duration-300 ease-in-out hover:bg-gradient-to-t hover:from-[#ab9a82] hover:to-[#ab9a82] '>
-                    <button onClick={handleClickBuyNow} className='h-full w-full text-[16px] text-white'>
+                  <div className="flex h-[48px] w-full transform items-center justify-center rounded-full bg-gradient-to-t from-[#B69B78] to-[#CDB698] transition-all duration-300 ease-in-out hover:bg-gradient-to-t hover:from-[#ab9a82] hover:to-[#ab9a82] ">
+                    <button
+                      onClick={handleClickBuyNow}
+                      className="h-full w-full text-[16px] text-white"
+                    >
                       Buy Now
                     </button>
                   </div>
                 </div>
-                <div className='flex flex-col gap-4'>
+                <div className="flex flex-col gap-4">
                   <div>
-                    <h2 className='text-[20px] font-semibold'>Other Information</h2>
+                    <h2 className="text-[20px] font-semibold">
+                      Other Information
+                    </h2>
                   </div>
-                  <div className='flex w-full flex-col justify-between gap-6'>
-                    <div className='flex flex-col gap-6'>
-                      <div className='flex flex-row items-center justify-start gap-1 lg:gap-2'>
-                        <Image src={Assets.InfoKardus} width={32} height={32} alt='Info Product Original' />
-                        <span className='text-[12px] text-[#231F20] lg:text-[18px]'>100% Product Original</span>
+                  <div className="flex w-full flex-col justify-between gap-6">
+                    <div className="flex flex-col gap-6">
+                      <div className="flex flex-row items-center justify-start gap-1 lg:gap-2">
+                        <Image
+                          src={Assets.InfoKardus}
+                          width={32}
+                          height={32}
+                          alt="Info Product Original"
+                        />
+                        <span className="text-[12px] text-[#231F20] lg:text-[18px]">
+                          100% Product Original
+                        </span>
                       </div>
-                      <div className='flex flex-row items-center justify-start gap-1 lg:gap-2'>
-                        <Image src={Assets.InfoDays} width={32} height={32} alt='Info Days Estimated' />
-                        <span className='text-[12px] text-[#231F20] lg:text-[18px]'>Easy 30 Days Return</span>
+                      <div className="flex flex-row items-center justify-start gap-1 lg:gap-2">
+                        <Image
+                          src={Assets.InfoDays}
+                          width={32}
+                          height={32}
+                          alt="Info Days Estimated"
+                        />
+                        <span className="text-[12px] text-[#231F20] lg:text-[18px]">
+                          Easy 30 Days Return
+                        </span>
                       </div>
-                      <div className='flex flex-row items-center justify-start gap-1 lg:gap-2'>
-                        <Image src={Assets.InfoTangan} width={32} height={32} alt='Info Pay Easily' />
-                        <span className='text-[12px] text-[#231F20] lg:text-[18px]'>Pay Easily</span>
+                      <div className="flex flex-row items-center justify-start gap-1 lg:gap-2">
+                        <Image
+                          src={Assets.InfoTangan}
+                          width={32}
+                          height={32}
+                          alt="Info Pay Easily"
+                        />
+                        <span className="text-[12px] text-[#231F20] lg:text-[18px]">
+                          Pay Easily
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -456,31 +567,69 @@ export default function DetailShopComponent({ params }: { params: { slug: string
               </div>
             </div>
           </div>
-          <div className='relative h-full w-full bg-[#F4F4F4] p-20'>
-            {/* <div
-              className="font-regular text-[#252525]"
-              dangerouslySetInnerHTML={{
-                __html: productDetail?.descriptions || "",
-              }}
-            /> */}
-            <div className='mx-auto w-full divide-y divide-black rounded-xl'>
-              {faqData.map((item, index) => (
-                <Disclosure as='div' className='p-6' key={index}>
-                  {({ open }) => (
-                    <>
-                      <Disclosure.Button className='group flex w-full items-center justify-between'>
-                        <h2 className='text-start text-[24px] text-[#232324] lg:text-[32px]'>{item.title}</h2>
-                        <span className={`transition-transform duration-300 ${open ? "rotate-180" : "rotate-0"}`}>
-                          {open ? <XMarkIcon className='size-6 fill-black' /> : <PlusIcon className='size-6 fill-black' />}
-                        </span>
-                      </Disclosure.Button>
-                      <Disclosure.Panel className='mt-2'>
-                        <h2 className='text-start text-[20px] text-[#232324] lg:text-[24px]'>{item.content}</h2>
-                      </Disclosure.Panel>
-                    </>
-                  )}
-                </Disclosure>
-              ))}
+          <div className="relative h-full w-full bg-[#F4F4F4] p-20">
+            <div className="mx-auto w-full divide-y divide-black rounded-xl">
+              {productDetail &&
+                [
+                  {
+                    title: "Our Product",
+                    content:
+                      productDetail?.descriptions ??
+                      "Deskripsi belum tersedia.",
+                  },
+                  {
+                    title: "Komposisi",
+                    content:
+                      productDetail?.komposisi ??
+                      "Data komposisi belum tersedia.",
+                  },
+                  {
+                    title: "Manfaat",
+                    content:
+                      productDetail?.manfaat ??
+                      "Informasi manfaat belum tersedia.",
+                  },
+                  {
+                    title: "Cara Konsumsi",
+                    content:
+                      productDetail?.caraKomsumsi ??
+                      "Informasi cara konsumsi belum tersedia.",
+                  },
+                  {
+                    title: "Cara Penyimpanan",
+                    content:
+                      productDetail?.caraPenyimpanan ??
+                      "Informasi cara penyimpanan belum tersedia.",
+                  },
+                ].map((item, index) => (
+                  <Disclosure as="div" className="p-6" key={index}>
+                    {({ open }) => (
+                      <>
+                        <Disclosure.Button className="group flex w-full items-center justify-between">
+                          <h2 className="text-start text-[24px] text-[#232324] lg:text-[32px]">
+                            {item.title}
+                          </h2>
+                          <span
+                            className={`transition-transform duration-300 ${
+                              open ? "rotate-180" : "rotate-0"
+                            }`}
+                          >
+                            {open ? (
+                              <XMarkIcon className="size-6 fill-black" />
+                            ) : (
+                              <PlusIcon className="size-6 fill-black" />
+                            )}
+                          </span>
+                        </Disclosure.Button>
+                        <Disclosure.Panel className="mt-2">
+                          <h2 className="text-start text-[20px] text-[#232324] lg:text-[24px]">
+                            {item.content}
+                          </h2>
+                        </Disclosure.Panel>
+                      </>
+                    )}
+                  </Disclosure>
+                ))}
             </div>
           </div>
         </>

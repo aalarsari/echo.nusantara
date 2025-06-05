@@ -238,12 +238,8 @@ export default function Product() {
                       onChange={() => handleToggleBestSeller(product.slug)}
                       className="h-4 w-4 rounded border-gray-300 text-green-500 focus:ring-green-500 cursor-pointer"
                     />
-                    <span
-                      className={`font-semibold ${
-                        product.bestseller ? "text-green-500" : "text-red-500"
-                      }`}
-                    >
-                      {product.bestseller ? "Best Seller" : "Not Best Seller"}
+                    <span className={`font-semibold ${product.bestseller}`}>
+                      {product.bestseller}
                     </span>
                   </div>
                 </td>

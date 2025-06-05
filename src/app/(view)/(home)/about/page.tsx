@@ -154,7 +154,7 @@ export default function About() {
                   />
 
                   {/* Title & Subtitle */}
-                  <div className="relative z-10 flex text-center text-white mb-6 flex-col gap-4 justify-center items-center">
+                  <div className="relative z-10 flex text-center text-white mb-14 flex-col gap-4 justify-center items-center">
                     <h2 className="text-[28px] lg:text-[52px] font-domaine font-bold drop-shadow-md">
                       Pure and Natural
                     </h2>
@@ -166,31 +166,13 @@ export default function About() {
                     </div>
                   </div>
 
-                  {/* Container arrow dan dot */}
-                  <div className="relative z-10 h-[5rem] flex items-center justify-center space-x-2 mb-4">
-                    {/* Custom Left Arrow */}
-                    <CustomArrowLeft
-                      onClick={() => {
-                        // Panggil method carousel prev slide jika perlu,
-                        // nanti kita bahas cara mengakses ref carousel
-                      }}
-                    />
+                  {/* <div className="relative z-10 h-[5rem] flex items-center justify-center space-x-2 mb-4">
+                    <CustomArrowLeft onClick={() => {}} />
 
-                    {/* Custom Dot */}
-                    <CustomDot
-                      onClick={() => {
-                        // Panggil method navigasi slide ke index
-                      }}
-                      active={true} // contoh aktif, kamu sesuaikan logicnya
-                    />
+                    <CustomDot onClick={() => {}} active={true} />
 
-                    {/* Custom Right Arrow */}
-                    <CustomArrowRight
-                      onClick={() => {
-                        // Panggil method carousel next slide
-                      }}
-                    />
-                  </div>
+                    <CustomArrowRight onClick={() => {}} />
+                  </div> */}
                 </div>
               )
             )}
