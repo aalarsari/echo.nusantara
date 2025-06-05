@@ -13,6 +13,7 @@ const languages: Language[] = [
   { label: "Eng", value: "en", logo: "/images/logo-us.svg" },
   { label: "Ind", value: "id", logo: "/images/logo-indo.svg" },
   { label: "Jpn", value: "ja", logo: "/images/logo-jpn.svg" },
+  { label: "Chi", value: "zh", logo: "/images/logo-china.svg" },
 ];
 
 const includedLanguages = languages.map((lang) => lang.value).join(",");

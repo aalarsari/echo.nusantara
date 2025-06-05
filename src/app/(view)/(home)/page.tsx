@@ -655,6 +655,7 @@ export default function Home() {
                 </h2>
               </div>
               <ButtonPrimary
+                onClick={() => router.push("/contact")}
                 text="Contact Us"
                 width="w-[200px]"
                 height="h-[50px]"
