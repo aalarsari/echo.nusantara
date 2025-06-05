@@ -113,7 +113,6 @@ export async function PUT(request: NextRequest, { params }: { params: { slug: st
         maxOrder: validation.maxOrder != null ? validation.maxOrder! : product?.maxOrder!,
         stock: validation.stock != null ? validation.stock! : product?.stock!,
         categoryId: validation.categoryId != null ? validation.categoryId! : product?.categoryId!,
-        bestseller: validation.isBestSeller != null ? validation.isBestSeller! : product?.bestseller!,
         recommendation: validation.recommendation != null ? validation.recommendation! : product?.recommendation!,
         image1: imageName1! != null ? `${process.env.APP_URL}/images/${imageName1}` : product?.image1,
         image2: imageName2! != null ? `${process.env.APP_URL}/images/${imageName2}` : product?.image2,

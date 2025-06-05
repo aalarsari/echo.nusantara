@@ -78,7 +78,6 @@ export const ProductValidation = zfd.formData(
     ),
     size: zfd.text(z.string().optional().nullable()),
     recommendation: z.boolean().optional().nullable(),
-    isBestSeller: z.boolean().nullable().default(false),
     image1: z
       .any()
       .refine((file) => file !== null && file !== undefined, "Image minimal 1")
@@ -208,7 +207,6 @@ export const ProductUpadateValidation = zfd.formData(
     caraKomsumsi: z.string().optional().nullable(),
     caraPenyimpanan: z.string().optional().nullable(),
     subDescriptions: z.string().optional().nullable(),
-    isBestSeller: z.boolean().optional().nullable(),
     recommendation: z.boolean().optional().nullable(),
     priceIDR: zfd.numeric(
       z
