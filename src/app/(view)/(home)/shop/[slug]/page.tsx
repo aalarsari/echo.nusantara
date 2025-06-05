@@ -574,7 +574,7 @@ export default function DetailShopComponent({
                   {
                     title: "Our Product",
                     content:
-                      productDetail?.description ??
+                      productDetail?.descriptions ??
                       "Tidak ada deskripsi tersedia.",
                   },
                   {
