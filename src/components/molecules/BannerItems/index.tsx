@@ -103,7 +103,7 @@ export const BannerItems = ({ bannerData }: { bannerData: BannerItem[] }) => {
                       src={bannerItem.path || Assets.DefaultImage}
                       alt={bannerItem.title}
                       fill
-                      style={{ objectFit: "cover" }}
+                      style={{ objectFit: "contain" }}
                       priority={true}
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />

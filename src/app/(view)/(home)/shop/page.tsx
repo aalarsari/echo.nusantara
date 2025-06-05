@@ -244,7 +244,7 @@ export default function Shop() {
                         src={bannerItem.path}
                         alt={bannerItem.title}
                         fill
-                        style={{ objectFit: "cover" }}
+                        style={{ objectFit: "contain" }}
                         priority={true}
                       />
                     </div>
