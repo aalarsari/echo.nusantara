@@ -83,12 +83,12 @@ export default function About() {
             }}
           />
           <div className="flex flex-col lg:gap-4 justify-start items-start">
-            <span className="text-[28px] lg:text-[64px] font-thin text-black font-domaine text-left">
-              SYMPHONY
-            </span>
-            <span className="text-[28px] lg:text-[64px] font-thin text-black font-domaine text-left">
-              OF NATURE
-            </span>
+            <div className="relative w-[250px] h-[50px] lg:w-[500px] lg:h-[70px]">
+              <Image src={Assets.Symphonyy} alt="Symphony" fill />
+            </div>
+            <div className="relative w-[250px] h-[50px] lg:w-[500px] lg:h-[70px]">
+              <Image src={Assets.OffNature} alt="Symphony" fill />
+            </div>
           </div>
         </div>
       </div>

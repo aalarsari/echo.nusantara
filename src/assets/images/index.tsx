@@ -162,3 +162,8 @@ export { default as ArrowDown } from "./icon-arrow-down.svg";
 export { default as BPOM } from "./icon-bpom.svg";
 export { default as NKV } from "./icon-nkv.svg";
 export { default as Halal } from "./icon-halal.svg";
+
+export { default as Symphonyy } from "./icon-simponi.svg";
+export { default as Of } from "./icon-off.svg";
+export { default as Naturee } from "./icon-natureee.svg";
+export { default as OffNature } from "./icon-ofnature.svg";
