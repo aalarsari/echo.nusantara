@@ -381,7 +381,7 @@ export default function Home() {
                               alt={product.name}
                               fill
                               priority
-                              style={{ objectFit: "cover" }}
+                              style={{ objectFit: "contain" }}
                               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             />
 
