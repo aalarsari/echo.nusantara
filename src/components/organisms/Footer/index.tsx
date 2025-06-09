@@ -30,11 +30,6 @@ export const Footer = () => {
         "Sahid Sudirman Centre 50th floor, Jl Jenderal Sudirman No 86, Jakarta, Indonesia 10220.",
     },
     {
-      title: "Surabaya Branch Office",
-      address:
-        "Surabaya Branch Office: JI. Ciliwung No. 1 Darmo, Wonokromo. Kota Surabaya. 60241 Indonesia",
-    },
-    {
       title: "Hongkong Branch Office",
       address:
         "AAL HK Trading Limited, address: 22/F 3 LOCKHART RD WANCHAI, HONG KONG",
