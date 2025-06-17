@@ -106,6 +106,8 @@ export default function News() {
     console.log("Selected option:", option);
   };
 
+  moment.locale("en");
+
   return (
     <div className="relative h-full w-full">
       <div className="w-full flex items-center justify-center py-16 lg:py-24">
@@ -196,7 +198,7 @@ export default function News() {
                 >
                   <div className="h-[225px] relative overflow-hidden bg-white w-full cursor-pointer shadow-product rounded-[16px] shadow-gray-100">
                     <div className="flex h-full w-full flex-row gap-2">
-                      <div className="relative h-full w-[225px]">
+                      <div className="relative h-full w-[50%] lg:w-[225px]">
                         <Image
                           src={item.image[0] || Assets.DefaultImage}
                           fill
@@ -206,7 +208,7 @@ export default function News() {
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         />
                       </div>
-                      <div className="flex flex-col justify-center items-start gap-8 h-full w-[60%] px-4 relative overflow-hidden">
+                      <div className="flex flex-col justify-center items-start gap-8 h-full w-[50%] lg:w-[60%] px-2 lg:px-4 relative overflow-hidden">
                         <div className="w-full">
                           <div className="flex flex-col gap-1">
                             <span className="font-domaine uppercase text-[14px] font-light text-black">
@@ -220,21 +222,23 @@ export default function News() {
                             {item.subtitle}
                           </h2>
                         </div>
-                        <div className="w-full flex justify-between items-center">
-                          <div className="flex flex-row gap-2 items-center justify-center">
+                        <div className="w-full flex gap-4 lg:justify-between items-center">
+                          <div className="flex flex-row gap-1 lg:gap-2 items-center justify-center">
                             <Image
                               src={Assets.TimeBronze}
                               alt="Last News"
                               width={16}
                               height={16}
                             />
-                            <span className="font-domaine text-[14px] font-light text-black">
-                              {moment(item.updateAt).format("DD MMMM YYYY")}
+                            <span className="font-domaine text-[12px] lg:text-[14px] font-light text-black">
+                              {moment(item.updateAt)
+                                .locale("en")
+                                .format("DD MMM YYYY")}
                             </span>
                           </div>
                           <button
                             onClick={() => handleBlogClick(item.slug)}
-                            className="font-domaine text-[14px] rounded-full px-4 py-1 font-semibold text-[#B69B7C] ring-1 ring-[#7D716A]"
+                            className="font-domaine text-[12px] lg:text-[14px] rounded-full px-2 lg:px-4 py-1 font-semibold text-[#B69B7C] lg:ring-1 lg:ring-[#7D716A]"
                           >
                             Read More
                           </button>
@@ -297,7 +301,7 @@ export default function News() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 px-4 py-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 lg:px-4 py-4">
           {news.blog && news.blog.length > 0 ? (
             news.blog.map((item, index) => (
               <div
@@ -306,7 +310,7 @@ export default function News() {
                 className="h-[225px] relative overflow-hidden bg-white w-full cursor-pointer shadow-product rounded-[16px] shadow-gray-100"
               >
                 <div className="flex h-full w-full flex-row gap-2">
-                  <div className="relative h-full w-[225px]">
+                  <div className="relative h-full w-[50%] lg:w-[225px]">
                     <Image
                       src={item.image?.[0] || Assets.DefaultImage}
                       fill
@@ -314,7 +318,7 @@ export default function News() {
                       alt={`Top Blog ${index + 1}`}
                     />
                   </div>
-                  <div className="flex flex-col justify-center items-start gap-8 h-full w-[60%] px-4">
+                  <div className="flex flex-col justify-center items-start gap-8 h-full w-[50%] lg:w-[60%] px-1 lg:px-4">
                     <div className="w-full">
                       <div className="flex flex-col gap-1">
                         <span className="font-domaine uppercase text-[14px] font-light text-black">
@@ -324,23 +328,25 @@ export default function News() {
                           {item.title}
                         </h2>
                       </div>
-                      <h2 className="font-domaine text-[16px] font-normal text-black truncate w-[300px]">
+                      <h2 className="hidden lg:block font-domaine text-[16px] font-normal text-black truncate w-[300px]">
                         {item.subtitle}
                       </h2>
                     </div>
-                    <div className="w-full flex justify-between items-center">
-                      <div className="flex flex-row gap-2 items-center">
+                    <div className="w-full flex gap-4 lg:justify-between items-center">
+                      <div className="flex flex-row gap-1 lg:gap-2 items-center">
                         <Image
                           src={Assets.TimeBronze}
                           alt="time-brown"
                           width={16}
                           height={16}
                         />
-                        <span className="font-domaine text-[14px] font-light text-[#B69B7C]">
-                          {moment(item.updateAt).format("DD MMMM YYYY")}
+                        <span className="font-domaine text-[12px] lg:text-[14px] font-light text-[#B69B7C]">
+                          {moment(item.updateAt)
+                            .locale("en")
+                            .format("DD MMM YYYY")}
                         </span>
                       </div>
-                      <button className="font-domaine text-[14px] rounded-full px-4 py-1 font-semibold text-[#B69B7C] ring-1 ring-[#7D716A]">
+                      <button className="font-domaine text-[12px] lg:text-[14px] rounded-full px-2 lg:px-4 py-1 font-semibold text-[#B69B7C] lg:ring-1 lg:ring-[#7D716A]">
                         Read More
                       </button>
                     </div>

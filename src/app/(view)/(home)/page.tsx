@@ -358,7 +358,7 @@ export default function Home() {
                 infinite
                 partialVisible={false}
                 itemClass="pr-2"
-                containerClass="w-full h-[70vh]"
+                containerClass="w-full h-[100vh] lg:h-[100vh]"
                 className="w-full"
                 customLeftArrow={<ChevronLeft size={24} />}
                 customRightArrow={<ChevronRight size={24} />}
@@ -373,10 +373,10 @@ export default function Home() {
                       className="w-full px-2"
                       onClick={() => handleProductClick(product.slug)}
                     >
-                      <div className="relative h-[480px] w-full cursor-pointer shadow-product bg-transparent shadow-gray-100 group">
+                      <div className="relative h-[600px] lg:h-[480px] w-full cursor-pointer shadow-product bg-transparent shadow-gray-100 group">
                         <div className="flex h-full w-full flex-col gap-2">
                           {/* Gambar produk */}
-                          <div className="relative h-[18rem] w-full overflow-hidden rounded-[8px]">
+                          <div className="relative h-[30rem] w-full overflow-hidden rounded-[8px]">
                             <Image
                               src={product.image1}
                               alt={product.name}
@@ -410,18 +410,18 @@ export default function Home() {
                           </div>
 
                           {/* Informasi produk */}
-                          <div className="flex flex-col justify-between h-[35%]">
+                          <div className="flex flex-col justify-between h-[50%] lg:h-[40%]">
                             <div className="flex flex-col gap-1 py-1">
-                              <span className="font-domaine text-[18px] font-semibold text-black">
+                              <span className="font-domaine text-[16px] lg:text-[18px] font-semibold text-black">
                                 {product.name}
                               </span>
-                              <span className="font-domaine text-[14px] text-black">
+                              <span className="font-domaine text-[12px] lg:text-[14px] text-black">
                                 {product.subDescriptions}
                               </span>
                             </div>
                             <div className="relative flex w-full flex-row items-center">
                               <div>
-                                <span className="font-josefins text-[28px] font-semibold text-[#B69B7C]">
+                                <span className="font-josefins text-[20px] lg:text-[28px] font-semibold text-[#B69B7C]">
                                   {product.Discount?.length > 0 ? (
                                     <div className="flex flex-row gap-2">
                                       <span className="ml-2 text-red-500 line-through">
@@ -445,7 +445,7 @@ export default function Home() {
                                 </span>
                               </div>
                               {product.Discount?.[0]?.discount && (
-                                <div className="absolute -top-10 animate-bounce rounded bg-red-500 p-1 text-[18px] text-white">
+                                <div className="absolute -top-10 animate-bounce rounded bg-red-500 p-1 text-[16px] lg:text-[18px] text-white">
                                   {`${(product.Discount[0].discount * 100).toFixed(0)}%`}
                                 </div>
                               )}

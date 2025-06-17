@@ -356,7 +356,7 @@ export default function DetailShopComponent({
               </button>
             </div>
           )}
-          <div className="h-full w-full px-20 py-12">
+          <div className="h-full w-full lg:px-20 lg:py-12 px-4 py-16">
             <div className="flex h-[3rem] flex-row items-center justify-start gap-2">
               <span className="rounded-full border-[1px] border-gray-200 px-4 py-1 text-center text-sm text-gray-400">
                 Products
@@ -567,7 +567,7 @@ export default function DetailShopComponent({
               </div>
             </div>
           </div>
-          <div className="relative h-full w-full bg-[#F4F4F4] p-20">
+          <div className="relative h-full w-full bg-[#F4F4F4] px-4 py-10 lg:px-20 lg:py-20">
             <div className="mx-auto w-full divide-y divide-black rounded-xl">
               {productDetail &&
                 [

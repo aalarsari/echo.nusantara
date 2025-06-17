@@ -186,7 +186,7 @@ export default function Shop() {
   return (
     <div className="flex h-full w-full flex-col items-center justify-between gap-10">
       {bannerData.filter((item) => item.category === "Discount").length > 0 && (
-        <div className="relative h-screen w-full overflow-hidden ">
+        <div className="relative h-screen w-full">
           <div
             className="flex h-screen items-center justify-center"
             onMouseEnter={() => setIsHovered(true)}
@@ -255,7 +255,7 @@ export default function Shop() {
         </div>
       )}
 
-      <div className="mt-4 flex h-full w-full flex-col items-center justify-center gap-[4rem] px-20">
+      <div className="mt-4 flex h-full w-full flex-col items-center justify-center gap-[4rem] py-14 px-8 lg:py-0 lg:px-20">
         <div className="relative flex h-full w-full flex-col gap-4">
           <div className="flex items-center justify-between w-full">
             <span className="text-2xl font-semibold">
