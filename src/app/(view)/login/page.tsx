@@ -90,13 +90,14 @@ export default function Login() {
     }
   };
 
-  // const onSubmitGoogle = async () => {
-  //   try {
-  //     const result = await signIn("google", {
-  //       redirect: false,
-  //     });
-  //   } catch (error) {}
-  // };
+  const onSubmitGoogle = async () => {
+    try {
+      const result = await signIn("google", {
+        redirect: false,
+      });
+    } catch (error) {}
+  };
+
   // useEffect(() => {
   //   setShowSymphony(true);
   // }, []);
@@ -125,7 +126,7 @@ export default function Login() {
           </div>
         </div>
         {/* ikuti isi konten jadi di mobile akan overflow */}
-        <div className="z-[1] h-full lg:h-[70%] w-full lg:w-[50%]">
+        <div className="z-[1] h-full lg:h-[80%] w-full lg:w-[50%]">
           <div className="relative flex h-full w-full items-center justify-center rounded-xl border-[0.08px] border-[#E0E0E0]/30 bg-white/40 px-4 backdrop-blur-md">
             <div className="flex h-full w-full flex-col items-center justify-center gap-10 py-10">
               <div className="flex w-full items-center justify-center">
@@ -169,6 +170,13 @@ export default function Login() {
                         : ""
                     }
                   />
+                  <button
+                    type="button"
+                    onClick={() => router.push(`/reset-password`)}
+                    className="font-josefins text-[12px] font-light text-white text-end"
+                  >
+                    Lupa Password?
+                  </button>
                   <ButtonPrimary
                     text="Login"
                     width="w-full"
@@ -177,28 +185,19 @@ export default function Login() {
                 </form>
               </div>
               <div className="">
-                <Image
-                  src={Assets.LogoOr}
-                  alt="Logo Or"
-                  width={400}
-                  height={400}
-                  style={{ width: "auto" }}
-                />
-              </div>
-              <div className="">
                 <h2 className="font-josefins text-sm font-light text-white">
                   Dont have an account ? {""}
-                  <span className="border-b-[0.5px] border-[#CCB596] font-josefins text-sm font-light">
-                    <Link href="/register" className="text-[#C9B192]">
+                  <span className="font-josefins text-sm font-bold">
+                    <Link href="/register" className="text-white">
                       Create Account
                     </Link>
                   </span>
                 </h2>
               </div>
-              {/* <div className="w-full md:w-[60%]">
+              <div className="w-full lg:w-[40%]">
                 <button
                   type="submit"
-                  className="w-full rounded-md border-[0.75px] border-white/50 bg-[#BCBCBC]/25 px-4 py-3 text-white transition-all duration-300 ease-in-out hover:bg-white/25 focus:border-[#C9B192] focus:outline-none focus:ring-[0.5px] focus:ring-[#C9B192]"
+                  className="w-full rounded-full border-[0.75px] border-white/50 bg-[#BCBCBC]/25 px-4 py-3 text-white transition-all duration-300 ease-in-out hover:bg-white/25 focus:border-[#C9B192] focus:outline-none focus:ring-[0.5px] focus:ring-[#C9B192]"
                   onClick={onSubmitGoogle}
                 >
                   <div className="flex items-center justify-center gap-2">
@@ -212,7 +211,7 @@ export default function Login() {
                     <p className="text-sm font-light">Sign in with Google</p>
                   </div>
                 </button>
-              </div> */}
+              </div>
             </div>
           </div>
         </div>
