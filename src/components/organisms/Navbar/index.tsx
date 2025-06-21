@@ -103,7 +103,7 @@ export const Navbar: React.FC = () => {
   const handleLogout = () => {
     signOut({
       redirect: true,
-      callbackUrl: "/",
+      callbackUrl: window.location.origin + "/",
     });
     localStorage.clear();
     document.cookie = "";
