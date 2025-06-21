@@ -170,13 +170,13 @@ export default function Login() {
                         : ""
                     }
                   />
-                  <button
+                  {/* <button
                     type="button"
                     onClick={() => router.push(`/reset-password`)}
                     className="font-josefins text-[12px] font-light text-white text-end"
                   >
                     Lupa Password?
-                  </button>
+                  </button> */}
                   <ButtonPrimary
                     text="Login"
                     width="w-full"
@@ -195,7 +195,7 @@ export default function Login() {
                 </h2>
               </div>
               <div className="w-full lg:w-[40%]">
-                <button
+                {/* <button
                   type="submit"
                   className="w-full rounded-full border-[0.75px] border-white/50 bg-[#BCBCBC]/25 px-4 py-3 text-white transition-all duration-300 ease-in-out hover:bg-white/25 focus:border-[#C9B192] focus:outline-none focus:ring-[0.5px] focus:ring-[#C9B192]"
                   onClick={onSubmitGoogle}
@@ -210,7 +210,7 @@ export default function Login() {
                     />
                     <p className="text-sm font-light">Sign in with Google</p>
                   </div>
-                </button>
+                </button> */}
               </div>
             </div>
           </div>

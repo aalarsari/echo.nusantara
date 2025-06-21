@@ -70,7 +70,7 @@ export const GoogleTranslate: React.FC<GoogleTranslateProps> = ({
   const currentLangObj = languages.find((l) => l.value === currentLang);
 
   return (
-    <div className="relative">
+    <div className="relative z-[9999]">
       {/* Hidden Google Translate DOM Element */}
       <div id="google_translate_element" style={{ display: "none" }}></div>
 
@@ -87,9 +87,9 @@ export const GoogleTranslate: React.FC<GoogleTranslateProps> = ({
             height={20}
             className="rounded-full"
           />
-          <span className="text-sm font-semibold text-[#717582] uppercase">
+          {/* <span className="text-sm font-semibold text-[#717582] uppercase">
             {currentLangObj?.label || "Eng"}
-          </span>
+          </span> */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-4 w-4 text-black"
@@ -108,7 +108,7 @@ export const GoogleTranslate: React.FC<GoogleTranslateProps> = ({
 
         {/* Dropdown List */}
         {isLanguageListOpen && (
-          <div className="absolute top-12 z-10 w-full rounded-md border border-[#E4E4E4] bg-white shadow-md">
+          <div className="absolute top-12 z-[99999999] rounded-md border border-[#E4E4E4] bg-white shadow-md">
             {languages.map((lang) => (
               <button
                 key={lang.value}
@@ -122,7 +122,7 @@ export const GoogleTranslate: React.FC<GoogleTranslateProps> = ({
                   height={20}
                   className="rounded-full"
                 />
-                <span className="text-[#333] uppercase">{lang.value}</span>
+                {/* <span className="text-[#333] uppercase">{lang.value}</span> */}
               </button>
             ))}
           </div>

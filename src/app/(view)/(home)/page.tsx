@@ -254,82 +254,82 @@ export default function Home() {
   return (
     <>
       <ModalForceClose session={session} />
+
       <main className="relative min-h-screen">
         {/* Section #1 */}
         {bannerData.filter((item) => item.category === "Products").length >
           0 && (
-          <div className="relative h-screen w-full overflow-hidden ">
-            <div
-              className="flex h-screen items-center justify-center"
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
+          <div
+            className="flex h-full lg:h-[92vh] items-center justify-center"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
+            <Carousel
+              additionalTransfrom={0}
+              arrows={false}
+              autoPlay
+              autoPlaySpeed={4000}
+              centerMode={false}
+              containerClass="carousel-container"
+              dotListClass=""
+              draggable
+              focusOnSelect={false}
+              infinite
+              itemClass="h-full lg:h-[90vh]"
+              keyBoardControl
+              minimumTouchDrag={80}
+              renderButtonGroupOutside={false}
+              renderDotsOutside={false}
+              responsive={{
+                desktop: {
+                  breakpoint: { max: 3000, min: 1024 },
+                  items: 1,
+                  partialVisibilityGutter: 40,
+                },
+                tablet: {
+                  breakpoint: { max: 1024, min: 464 },
+                  items: 1,
+                  partialVisibilityGutter: 30,
+                },
+                mobile: {
+                  breakpoint: { max: 464, min: 0 },
+                  items: 1,
+                  partialVisibilityGutter: 30,
+                },
+              }}
+              showDots={true}
+              sliderClass=""
+              slidesToSlide={1}
+              swipeable
+              className="h-full w-full"
+              customDot={<CustomDot />}
             >
-              <Carousel
-                additionalTransfrom={0}
-                arrows={false}
-                autoPlay
-                autoPlaySpeed={4000}
-                centerMode={false}
-                containerClass="carousel-container"
-                dotListClass=""
-                draggable
-                focusOnSelect={false}
-                infinite
-                itemClass="h-[100vh]"
-                keyBoardControl
-                minimumTouchDrag={80}
-                renderButtonGroupOutside={false}
-                renderDotsOutside={false}
-                responsive={{
-                  desktop: {
-                    breakpoint: { max: 3000, min: 1024 },
-                    items: 1,
-                    partialVisibilityGutter: 40,
-                  },
-                  tablet: {
-                    breakpoint: { max: 1024, min: 464 },
-                    items: 1,
-                    partialVisibilityGutter: 30,
-                  },
-                  mobile: {
-                    breakpoint: { max: 464, min: 0 },
-                    items: 1,
-                    partialVisibilityGutter: 30,
-                  },
-                }}
-                showDots={true}
-                sliderClass=""
-                slidesToSlide={1}
-                swipeable
-                className="h-full w-full"
-                customDot={<CustomDot />}
-              >
-                {bannerData
-                  .filter((bannerItem) => bannerItem.category === "Products")
-                  .map((bannerItem, index) => (
-                    <div
-                      key={index}
-                      className="flex h-[100vh] items-center justify-center"
-                    >
-                      <div className="relative h-[100%] w-full">
-                        <Image
-                          src={bannerItem.path}
-                          alt={bannerItem.title}
-                          fill
-                          style={{ objectFit: "cover" }}
-                          priority={true}
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        />
-                      </div>
+              {bannerData
+                .filter((bannerItem) => bannerItem.category === "Products")
+                .map((bannerItem, index) => (
+                  <div
+                    key={index}
+                    className="flex h-auto lg:h-[92vh] items-center justify-center"
+                  >
+                    <div className="relative h-[40vh] lg:h-[100%] w-full">
+                      <Image
+                        src={bannerItem.path}
+                        alt={bannerItem.title}
+                        fill
+                        // style={{ objectFit: "cover" }}
+                        className="object-contain lg:object-cover"
+                        priority={true}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      />
                     </div>
-                  ))}
-              </Carousel>
-            </div>
+                  </div>
+                ))}
+            </Carousel>
           </div>
         )}
         <div className="relative flex h-full w-full flex-col items-center justify-center gap-2 py-20 bg-[#F4F4F4]">
-          <div className="w-full flex items-center justify-center flex-col gap-2">
-            <h1 className="text-[52px] font-medium text-black font-domaine text-center">
+          <div className="w-full flex items-center justify-center flex-col gap-2 px-4">
+            <h1 className="lg:text-[52px] text-[30px] font-medium text-black font-domaine text-center">
               Our Best Selling Product
             </h1>
             <Link

@@ -372,41 +372,38 @@ export const Navbar: React.FC = () => {
   return (
     <>
       <ModalForceClose session={session} />
-      <div
-        className="fixed top-0 z-[999999] w-full"
-        style={{ transition: "0.5s" }}
-      >
+      <div className="top-0 z-[999999] w-full" style={{ transition: "0.5s" }}>
         <div className="block w-full">
           <div className="relative">
             <div
               className={
                 navbar
                   ? "navbar active"
-                  : "navbar absolute z-[10] w-full bg-white backdrop-blur-sm"
+                  : "navbar z-[10] w-full bg-white backdrop-blur-sm"
               }
             >
               <nav className="mx-auto flex h-[4rem] items-center justify-between px-4 md:py-4 xl:px-[4rem]">
-                <div className="flex w-[25%] flex-row items-center justify-start gap-4">
+                <div className="flex w-[20%] flex-row items-center justify-start gap-4">
                   <MobileMenuButton
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                   />
                   <LogoEcho />
                 </div>
-                <div className="flex flex-row items-center justify-center gap-12">
-                  <div className="flex w-full justify-center">
-                    <ul className="hidden items-center justify-center lg:flex w-full gap-12">
-                      {NavLinks.map((link, index) => (
-                        <li
-                          key={index}
-                          className="flex items-center justify-center whitespace-nowrap h-full"
-                        >
-                          <ButtonNavLink href={link.path}>
-                            {link.label}
-                          </ButtonNavLink>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                <div className="flex justify-center">
+                  <ul className="hidden items-center justify-center lg:flex gap-6">
+                    {NavLinks.map((link, index) => (
+                      <li
+                        key={index}
+                        className="flex items-center justify-center whitespace-nowrap h-full"
+                      >
+                        <ButtonNavLink href={link.path}>
+                          {link.label}
+                        </ButtonNavLink>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="flex flex-row  items-center justify-center gap-12">
                   <div className="relative w-full inline-flex justify-end">
                     <div className="flex flex-row items-center justify-center gap-4">
                       {IconLinks.map((icon, index) => (
