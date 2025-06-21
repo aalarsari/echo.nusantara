@@ -372,7 +372,10 @@ export const Navbar: React.FC = () => {
   return (
     <>
       <ModalForceClose session={session} />
-      <div className="top-0 z-[999999] w-full" style={{ transition: "0.5s" }}>
+      <div
+        className="top-0 z-[999] relative w-full"
+        style={{ transition: "0.5s" }}
+      >
         <div className="block w-full">
           <div className="relative">
             <div
@@ -382,7 +385,7 @@ export const Navbar: React.FC = () => {
                   : "navbar z-[10] w-full bg-white backdrop-blur-sm"
               }
             >
-              <nav className="mx-auto flex h-[4rem] items-center justify-between px-4 md:py-4 xl:px-[4rem]">
+              <nav className="mx-auto flex h-[4rem] items-center justify-between px-4 md:py-4 xl:px-[4rem] z-[99999]">
                 <div className="flex w-[20%] flex-row items-center justify-start gap-4">
                   <MobileMenuButton
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
