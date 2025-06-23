@@ -66,11 +66,11 @@ export default async function middleware(req: NextRequest) {
 // Gabungkan matcher
 export const config = {
   matcher: [
-    "/((?!api|trpc|_next|_vercel|.*\\..*).*)", // i18n
-    "/dashboard/:path*",
-    "/api/admin/:path*",
-    "/api/user/:path*",
-    "/login",
+    "/((?!api|trpc|_next|_vercel|.*\\..*).*)",
+    "/(id|en)/dashboard/:path*",
+    "/(id|en)/api/admin/:path*",
+    "/(id|en)/api/user/:path*",
+    "/(id|en)/login",
     "/pdf",
   ],
 };
