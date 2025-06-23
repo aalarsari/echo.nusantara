@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build:tailwind": "cross-env NODE_ENV=production tailwindcss -i src/assets/styles/globals.css -o src/assets/styles/build.css --minify",
-    "dev": "next dev ",
+    "dev": "NODE_OPTIONS=--no-deprecation next dev",
     "build": "cross-env NODE_ENV=production tailwindcss -i src/assets/styles/globals.css -o src/assets/styles/build.css --minify && prisma generate && next build",
     "start": "cross-env NODE_ENV=production node server.js",
     "lint": "next lint"
@@ -56,8 +56,10 @@
     "moment-timezone": "^0.5.45",
     "next": "^14.2.3",
     "next-auth": "^4.24.7",
+    "next-intl": "^4.1.0",
     "next-sitemap": "^4.2.3",
     "next-themes": "^0.3.0",
+    "next-translate": "^2.6.2",
     "next-videos": "1.4.1",
     "node-cron": "^3.0.3",
     "nodemailer": "^6.9.13",
@@ -124,6 +126,7 @@
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.1.4",
+    "next-translate-plugin": "^2.6.2",
     "postcss": "^8",
     "postcss-nesting": "^12.1.5",
     "prettier": "^3.2.5",

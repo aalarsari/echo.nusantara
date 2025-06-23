@@ -1,6 +1,5 @@
 "use client";
 
-import { Assets } from "@/assets";
 import Image from "next/image";
 import React from "react";
 import Carousel from "react-multi-carousel";
@@ -9,6 +8,7 @@ import { useMediaQuery } from "react-responsive";
 
 import { useRouter } from "next/navigation";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { Assets } from "@/assets";
 
 interface CustomDotProps {
   onClick?: () => void;

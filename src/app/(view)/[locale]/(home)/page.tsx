@@ -10,8 +10,6 @@ import {
   NavHome,
 } from "@/components";
 import { useSession } from "next-auth/react";
-import { Dialog } from "@headlessui/react";
-import { XMarkIcon } from "@heroicons/react/24/outline";
 import Carousel from "react-multi-carousel";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
@@ -25,7 +23,9 @@ import { getListShop } from "@/controller/noAuth/shop";
 import { AppDispatch } from "@/app/store";
 import { useDispatch } from "react-redux";
 import { ProductController } from "@/controller/noAuth/product";
-
+import { use } from "react";
+import { setRequestLocale } from "next-intl/server";
+import { Locale, useTranslations } from "next-intl";
 interface CustomDotProps {
   onClick?: () => void;
   active?: boolean;
@@ -84,7 +84,13 @@ interface BannerItem {
   title: string;
   category: string;
 }
-export default function Home() {
+
+type Props = {
+  params: { locale: Locale };
+};
+
+export default function Home({ params }: Props) {
+  const t = useTranslations("IndexPage");
   const [scrollPosition, setScrollPosition] = useState(0);
   const [showSymphony, setShowSymphony] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
@@ -330,7 +336,8 @@ export default function Home() {
         <div className="relative flex h-full w-full flex-col items-center justify-center gap-2 py-20 bg-[#F4F4F4]">
           <div className="w-full flex items-center justify-center flex-col gap-2 px-4">
             <h1 className="lg:text-[52px] text-[30px] font-medium text-black font-domaine text-center">
-              Our Best Selling Product
+              {/* <p>{t("description")}</p> */}
+              Our Best Selling
             </h1>
             <Link
               href="/shop"
@@ -610,7 +617,7 @@ export default function Home() {
           </h2>
         </div>
         <div className="flex h-full py-8 lg:h-screen w-full items-center justify-center rounded-[4px] ">
-          <video
+          {/* <video
             style={{
               objectFit: isMobile ? "contain" : "cover",
               width: "100%",
@@ -621,7 +628,7 @@ export default function Home() {
             muted
             loop
             playsInline
-          />
+          /> */}
         </div>
         <div className="relative h-screen lg:h-[100vh] w-full flex items-center justify-center overflow-hidden">
           <div className="absolute bottom-0 lg:top-0 left-0 z-0 lg:h-full w-full">

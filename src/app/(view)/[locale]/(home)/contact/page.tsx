@@ -11,8 +11,13 @@ import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { Listbox, Transition } from "@headlessui/react";
+import { Locale, useTranslations } from "next-intl";
 
-export default function Contact() {
+type Props = {
+  params: { locale: Locale };
+};
+export default function Contact({ params: { locale } }: Props) {
+  const t = useTranslations("ContactPage");
   const [notification, setNotification] = useState({
     message: "",
     type: "success" as "success" | "error",
@@ -66,6 +71,7 @@ export default function Contact() {
 
           <div className="absolute inset-0 flex justify-center items-center">
             <span className="font-domaine text-[36px] text-white font-bold">
+              {/* <p>{t("description")}</p> */}
               Need Help? Get in touch.
             </span>
           </div>

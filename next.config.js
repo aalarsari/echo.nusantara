@@ -1,9 +1,19 @@
+// next.config.js
+
+const withVideos = require("next-videos");
+const createNextIntlPlugin = require("next-intl/plugin");
+
+const withNextIntl = createNextIntlPlugin({
+  experimental: {
+    createMessagesDeclaration: "./messages/en.json",
+  },
+});
+
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const baseConfig = {
   experimental: {
     serverComponentsExternalPackages: ["@react-pdf/renderer"],
     missingSuspenseWithCSRBailout: false,
-    // typedRoutes: true,
     serverActions: {
       allowedOrigins: ["echonusantara.com"],
     },
@@ -28,6 +38,4 @@ const nextConfig = {
   },
 };
 
-const withVideos = require("next-videos");
-
-module.exports = withVideos(nextConfig);
+module.exports = withVideos(withNextIntl(baseConfig));

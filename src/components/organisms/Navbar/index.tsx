@@ -34,6 +34,7 @@ import {
 import { WishlistItem } from "@/types/wishlist/wishlist";
 import { GetListWishlist } from "@/controller/user/wishlist";
 import { GetWishlistCookies } from "@/lib/cookies/wishlist";
+import { LanguageSwitcher } from "@/components/atoms/LanguageSwitcher";
 
 export const Navbar: React.FC = () => {
   const { data: session } = useSession();
@@ -457,6 +458,7 @@ export const Navbar: React.FC = () => {
                         </Link>
                       )}
                       <GoogleTranslate prefLangCookie={prefLangCookie} />
+                      {/* <LanguageSwitcher /> */}
                     </div>
                   </div>
                 </div>
