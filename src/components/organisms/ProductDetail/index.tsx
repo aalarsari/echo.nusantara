@@ -660,7 +660,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ slug }) => {
                         id="file-input-2"
                         type="file"
                         accept="image/jpeg, image/png"
-                        onChange={(e) => handleFileChange(e, "imaga2")}
+                        onChange={(e) => handleFileChange(e, "image2")}
                         className="hidden"
                       />
                     </div>
