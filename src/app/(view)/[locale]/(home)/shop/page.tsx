@@ -26,6 +26,7 @@ import { FormatRupiah } from "@/components";
 import { ProductController } from "@/controller/noAuth/product";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import { DiscountBanner } from "@/components/molecules/BannerDiscount";
 
 interface Discount {
   id: number;
@@ -184,74 +185,12 @@ export default function Shop() {
     : productData;
 
   return (
-    <div className="flex h-full w-full flex-col items-center justify-between gap-10">
-      {bannerData.filter((item) => item.category === "Discount").length > 0 && (
-        <div
-          className="flex h-full lg:h-[92vh] items-center justify-center"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-        >
-          <Carousel
-            additionalTransfrom={0}
-            arrows={false}
-            autoPlay
-            autoPlaySpeed={4000}
-            centerMode={false}
-            containerClass="carousel-container"
-            dotListClass=""
-            draggable
-            focusOnSelect={false}
-            infinite
-            itemClass="h-full lg:h-[90vh]"
-            keyBoardControl
-            minimumTouchDrag={80}
-            renderButtonGroupOutside={false}
-            renderDotsOutside={false}
-            responsive={{
-              desktop: {
-                breakpoint: { max: 3000, min: 1024 },
-                items: 1,
-                partialVisibilityGutter: 40,
-              },
-              tablet: {
-                breakpoint: { max: 1024, min: 464 },
-                items: 1,
-                partialVisibilityGutter: 30,
-              },
-              mobile: {
-                breakpoint: { max: 464, min: 0 },
-                items: 1,
-                partialVisibilityGutter: 30,
-              },
-            }}
-            showDots={true}
-            sliderClass=""
-            slidesToSlide={1}
-            swipeable
-            className="h-full w-full"
-            customDot={<CustomDot />}
-          >
-            {bannerData
-              .filter((bannerItem) => bannerItem.category === "Discount")
-              .map((bannerItem, index) => (
-                <div
-                  key={index}
-                  className="flex h-auto lg:h-[92vh] items-center justify-center"
-                >
-                  <div className="relative h-[40vh] lg:h-[100%] w-full">
-                    <Image
-                      src={bannerItem.path}
-                      alt={bannerItem.title}
-                      fill
-                      style={{ objectFit: "cover" }}
-                      priority={true}
-                    />
-                  </div>
-                </div>
-              ))}
-          </Carousel>
-        </div>
-      )}
+    <div className="h-full w-full flex-col items-center justify-between gap-10">
+      <DiscountBanner
+        bannerData={bannerData}
+        isHovered={isHovered}
+        setIsHovered={setIsHovered}
+      />
 
       <div className="mt-4 flex h-full w-full flex-col items-center justify-center gap-[4rem] py-14 px-8 lg:py-0 lg:px-20">
         <div className="relative flex h-full w-full flex-col gap-4">

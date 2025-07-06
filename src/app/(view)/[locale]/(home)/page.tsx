@@ -611,24 +611,24 @@ export default function Home({ params }: Props) {
             }}
           />
         </div>
-        <div className="max-w-[50%] mx-auto w-full block lg:hidden">
-          <h2 className="text-center font-domaine text-[24px]">
+        <div className="max-w-[50%] mx-auto w-full">
+          <h2 className="text-center font-domaine lg:text-[36px] text-[24px]">
             Premium Quality Bird{"'"}s Nest
           </h2>
         </div>
         <div className="flex h-full py-8 lg:h-screen w-full items-center justify-center rounded-[4px] ">
-          {/* <video
+          <video
             style={{
               objectFit: isMobile ? "contain" : "cover",
               width: "100%",
               height: "100%",
             }}
-            src={require("../../../../public/video-aal.mp4")}
+            src={require("./video-aal.mp4")}
             autoPlay
             muted
             loop
             playsInline
-          /> */}
+          />
         </div>
         <div className="relative h-screen lg:h-[100vh] w-full flex items-center justify-center overflow-hidden">
           <div className="absolute bottom-0 lg:top-0 left-0 z-0 lg:h-full w-full">

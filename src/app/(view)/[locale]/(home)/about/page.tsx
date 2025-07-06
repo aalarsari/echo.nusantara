@@ -135,47 +135,45 @@ export default function About() {
             showDots={false}
             arrows={false}
           >
-            {[Assets.Pure, Assets.AboutUs, Assets.Choose2].map(
-              (image, index) => (
-                <div
-                  key={index}
-                  className="relative p-2 h-screen flex flex-col justify-end ]"
-                >
-                  <Image
-                    src={image}
-                    style={{
-                      objectFit: "cover",
-                      width: "100%",
-                      height: "100%",
-                    }}
-                    unoptimized
-                    alt={`Slide ${index}`}
-                    className="absolute inset-0 rounded-xl shadow-md"
-                  />
+            {[Assets.Pure].map((image, index) => (
+              <div
+                key={index}
+                className="relative p-2 h-screen flex flex-col justify-end ]"
+              >
+                <Image
+                  src={image}
+                  style={{
+                    objectFit: "cover",
+                    width: "100%",
+                    height: "100%",
+                  }}
+                  unoptimized
+                  alt={`Slide ${index}`}
+                  className="absolute inset-0 rounded-xl shadow-md"
+                />
 
-                  {/* Title & Subtitle */}
-                  <div className="relative z-10 flex text-center text-white mb-14 flex-col gap-4 justify-center items-center">
-                    <h2 className="text-[28px] lg:text-[52px] font-domaine font-bold drop-shadow-md">
-                      Pure and Natural
-                    </h2>
-                    <div className="w-[70%] ">
-                      <p className="text-[24px] lg:text-[32px] text-center font-thin drop-shadow-sm">
-                        We carefully source high-quality, natural ingredients,
-                        free from harmful chemicals and additives.
-                      </p>
-                    </div>
+                {/* Title & Subtitle */}
+                <div className="relative z-10 flex text-center text-white mb-14 flex-col gap-4 justify-center items-center">
+                  <h2 className="text-[28px] lg:text-[52px] font-domaine font-bold drop-shadow-md">
+                    Pure and Natural
+                  </h2>
+                  <div className="w-[70%] ">
+                    <p className="text-[24px] lg:text-[32px] text-center font-thin drop-shadow-sm">
+                      We carefully source high-quality, natural ingredients,
+                      free from harmful chemicals and additives.
+                    </p>
                   </div>
+                </div>
 
-                  {/* <div className="relative z-10 h-[5rem] flex items-center justify-center space-x-2 mb-4">
+                {/* <div className="relative z-10 h-[5rem] flex items-center justify-center space-x-2 mb-4">
                     <CustomArrowLeft onClick={() => {}} />
 
                     <CustomDot onClick={() => {}} active={true} />
 
                     <CustomArrowRight onClick={() => {}} />
                   </div> */}
-                </div>
-              )
-            )}
+              </div>
+            ))}
           </Carousel>
         </div>
       </div>

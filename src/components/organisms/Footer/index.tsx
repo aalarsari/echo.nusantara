@@ -118,15 +118,15 @@ export const Footer = () => {
                         </div>
                         <div className="flex w-full flex-col">
                           <Link href="/faq">
-                            <span className="text-sm text-white transition-all duration-300 ease-in-out hover:text-[#835a41]">
+                            <span className="text-sm text-white transition-all duration-300 ease-in-out ">
                               FAQ
                             </span>
                           </Link>
-                          <Link href="/">
-                            <span className="text-sm text-white transition-all duration-300 ease-in-out hover:text-[#000000]">
-                              Privacy Policy
-                            </span>
-                          </Link>
+                          {/* <Link href="/"> */}
+                          <span className="text-sm text-white transition-all duration-300 ease-in-out ">
+                            Privacy Policy
+                          </span>
+                          {/* </Link> */}
                         </div>
                       </div>
                     </div>
@@ -239,16 +239,14 @@ export const Footer = () => {
                     title="Logo HALAL"
                   />
                 </a>
-                <a href="/news" target="_blank" rel="noopener noreferrer">
-                  <Image
-                    src={Assets.NKV}
-                    alt={"NKV"}
-                    width={80}
-                    height={80}
-                    loading="lazy"
-                    title="Logo NKV"
-                  />
-                </a>
+                <Image
+                  src={Assets.NKV}
+                  alt={"NKV"}
+                  width={80}
+                  height={80}
+                  loading="lazy"
+                  title="Logo NKV"
+                />
               </div>
             </div>
           </div>
