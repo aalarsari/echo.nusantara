@@ -134,8 +134,8 @@ export const Footer = () => {
                 </div>
               </div>
               <div className="flex flex-row justify-between lg:gap-24">
-                {/* <div className="flex flex-col items-start  lg:items-center gap-4">
-                  <h2 className="text-lg font-bold text-white">Social Media</h2>
+                <div className="flex flex-col items-start  lg:items-center gap-4">
+                  <h2 className="text-lg font-bold text-white">E-Commerce</h2>
                   {socialMediaLinks.filter(
                     (link) =>
                       ["Tiktok", "Instagram"].includes(link.name) &&
@@ -168,7 +168,7 @@ export const Footer = () => {
                         ))}
                     </div>
                   )}
-                </div> */}
+                </div>
                 <div className="flex flex-col items-start lg:items-center gap-4">
                   <h2 className="text-lg font-bold text-white">Follow Us</h2>
                   {socialMediaLinks.filter(
@@ -190,11 +190,11 @@ export const Footer = () => {
                             href={link.link}
                             className="flex flex-row gap-4"
                           >
-                            <div className="h-[40px] w-[40px]">
+                            <div className="h-[40px] w-[40px] bg-[#B69B7C] rounded-full flex items-center justify-center">
                               <Image
                                 src={link.image || Assets.X}
-                                width={50}
-                                height={50}
+                                width={24}
+                                height={24}
                                 alt={link.name}
                                 loading="lazy"
                               />
