@@ -20,7 +20,7 @@ export default function Payment() {
   const vaNumber = useSelector((state: RootState) => state.payment.vaNumber);
   const orderId = useSelector((state: RootState) => state.payment.orderId);
   const billerCode = useSelector(
-    (state: RootState) => state.payment.billerCode,
+    (state: RootState) => state.payment.billerCode
   );
 
   const { data: session } = useSession();
@@ -201,7 +201,7 @@ export default function Payment() {
                         navigator.clipboard.writeText(vaNumber);
                         showNotification(
                           "Virtual Account Number Copied",
-                          "success",
+                          "success"
                         );
                       }
                     }}
