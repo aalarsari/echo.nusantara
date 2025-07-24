@@ -360,28 +360,28 @@ export async function POST(request: NextRequest) {
       saveFile,
    );
 
-   await SendEmail({
-      to: user.email!,
-      attachment: [
-         {
-            filename: "invoice.pdf",
-            path: saveFile,
-         },
-      ],
-      subject: `invoice payment ${payment.orderId}`,
-      html: render(
-         Nota({
-            orderId: payment?.orderId!,
-            id: payment?.id!,
-            amount: payment?.amount!,
-            status: payment?.status!,
-            createdAt: payment?.createdAt!,
-            updatedAt: payment?.updatedAt!,
-            user: user!,
-            transaction: transaction,
-         }),
-      ),
-   });
+   // await SendEmail({
+   //    to: user.email!,
+   //    attachment: [
+   //       {
+   //          filename: "invoice.pdf",
+   //          path: saveFile,
+   //       },
+   //    ],
+   //    subject: `invoice payment ${payment.orderId}`,
+   //    html: render(
+   //       Nota({
+   //          orderId: payment?.orderId!,
+   //          id: payment?.id!,
+   //          amount: payment?.amount!,
+   //          status: payment?.status!,
+   //          createdAt: payment?.createdAt!,
+   //          updatedAt: payment?.updatedAt!,
+   //          user: user!,
+   //          transaction: transaction,
+   //       }),
+   //    ),
+   // });
 
    return NextResponse.json({
       error: false,
