@@ -2,7 +2,7 @@ import { prepareResetPassword } from "@/lib/zod-schema/reset-password";
 import { z } from "zod";
 
 export async function ChangePassword(
-  data: z.infer<typeof prepareResetPassword>,
+  data: z.infer<typeof prepareResetPassword>
 ) {
   var response = await fetch("/api/change-password", {
     method: "POST",
@@ -16,7 +16,7 @@ export async function ChangePassword(
 
 export async function ConfirmChangepassword(
   data: z.infer<typeof prepareResetPassword>,
-  token: string,
+  token: string
 ) {
   var response = await fetch(`/api/change-password/${token}`, {
     method: "PUT",

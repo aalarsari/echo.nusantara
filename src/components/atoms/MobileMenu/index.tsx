@@ -25,7 +25,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
       leave="transition-transform transition-opacity duration-300"
       leaveFrom="transform translate-x-0 opacity-100"
       leaveTo="transform -translate-x-full opacity-0"
-      className="fixed inset-0 z-20 bg-white p-4 lg:hidden"
+      className="fixed inset-0 z-[99999] bg-white p-4 lg:hidden "
     >
       <div className="flex flex-col">
         <div className="mb-4 flex items-center justify-between">

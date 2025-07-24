@@ -26,7 +26,7 @@ export const ButtonNavLink: React.FC<ButtonNavLinkProps> = ({
     <a
       href={href}
       onClick={onClick}
-      className={`group relative w-full inline-block appearance-none overflow-hidden font-domaine text-[18px] font-light uppercase text-[#221F20] no-underline transition-all duration-300 hover:text-[#C1AE94] hover:no-underline focus:text-black focus:no-underline focus:outline-none focus-visible:outline-none ${
+      className={`group relative w-full inline-block appearance-none overflow-hidden font-domaine text-[16px] font-light uppercase text-[#221F20] no-underline transition-all duration-300 hover:text-[#C1AE94] hover:no-underline focus:text-black focus:no-underline focus:outline-none focus-visible:outline-none ${
         pathname === href ? "text-black" : ""
       }`}
       style={{

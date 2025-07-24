@@ -30,11 +30,6 @@ export const Footer = () => {
         "Sahid Sudirman Centre 50th floor, Jl Jenderal Sudirman No 86, Jakarta, Indonesia 10220.",
     },
     {
-      title: "Surabaya Branch Office",
-      address:
-        "Surabaya Branch Office: JI. Ciliwung No. 1 Darmo, Wonokromo. Kota Surabaya. 60241 Indonesia",
-    },
-    {
       title: "Hongkong Branch Office",
       address:
         "AAL HK Trading Limited, address: 22/F 3 LOCKHART RD WANCHAI, HONG KONG",
@@ -123,15 +118,15 @@ export const Footer = () => {
                         </div>
                         <div className="flex w-full flex-col">
                           <Link href="/faq">
-                            <span className="text-sm text-white transition-all duration-300 ease-in-out hover:text-[#835a41]">
+                            <span className="text-sm text-white transition-all duration-300 ease-in-out ">
                               FAQ
                             </span>
                           </Link>
-                          <Link href="/">
-                            <span className="text-sm text-white transition-all duration-300 ease-in-out hover:text-[#000000]">
-                              Privacy Policy
-                            </span>
-                          </Link>
+                          {/* <Link href="/"> */}
+                          <span className="text-sm text-white transition-all duration-300 ease-in-out ">
+                            Privacy Policy
+                          </span>
+                          {/* </Link> */}
                         </div>
                       </div>
                     </div>
@@ -139,8 +134,8 @@ export const Footer = () => {
                 </div>
               </div>
               <div className="flex flex-row justify-between lg:gap-24">
-                {/* <div className="flex flex-col items-start  lg:items-center gap-4">
-                  <h2 className="text-lg font-bold text-white">Social Media</h2>
+                <div className="flex flex-col items-start  lg:items-center gap-4">
+                  <h2 className="text-lg font-bold text-white">E-Commerce</h2>
                   {socialMediaLinks.filter(
                     (link) =>
                       ["Tiktok", "Instagram"].includes(link.name) &&
@@ -173,7 +168,7 @@ export const Footer = () => {
                         ))}
                     </div>
                   )}
-                </div> */}
+                </div>
                 <div className="flex flex-col items-start lg:items-center gap-4">
                   <h2 className="text-lg font-bold text-white">Follow Us</h2>
                   {socialMediaLinks.filter(
@@ -195,11 +190,11 @@ export const Footer = () => {
                             href={link.link}
                             className="flex flex-row gap-4"
                           >
-                            <div className="h-[40px] w-[40px]">
+                            <div className="h-[40px] w-[40px] bg-[#B69B7C] rounded-full flex items-center justify-center">
                               <Image
                                 src={link.image || Assets.X}
-                                width={50}
-                                height={50}
+                                width={24}
+                                height={24}
                                 alt={link.name}
                                 loading="lazy"
                               />
@@ -244,16 +239,14 @@ export const Footer = () => {
                     title="Logo HALAL"
                   />
                 </a>
-                <a href="/news" target="_blank" rel="noopener noreferrer">
-                  <Image
-                    src={Assets.NKV}
-                    alt={"NKV"}
-                    width={80}
-                    height={80}
-                    loading="lazy"
-                    title="Logo NKV"
-                  />
-                </a>
+                <Image
+                  src={Assets.NKV}
+                  alt={"NKV"}
+                  width={80}
+                  height={80}
+                  loading="lazy"
+                  title="Logo NKV"
+                />
               </div>
             </div>
           </div>

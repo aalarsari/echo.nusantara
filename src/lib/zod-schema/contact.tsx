@@ -15,9 +15,11 @@ export const ContactValidations = zfd.formData(
     email: z.string({
       required_error: "Email is required",
     }),
-    title: z.string({
-      required_error: "Title is required",
-    }),
+    title: z
+      .string({
+        required_error: "Title is required",
+      })
+      .default("-"),
     description: z.string({
       required_error: "Question is required",
     }),
@@ -25,5 +27,5 @@ export const ContactValidations = zfd.formData(
       required_error: "No Handphone is required",
     }),
     category: contactEnum,
-  }),
+  })
 );
